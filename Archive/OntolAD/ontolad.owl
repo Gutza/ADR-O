@@ -1,0 +1,1665 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/milena/ontologies/2013/ontolad"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/milena/ontologies/2013/ontolad">
+    <Prefix name="" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">OntolAD is licensed under a Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#Acquirer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Architecture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureDecision"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureDescription"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureDescriptionElement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureDescriptionLanguage"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureFramework"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureModel"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitecturePattern"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureRationale"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureStyle"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureView"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ArchitectureViewpoint"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Builder"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Concern"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Constraint"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Correspondence"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#CorrespondenceRule"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Developer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Entity"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Environment"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Language"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Maintainer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Metamodel"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ModelElement"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ModelKind"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Operation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Operator"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Owner"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Relationship"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Stakeholder"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Supplier"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#System"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Template"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#User"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#affects"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#frames"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasArchitecture"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasConcern"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasConstraint"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasCorrespondence"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasCorrespondenceRule"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasEntity"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasModel"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasModelKind"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasOperation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasRationale"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasRelationship"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasStakeholder"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasSystem"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasView"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasViewpoint"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isConcernOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isExpressedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isFramedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isGovernedByModelKind"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isGovernedByViewpoint"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isInterestedIn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isJustifiedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isSituatedIn"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isUsefulFor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#justifies"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#relationDestination"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#relationSource"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Applicability"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Author"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#ChangeHistory"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Convention"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#CorrespondenceRuleState"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Glossary"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#IssueDate"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Multiplicity"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Name"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Organization"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Reference"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Reviewer"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Status"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Summary"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Version"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasAttribute"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasLanguage"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#hasTemplate"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Cost"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Evolvability"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Feasibility"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Functionality"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Maintainability"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Purpose"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Risk"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Suitability"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Architecture"/>
+        <ObjectIntersectionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isExpressedBy"/>
+                <Class IRI="#ArchitectureDescription"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isUsefulFor"/>
+                <Class IRI="#System"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#isExpressedBy"/>
+                <Class IRI="#ArchitectureDescription"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureDecision"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#affects"/>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isJustifiedBy"/>
+                <Class IRI="#ArchitectureRationale"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#affects"/>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#isJustifiedBy"/>
+                <Class IRI="#ArchitectureRationale"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureDescription"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasRationale"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureRationale"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#justifies"/>
+                        <Class IRI="#ArchitectureDecision"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Stakeholder"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasConcern"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasView"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureView"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isGovernedByViewpoint"/>
+                        <Class IRI="#ArchitectureViewpoint"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasViewpoint"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureViewpoint"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasView"/>
+                        <Class IRI="#ArchitectureView"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isUsefulFor"/>
+                <Class IRI="#Architecture"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasCorrespondence"/>
+                <Class IRI="#Correspondence"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasCorrespondenceRule"/>
+                <Class IRI="#CorrespondenceRule"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Stakeholder"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasConcern"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasView"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureView"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isGovernedByViewpoint"/>
+                        <Class IRI="#ArchitectureViewpoint"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasViewpoint"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureViewpoint"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasView"/>
+                        <Class IRI="#ArchitectureView"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureDescriptionElement"/>
+        <ObjectUnionOf>
+            <Class IRI="#ArchitectureDecision"/>
+            <Class IRI="#ArchitectureDescription"/>
+            <Class IRI="#ArchitectureDescriptionLanguage"/>
+            <Class IRI="#ArchitectureFramework"/>
+            <Class IRI="#ArchitectureModel"/>
+            <Class IRI="#ArchitectureRationale"/>
+            <Class IRI="#ArchitectureView"/>
+            <Class IRI="#ArchitectureViewpoint"/>
+            <Class IRI="#Concern"/>
+            <Class IRI="#Correspondence"/>
+            <Class IRI="#CorrespondenceRule"/>
+            <Class IRI="#ModelKind"/>
+            <Class IRI="#Stakeholder"/>
+        </ObjectUnionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureDescriptionLanguage"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasModelKind"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ModelKind"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#frames"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Stakeholder"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasConcern"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasCorrespondenceRule"/>
+                <Class IRI="#CorrespondenceRule"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasModelKind"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ModelKind"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#frames"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Stakeholder"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasConcern"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasViewpoint"/>
+                <Class IRI="#ArchitectureViewpoint"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureFramework"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Stakeholder"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasConcern"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasViewpoint"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureViewpoint"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#frames"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasCorrespondenceRule"/>
+                <Class IRI="#CorrespondenceRule"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Stakeholder"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#hasConcern"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasViewpoint"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#ArchitectureViewpoint"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#frames"/>
+                        <Class IRI="#Concern"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureModel"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <Class IRI="#Concern"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isGovernedByModelKind"/>
+                <Class IRI="#ModelKind"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <Class IRI="#Concern"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#isGovernedByModelKind"/>
+                <Class IRI="#ModelKind"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureRationale"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#justifies"/>
+                <Class IRI="#ArchitectureDecision"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#justifies"/>
+                <Class IRI="#ArchitectureDecision"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureView"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasModel"/>
+                <Class IRI="#ArchitectureModel"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isGovernedByViewpoint"/>
+                <Class IRI="#ArchitectureViewpoint"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasModel"/>
+                <Class IRI="#ArchitectureModel"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#isGovernedByViewpoint"/>
+                <Class IRI="#ArchitectureViewpoint"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ArchitectureViewpoint"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasModelKind"/>
+                <Class IRI="#ModelKind"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <ObjectIntersectionOf>
+                    <Class IRI="#Concern"/>
+                    <ObjectSomeValuesFrom>
+                        <ObjectProperty IRI="#isConcernOf"/>
+                        <Class IRI="#Stakeholder"/>
+                    </ObjectSomeValuesFrom>
+                </ObjectIntersectionOf>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasModelKind"/>
+                <Class IRI="#ModelKind"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Concern"/>
+        <ObjectUnionOf>
+            <ObjectIntersectionOf>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+                <ObjectSomeValuesFrom>
+                    <ObjectProperty IRI="#isConcernOf"/>
+                    <Class IRI="#Stakeholder"/>
+                </ObjectSomeValuesFrom>
+            </ObjectIntersectionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isFramedBy"/>
+                <Class IRI="#ArchitectureDescription"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isFramedBy"/>
+                <Class IRI="#ArchitectureDescriptionLanguage"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isFramedBy"/>
+                <Class IRI="#ArchitectureFramework"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isFramedBy"/>
+                <Class IRI="#ArchitectureModel"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isFramedBy"/>
+                <Class IRI="#ArchitectureViewpoint"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isFramedBy"/>
+                <Class IRI="#ModelKind"/>
+            </ObjectSomeValuesFrom>
+        </ObjectUnionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Constraint"/>
+        <ObjectIntersectionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#affects"/>
+                <Class IRI="#Entity"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#affects"/>
+                <Class IRI="#Entity"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Correspondence"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#relationDestination"/>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#relationSource"/>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#relationDestination"/>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#relationSource"/>
+                <Class IRI="#ArchitectureDescriptionElement"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#CorrespondenceRule"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasCorrespondence"/>
+                <Class IRI="#Correspondence"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasCorrespondence"/>
+                <Class IRI="#Correspondence"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Entity"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ModelElement"/>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#Name"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataSomeValuesFrom>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#hasAttribute"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataSomeValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#Name"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataAllValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#hasAttribute"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Environment"/>
+        <ObjectIntersectionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasSystem"/>
+                <Class IRI="#System"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasSystem"/>
+                <Class IRI="#System"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Language"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ModelKind"/>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#hasLanguage"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataSomeValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#hasLanguage"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Metamodel"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ModelKind"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasEntity"/>
+                <Class IRI="#Entity"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasRelationship"/>
+                <Class IRI="#Relationship"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasConstraint"/>
+                <Class IRI="#Constraint"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasEntity"/>
+                <Class IRI="#Entity"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasRelationship"/>
+                <Class IRI="#Relationship"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ModelElement"/>
+        <ObjectUnionOf>
+            <Class IRI="#Entity"/>
+            <Class IRI="#Relationship"/>
+        </ObjectUnionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ModelKind"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <Class IRI="#Concern"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#frames"/>
+                <Class IRI="#Concern"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#ModelKind"/>
+        <ObjectUnionOf>
+            <Class IRI="#Language"/>
+            <Class IRI="#Metamodel"/>
+            <Class IRI="#Operation"/>
+            <Class IRI="#Template"/>
+        </ObjectUnionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Operation"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ModelKind"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasOperation"/>
+                <Class IRI="#Operation"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasOperation"/>
+                <Class IRI="#Operation"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Relationship"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ModelElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#relationDestination"/>
+                <Class IRI="#ModelElement"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#relationSource"/>
+                <Class IRI="#ModelElement"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#relationDestination"/>
+                <Class IRI="#ModelElement"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#relationSource"/>
+                <Class IRI="#ModelElement"/>
+            </ObjectAllValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#Multiplicity"/>
+                <Datatype abbreviatedIRI="xsd:integer"/>
+            </DataAllValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#Name"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Stakeholder"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ArchitectureDescriptionElement"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasConcern"/>
+                <Class IRI="#Concern"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isInterestedIn"/>
+                <Class IRI="#System"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasConcern"/>
+                <Class IRI="#Concern"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#isInterestedIn"/>
+                <Class IRI="#System"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#System"/>
+        <ObjectIntersectionOf>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasArchitecture"/>
+                <Class IRI="#Architecture"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <Class IRI="#Stakeholder"/>
+            </ObjectSomeValuesFrom>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isSituatedIn"/>
+                <Class IRI="#Environment"/>
+            </ObjectSomeValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasArchitecture"/>
+                <Class IRI="#Architecture"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#hasStakeholder"/>
+                <Class IRI="#Stakeholder"/>
+            </ObjectAllValuesFrom>
+            <ObjectAllValuesFrom>
+                <ObjectProperty IRI="#isSituatedIn"/>
+                <Class IRI="#Environment"/>
+            </ObjectAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Template"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#ModelKind"/>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#hasTemplate"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataSomeValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#hasTemplate"/>
+                <Datatype abbreviatedIRI="rdfs:Literal"/>
+            </DataAllValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#Acquirer"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Author"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#ChangeHistory"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Glossary"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#IssueDate"/>
+            <Datatype abbreviatedIRI="xsd:dateTime"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Organization"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Reference"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Reviewer"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Summary"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureDescription"/>
+        <DataSomeValuesFrom>
+            <DataProperty IRI="#Version"/>
+            <Datatype abbreviatedIRI="xsd:decimal"/>
+        </DataSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureFramework"/>
+        <DataAllValuesFrom>
+            <DataProperty IRI="#Applicability"/>
+            <Datatype abbreviatedIRI="xsd:string"/>
+        </DataAllValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitecturePattern"/>
+        <Class IRI="#ArchitectureModel"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#ArchitectureStyle"/>
+        <Class IRI="#ArchitectureModel"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Builder"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Concern"/>
+        <Class IRI="#ArchitectureDescriptionElement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Constraint"/>
+        <Class IRI="#Relationship"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#CorrespondenceRule"/>
+        <ObjectIntersectionOf>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#CorrespondenceRuleState"/>
+                <Datatype abbreviatedIRI="xsd:string"/>
+            </DataSomeValuesFrom>
+            <DataAllValuesFrom>
+                <DataProperty IRI="#CorrespondenceRuleState"/>
+                <Datatype abbreviatedIRI="xsd:string"/>
+            </DataAllValuesFrom>
+        </ObjectIntersectionOf>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Developer"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Entity"/>
+        <Class IRI="#ModelElement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Maintainer"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Operator"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Owner"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Relationship"/>
+        <Class IRI="#ModelElement"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Supplier"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#User"/>
+        <Class IRI="#Stakeholder"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Architecture"/>
+        <Class IRI="#ArchitectureDescriptionElement"/>
+        <Class IRI="#Environment"/>
+        <Class IRI="#System"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#ArchitecturePattern"/>
+        <Class IRI="#ArchitectureStyle"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Entity"/>
+        <Class IRI="#Relationship"/>
+    </DisjointClasses>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Cost"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Evolvability"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Feasibility"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Functionality"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Maintainability"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Purpose"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Risk"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Concern"/>
+        <NamedIndividual IRI="#Suitability"/>
+    </ClassAssertion>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#frames"/>
+        <ObjectProperty IRI="#isFramedBy"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#isConcernOf"/>
+        <ObjectProperty IRI="#hasConcern"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#hasSystem"/>
+        <ObjectProperty IRI="#isSituatedIn"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#justifies"/>
+        <ObjectProperty IRI="#isJustifiedBy"/>
+    </InverseObjectProperties>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#hasView"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#isGovernedByViewpoint"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#isJustifiedBy"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#isSituatedIn"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#justifies"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#relationSource"/>
+    </FunctionalObjectProperty>
+    <InverseFunctionalObjectProperty>
+        <ObjectProperty IRI="#isGovernedByModelKind"/>
+    </InverseFunctionalObjectProperty>
+    <InverseFunctionalObjectProperty>
+        <ObjectProperty IRI="#isGovernedByViewpoint"/>
+    </InverseFunctionalObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#frames"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasArchitecture"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasConcern"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasConstraint"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasCorrespondence"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasCorrespondenceRule"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasEntity"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasModel"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasModelKind"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasOperation"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasRationale"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasRelationship"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasStakeholder"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasSystem"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasView"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#hasViewpoint"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isConcernOf"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isExpressedBy"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isFramedBy"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isGovernedByModelKind"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isGovernedByViewpoint"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isInterestedIn"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isJustifiedBy"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#isSituatedIn"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#justifies"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#relationDestination"/>
+    </AsymmetricObjectProperty>
+    <AsymmetricObjectProperty>
+        <ObjectProperty IRI="#relationSource"/>
+    </AsymmetricObjectProperty>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="#affects"/>
+    </TransitiveObjectProperty>
+    <TransitiveObjectProperty>
+        <ObjectProperty IRI="#isUsefulFor"/>
+    </TransitiveObjectProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Applicability"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#ChangeHistory"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#CorrespondenceRuleState"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Glossary"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#IssueDate"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Multiplicity"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Name"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Status"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Summary"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#Version"/>
+    </FunctionalDataProperty>
+    <DataPropertyRange>
+        <DataProperty IRI="#Applicability"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Author"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#ChangeHistory"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#CorrespondenceRuleState"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Glossary"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#IssueDate"/>
+        <Datatype abbreviatedIRI="xsd:dateTime"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Organization"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Reference"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Reviewer"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Status"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Summary"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Version"/>
+        <Datatype abbreviatedIRI="xsd:decimal"/>
+    </DataPropertyRange>
+    <DisjointDataProperties>
+        <DataProperty IRI="#Applicability"/>
+        <DataProperty IRI="#Author"/>
+        <DataProperty IRI="#ChangeHistory"/>
+        <DataProperty IRI="#CorrespondenceRuleState"/>
+        <DataProperty IRI="#Glossary"/>
+        <DataProperty IRI="#IssueDate"/>
+        <DataProperty IRI="#Organization"/>
+        <DataProperty IRI="#Reference"/>
+        <DataProperty IRI="#Reviewer"/>
+        <DataProperty IRI="#Status"/>
+        <DataProperty IRI="#Summary"/>
+        <DataProperty IRI="#Version"/>
+    </DisjointDataProperties>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Architecture</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;fundamental concepts or properties of a system in its environment embodied in its elements, relationships, and in the principles governing its design and evolution&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Architecture</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureDecision</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;Decisions pertain to system concerns; however, there is often no simple mapping between the two. A decision can affect the architecture in several ways. These can be reflected in the architecture description such as requiring the existence of AD elements; changing the properties of AD elements; triggering trade-off analyses in which some AD elements, including other decisions and concerns, are revised; or raising new concerns.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureDecision</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Decision</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureDescription</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">Def.: &quot;work product used to express an architecture&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureDescription</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Description</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureDescriptionElement</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;An AD element is any construct in an architecture description. AD elements are the most primitive constructs discussed in this International Standard. Every stakeholder, concern, architecture viewpoint, architecture view, model kind, architecture model, architecture decision and rationale is considered an AD element.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureDescriptionElement</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Description Element</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureDescriptionLanguage</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;An ADL is any form of expression for use in architecture descriptions. An ADL provides one or more model kinds as a means to frame some concerns for its audience of stakeholders. An ADL can be narrowly focused, defining a single model kind, or widely focused to provide several model kinds, optionally organized into viewpoints. Often an ADL is supported by automated tools to aid the creation, use and analysis of its models&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureDescriptionLanguage</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">NOTE &quot;Examples: Rapide, SysML, Wright, and ArchiMate&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureDescriptionLanguage</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">ADL</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureFramework</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;An architecture framework establishes the conventions, principles and practices to describe architectures of a specific domain of application and/or community of stakeholders&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureFramework</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Examples: Reference Model of Open Distributed Processing (RM-ODP) [ISO/IEC 10746]; Kruchten&apos;s &quot;4+1&quot; view model; Siemens&apos; 4 views method; The Open Group&apos;s Architecture Framework (TOGAF).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureFramework</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Possible uses: &quot;to create architecture descriptions, develop modeling tools and architecting methods, and establishing processes to facilitate communication, commitments and interoperation across multiple projects and/or organizations&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureFramework</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Framework</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureModel</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.6: &quot;Architecture models can be used as &quot;containers&quot; for applying architecture patterns or architecture styles to express fundamental schemes (such as layers, three-tier, peer-to-peer, model-view-controller) within architecture views.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureModel</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;An architecture view is composed of one or more architecture models. An architecture model uses modeling conventions appropriate to the concerns to be addressed. These conventions are specified by the model kind governing that model.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureModel</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Model</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitecturePattern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Pattern</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureRationale</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;Architecture rationale records explanation, justification or reasoning about architecture decisions that have been made&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureRationale</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;The rationale for a decision can include the basis for a decision, alternatives and trade-offs considered, potential consequences of the decision and citations to sources of additional information.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureRationale</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Rationale</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureStyle</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Style</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureView</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.6: An architecture view shall be composed of one or more architecture models. (from 5.5: architecture models that address all of the concerns framed by its governing viewpoint and cover the whole system from that viewpoint).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureView</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;work product expressing the architecture of a system from the perspective of specific system concerns&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureView</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture View</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureViewpoint</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.7.3: A corresponde rule applying to an architecture description could orignate in the architecture description, in a viewpoint or in an architecture framework or architecture description language.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ArchitectureViewpoint</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;work product establishing the conventions for the construction, interpretation and use of architecture views to frame specific system concerns&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ArchitectureViewpoint</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Architecture Viewpoint</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Concern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">4.2.3: &quot;A concern could be held by one or more stakeholders&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Concern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.3: The following concerns shall be considered and when applicable, identified in the architecture description: the purposes of the system; the suitability of the architecture for achieving the system’s purposes; the feasibility of constructing and deploying the system; the potential risks and impacts of the system to its stakeholders throughout its life cycle; maintainability and evolvability of the system.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Concern</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;interest in a system relevant to one or more of its stakeholders&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Correspondence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;A correspondence defines a relation between AD elements. Correspondences are used to express architecture relations of interest within an architecture description (or between architecture descriptions).&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Correspondence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">NOTE &quot;A correspondence can be defined between an AD element and itself.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Correspondence</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">NOTE &quot;Correspondences and correspondence rules are used to express and enforce architecture relations such as composition, consistency, traceability, dependency, constraint and obligation.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#CorrespondenceRule</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.7.3: &quot;A corresponde rule applying to an architecture description could orignate in the architecture description, in a viewpoint or in an architecture framework or architecture description language.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#CorrespondenceRule</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.7.3: An architecture description shall record for each correspondence rule if it holds (i.e., an associated corresponde can be shown to satisfy the rule) or if it is violated (i.e., an ssociation can be shown to not satisfy the rule or when no associated correspondence exists).</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#CorrespondenceRule</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;A correspondence rule is used to enforce relations within an architecture description.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#CorrespondenceRule</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Correspondence Rule</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Environment</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;context determining the setting and circumstances of all influences upon a system&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Environment</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Justification: &quot;The environment of a system is bounded by and understood through the identification and analysis of the system&apos;s stakeholders and their concerns&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#Environment</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Environment
+</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ModelKind</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;conventions for a type of modelling&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#ModelKind</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">NOTE &quot;Examples include data flow diagrams, class diagrams, Petri nets, balance sheets, organization charts and state transition models.&quot;</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#ModelKind</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Model Kind</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Multiplicity</IRI>
+        <Literal datatypeIRI="&rdf;PlainLiteral">0= 1..0
+1= 1
+2= 1..*</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Stakeholder</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">5.3: The following stakeholders shall be considered and when applicable, identified in the architecture description: users of the system; operators of the system; acquirers of the system; owners of the system; suppliers of the system; developers of the system; builders of the system; maintainers of the system.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Stakeholder</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;individual, team, organization, or classes thereof, having an interest in a system&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#System</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;as described in [ISO/IEC 15288]: &apos;systems that are man-made and may be configured with one or more of the following: hardware, software, data, humans, processes (e.g., processes for providing service to users), procedures (e.g. operator instructions), facilities, materials and naturally occurring entities&apos;&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#System</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;software-intensive systems as described in [IEEE Std 1471:2000]: &quot;any system where software contributes essential influences to the design, construction, deployment, and evolution of the system as a whole&quot; to encompass &quot;individual applications, systems in the traditional sense, subsystems, systems of systems, product lines, product families, whole enterprises, and other aggregations of interest&quot;.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#affects</IRI>
+        <Literal xml:lang="en" datatypeIRI="&rdf;PlainLiteral">Def.: &quot;A decision can affect the architecture description by requiring the existence of AD elements; changing the properties of AD elements; triggering trade-off analyses in which some AD elements, including other decisions and concerns, are revised; or raising new concerns.&quot;</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+
