@@ -8,8 +8,6 @@
 | Date         | 2026-04-17 |
 | Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
 
----
-
 ## Context
 
 Architecture Decision Records (ADRs) are a lightweight but valuable practice for capturing significant software design choices together with their context and rationale. The practice was popularised by Michael Nygard's 2011 blog post and has since been formalised in templates ranging from the minimal Nygard format (title / status / context / decision / consequences) to the richer MADR and Tyree–Akerman templates. The broader academic field is Architectural Knowledge Management (AKM).
@@ -58,8 +56,6 @@ A formal OWL 2 ontology for the ISO/IEC/IEEE 42010 standard for architecture des
 
 The standard defines a semi-formal UML conceptual model. OntolAD is the only known OWL 2 formalisation of it. The standard is relevant as a reference vocabulary but not directly reusable as an RDF artefact.
 
----
-
 ## Decision
 
 **Develop a greenfield RDF/OWL 2 ontology for ADRs**, importing established W3C vocabularies for all concepts they already cover and defining only the genuinely novel ADR-specific terms.
@@ -81,8 +77,6 @@ The status concept scheme will include at minimum: `Proposed`, `Accepted`, `Depr
 | Adopt Kruchten 2004 directly | No OWL artefact exists; the conceptual model is excellent input but not a starting point |
 | Wait for a community standard | No active standardisation effort was found; the gap between the ADR practitioner community and the semantic web community shows no sign of closing organically |
 
----
-
 ## Consequences
 
 **Positive.** The resulting ontology will be natively aligned with the broader linked data ecosystem from day one. Consumers can use standard SPARQL, PROV-O reasoning, and SKOS tooling without any bridging layer. The ontology will be small enough to be fully understood and maintained by a single person.
@@ -94,8 +88,6 @@ The status concept scheme will include at minimum: `Proposed`, `Accepted`, `Depr
 - Whether `conflictsWith` should be a symmetric property or two directed properties (`prevents`, `isPreventedBy`) following Kruchten's model.
 - How to represent the *forces* / trade-off narrative that many ADR templates include — as a datatype property on the record, or as a first-class `Force` class linked to both the decision and affected quality attributes.
 - Whether to define a SHACL shapes graph alongside the OWL ontology to support validation of ADR instances without requiring a full OWL reasoner.
-
----
 
 ## References
 

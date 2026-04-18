@@ -8,8 +8,6 @@
 | Date         | 2026-04-17 |
 | Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
 
----
-
 ## Context
 
 ADR-O is an ontology — a knowledge artefact — not a software library. This distinction matters for licensing because the two dominant open-source software licenses (MIT, Apache 2.0) were designed for code: they speak to executable copying, distribution, and patent grants in ways that map awkwardly onto RDF graphs and OWL axiom sets. A license chosen for an ontology should be legible to the semantic web and linked data communities, not only to software engineers.
@@ -32,8 +30,6 @@ The candidate set included both software licenses (from GitHub's picker) and Cre
 | Apache 2.0 | Yes (NOTICE file) | No | No | Occasional; includes patent grant irrelevant to ontologies |
 | MIT | Yes (header) | No | No | Rare for ontologies; no patent clause |
 
----
-
 ## Decision
 
 **License ADR-O under Creative Commons Attribution 4.0 International (CC BY 4.0).**
@@ -46,8 +42,6 @@ CC0 maximises reuse friction-free, and some members of the OBO community prefer 
 
 Apache 2.0 is a reasonable choice for ontologies bundled with significant code tooling, because the patent grant matters there. ADR-O has no code artefacts at this stage. Choosing Apache 2.0 would be legible to software engineers but would mark ADR-O as an outlier to the ontology community it is targeting.
 
----
-
 ## Consequences
 
 **Positive.**
@@ -57,8 +51,6 @@ Apache 2.0 is a reasonable choice for ontologies bundled with significant code t
 
 **Negative / risks.**
 - If ADR-O is later adopted by a community that prefers CC0 (e.g., an OBO working group), re-licensing would require contacting all prior contributors — a standard but non-trivial process.
-
----
 
 ## References
 
