@@ -1,4 +1,4 @@
-Please orientate yourself in the project a little, and let's discuss MADR/YADR/JSON ADR lessons we can learn from:
+Please orientate yourself in the project a little, and let's discuss MADR/YADR/JSON ADR/GADR lessons we can learn from:
 
 ```md
 ---
@@ -209,6 +209,8 @@ more-information: |
   "additional-rationale": "technology exploration | increase visibility and community outreach"
 }
 ```
+
+For GADR, please look at local file `Archive/GADR/GADR-capturing-the-essence-of-decisions.pdf`.
 
 ---
 
