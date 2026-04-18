@@ -1,0 +1,378 @@
+@prefix : <https://w3id.org/adr-o#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix adr-o: <https://w3id.org/adr-o#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ontolad: <http://www.semanticweb.org/milena/ontologies/2013/ontolad#> .
+@base <https://w3id.org/adr-o> .
+
+<https://w3id.org/adr-o> rdf:type owl:Ontology ;
+                          owl:versionIRI <https://w3id.org/adr-o/version/0.1.0> ;
+                          dcterms:created "2026-04-18"^^xsd:date ;
+                          dcterms:creator "Bogdan Stăncescu" ;
+                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Architecture Decision Records (ADRs) and, more generally, any load-bearing decision record that carries context, alternatives, rationale, and typed relationships to other decisions."@en ;
+                          dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                          dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
+                          rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
+                          owl:versionInfo "0.1.0-draft" ;
+                          skos:scopeNote "ADR-O defines the minimum vocabulary needed to represent a single decision record as a node in a typed graph: the record itself, the concerns it addresses, the system elements it affects, the alternatives considered, the rationale, and the typed relationships to every other record in the log. Record metadata (title, identifier, date, author, references) is delegated to Dublin Core Terms; provenance is aligned with PROV-O; controlled vocabularies (status, and any domain-specific concern or relationship taxonomies) are expressed as SKOS concept schemes. The core ontology is domain-agnostic: software-architecture-specific terms, such as ArchitectureDecisionRecord, belong in domain profiles published in their own namespaces."@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:AnnotationProperty ;
+                skos:scopeNote "In ADR-O: optional record-creation timestamp, distinct from dcterms:date when the log distinguishes decision date from record lifecycle."@en .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty ;
+                skos:scopeNote "In ADR-O: the canonical authorship predicate. Accepts either a literal (e.g. \"Jane Doe <jane@example.org>\") or an IRI pointing to a structured agent (e.g. a prov:Agent or foaf:Person). The IRI form is preferred for graph-traversable authorship queries but is not mandated."@en .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty ;
+                skos:scopeNote "In ADR-O: per-record license override if the record is licensed differently from the log as a whole."@en .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty ;
+              skos:scopeNote "In ADR-O: the human-readable title of a DecisionRecord."@en .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#hasTopConcept
+skos:hasTopConcept rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#inScheme
+skos:inScheme rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#scopeNote
+skos:scopeNote rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#topConceptOf
+skos:topConceptOf rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.w3.org/ns/prov#wasRevisionOf
+prov:wasRevisionOf rdf:type owl:ObjectProperty ;
+                   skos:scopeNote "In ADR-O: the PROV-O super-property of adr-o:supersedes. Use adr-o:supersedes for ADR-O records; prov:wasRevisionOf is entailed automatically."@en .
+
+
+###  https://w3id.org/adr-o#addresses
+adr-o:addresses rdf:type owl:ObjectProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range adr-o:Concern ;
+                rdfs:comment "Links a DecisionRecord to a Concern it resolves or responds to, thus modeling the *problem* side of a decision. Complements adr-o:affects, which captures the *manifestation* side. Separating these two relations allows SPARQL to distinguish \"why was this decided?\" (addr-o:addresses) from \"what does this decision touch?\" (addr-o:affects)"@en ;
+                rdfs:label "addresses"@en ;
+                rdfs:seeAlso adr-o:affects .
+
+
+###  https://w3id.org/adr-o#affects
+adr-o:affects rdf:type owl:ObjectProperty ;
+              rdfs:domain adr-o:DecisionRecord ;
+              rdfs:range rdfs:Resource ;
+              rdfs:comment """Links a DecisionRecord to a system element, component, artefact, procedure, or any other IRI-identifiable resource that the decision makes real, modifies, or constrains, modeling the *manifestation* side of a decision. The range is deliberately open (rdfs:Resource); domain profiles are expected to supply the discipline of what counts as an affected element.
+
+This predicate makes targeted questions (\"why is this synthetic column here?\") and filter-by-system queries (\"which decisions shaped our hardware stack?\") answerable in SPARQL."""@en ;
+              rdfs:label "affects"@en ;
+              rdfs:seeAlso adr-o:addresses .
+
+
+###  https://w3id.org/adr-o#conflictsWith
+adr-o:conflictsWith rdf:type owl:ObjectProperty ,
+                             owl:SymmetricProperty ;
+                    rdfs:domain adr-o:DecisionRecord ;
+                    rdfs:range adr-o:DecisionRecord ;
+                    rdfs:comment "States that two DecisionRecords are in tension: holding both imposes a trade-off, contradiction, or friction that should be surfaced. Modelled as symmetric for simplicity; a later revision may add directed Kruchten-style sub-properties (prevents / isPreventedBy) without breaking this property."@en ;
+                    rdfs:label "conflicts with"@en .
+
+
+###  https://w3id.org/adr-o#dependsOn
+adr-o:dependsOn rdf:type owl:ObjectProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range adr-o:DecisionRecord ;
+                rdfs:comment "States that a DecisionRecord relies on another DecisionRecord: the referenced decision must hold for the referring decision to be coherent. Useful for change-impact analysis: if the depended-on record changes or is superseded, the dependent record should be reviewed."@en ;
+                rdfs:label "depends on"@en .
+
+
+###  https://w3id.org/adr-o#enables
+adr-o:enables rdf:type owl:ObjectProperty ;
+              rdfs:domain adr-o:DecisionRecord ;
+              rdfs:range adr-o:DecisionRecord ;
+              rdfs:comment "States that a DecisionRecord makes another DecisionRecord possible or materially easier. The converse relational direction from dependsOn in spirit, but not a formal inverse: A enables B does not imply B dependsOn A, because B may have alternative enablers."@en ;
+              rdfs:label "enables"@en .
+
+
+###  https://w3id.org/adr-o#hasAlternative
+adr-o:hasAlternative rdf:type owl:ObjectProperty ;
+                     rdfs:domain adr-o:DecisionRecord ;
+                     rdfs:range adr-o:Alternative ;
+                     rdfs:comment "Links a DecisionRecord to an Alternative that was considered during its deliberation. Both accepted and rejected alternatives are attached via this property; for rejected alternatives, adr-o:wasRejectedBecause carries the rationale."@en ;
+                     rdfs:label "has alternative"@en .
+
+
+###  https://w3id.org/adr-o#hasStatus
+adr-o:hasStatus rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range adr-o:Status ;
+                rdfs:comment "Links a DecisionRecord to its lifecycle status. Domain profiles may extend the base status vocabulary by adding new skos:Concepts with skos:inScheme adr-o:statusScheme — such additions automatically gain adr-o:Status membership."@en ;
+                rdfs:label "has status"@en .
+
+
+###  https://w3id.org/adr-o#supersededBy
+adr-o:supersededBy rdf:type owl:ObjectProperty ;
+                   owl:inverseOf adr-o:supersedes ;
+                   rdfs:domain adr-o:DecisionRecord ;
+                   rdfs:range adr-o:DecisionRecord ;
+                   rdfs:comment "The inverse of adr-o:supersedes: states that a DecisionRecord has been replaced by a later DecisionRecord."@en ;
+                   rdfs:label "superseded by"@en .
+
+
+###  https://w3id.org/adr-o#supersedes
+adr-o:supersedes rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf prov:wasRevisionOf ;
+                 rdfs:domain adr-o:DecisionRecord ;
+                 rdfs:range adr-o:DecisionRecord ;
+                 rdfs:comment "States that a DecisionRecord replaces an earlier DecisionRecord. Subproperty of prov:wasRevisionOf, so PROV-O-aware tooling sees every supersession as a revision. Typically paired with transitioning the prior record's adr-o:hasStatus to adr-o:Superseded."@en ;
+                 rdfs:label "supersedes"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://w3id.org/adr-o#consequences
+adr-o:consequences rdf:type owl:DatatypeProperty ;
+                   rdfs:domain adr-o:DecisionRecord ;
+                   rdfs:range rdf:langString ;
+                   rdfs:comment "The \"Consequences\" section of a DecisionRecord: positive outcomes, negative outcomes, risks, and follow-ups as a single free-form language-tagged text. Not split into positive/negative sub-properties in this iteration; a later revision may introduce that split (MADR pattern) without breaking this property."@en ;
+                   rdfs:label "consequences"@en .
+
+
+###  https://w3id.org/adr-o#context
+adr-o:context rdf:type owl:DatatypeProperty ;
+              rdfs:domain adr-o:DecisionRecord ;
+              rdfs:range rdf:langString ;
+              rdfs:comment "The \"Context\" section of a DecisionRecord: the forces, constraints, and situation that motivated the decision. Free-form language-tagged text. May be promoted to a first-class class in a later iteration if structural access to context elements becomes warranted."@en ;
+              rdfs:label "context"@en .
+
+
+###  https://w3id.org/adr-o#decision
+adr-o:decision rdf:type owl:DatatypeProperty ;
+               rdfs:domain adr-o:DecisionRecord ;
+               rdfs:range rdf:langString ;
+               rdfs:comment "The decision statement itself — the position taken, expressed as free-form language-tagged text. Distinct from the DecisionRecord (which is the whole node); this property carries the body of the decision prose."@en ;
+               rdfs:label "decision"@en .
+
+
+###  https://w3id.org/adr-o#index
+adr-o:index rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain adr-o:DecisionRecord ;
+            rdfs:range xsd:integer ;
+            rdfs:comment "The ordering index of a DecisionRecord within its log, as a non-negative integer. Recommended for every record so SPARQL can sort a subgraph chronologically without parsing string identifiers. Distinct from dcterms:identifier, which carries the human-readable string ID (e.g. \"ADR-0042\") and does not sort cleanly. Required for organizational-history queries that traverse supersession chains in temporal order."@en ;
+            rdfs:label "index"@en .
+
+
+###  https://w3id.org/adr-o#rationale
+adr-o:rationale rdf:type owl:DatatypeProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range rdf:langString ;
+                rdfs:comment "The reasoning that led from the context to the decision: the argument, trade-off analysis, and forces that tipped the balance. Free-form language-tagged text. A later iteration may promote this to a first-class Rationale class (after OntolAD / ISO 42010 terminology) with its own structured properties."@en ;
+                rdfs:label "rationale"@en .
+
+
+###  https://w3id.org/adr-o#wasRejectedBecause
+adr-o:wasRejectedBecause rdf:type owl:DatatypeProperty ;
+                         rdfs:domain adr-o:Alternative ;
+                         rdfs:range rdf:langString ;
+                         rdfs:comment "The reason a rejected Alternative was rejected, as free-form language-tagged text. If present, the Alternative is understood to have been rejected. A later revision may add a parallel object property pointing to a structured rationale node without breaking this one."@en ;
+                         rdfs:label "was rejected because"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.w3.org/2000/01/rdf-schema#Resource
+rdfs:Resource rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+skos:Concept rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+skos:ConceptScheme rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/prov#Entity
+prov:Entity rdf:type owl:Class .
+
+
+###  https://w3id.org/adr-o#Alternative
+adr-o:Alternative rdf:type owl:Class ;
+                  rdfs:comment "An option considered during the deliberation that produced a DecisionRecord. Alternatives are first-class nodes, not footnotes, so that rejected options — and the reasons for their rejection — can be traversed by SPARQL queries answering organizational-history questions. An Alternative may be the one that was chosen, or one that was rejected (in which case adr-o:wasRejectedBecause should carry the rejection reason)."@en ;
+                  rdfs:label "Alternative"@en .
+
+
+###  https://w3id.org/adr-o#Concern
+adr-o:Concern rdf:type owl:Class ;
+              rdfs:comment "A matter of interest or importance to a stakeholder (terminology from ISO/IEC/IEEE 42010). Deliberately an abstract anchor class: ADR-O populates no concept scheme for it, because the relevant concern vocabulary is domain-specific and varies even within software (security, maintainability, latency budgets, regulatory posture, etc.). Domain profiles are expected to publish SKOS concept schemes whose members instantiate Concern and are valid values for adr-o:addresses."@en ;
+              rdfs:label "Concern"@en .
+
+
+###  https://w3id.org/adr-o#DecisionRecord
+adr-o:DecisionRecord rdf:type owl:Class ;
+                     rdfs:subClassOf prov:Entity ;
+                     rdfs:comment "A record of a single, load-bearing decision together with its context, rationale, alternatives considered, and typed relationships to other decision records. The central class of ADR-O. Deliberately domain-agnostic: software architecture decisions are one possible instantiation, but the class can also cover HR, finance, policy, and any other white-collar knowledge domain in which decisions need to recorded separately from the final deliverable. Domain-specific subclasses (e.g. the software development specific ArchitectureDecisionRecord) belong in domain profile namespaces, not in the ADR-O core."@en ;
+                     rdfs:label "Decision Record"@en .
+
+
+###  https://w3id.org/adr-o#Status
+adr-o:Status rdf:type owl:Class ;
+             owl:equivalentClass [ owl:intersectionOf ( skos:Concept
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty skos:inScheme ;
+                                                          owl:hasValue adr-o:statusScheme
+                                                        ]
+                                                      ) ;
+                                   rdf:type owl:Class
+                                 ] ;
+             rdfs:subClassOf skos:Concept ;
+             rdfs:comment "A lifecycle status for a DecisionRecord. Defined as any skos:Concept that is a member of adr-o:statusScheme, so domain profiles that extend the scheme with additional status values (e.g. \"Tentative\", \"Challenged\") automatically populate this class. Status is the range of adr-o:hasStatus: this is how the status vocabulary is wired into the DecisionRecord rather than merely coexisting with it."@en ;
+             rdfs:label "Status"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://w3id.org/adr-o#Accepted
+adr-o:Accepted rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               skos:definition "The decision is in force. Accepted is the default steady-state status for a record that reflects current practice."@en ;
+               skos:inScheme adr-o:statusScheme ;
+               skos:prefLabel "Accepted"@en ;
+               skos:topConceptOf adr-o:statusScheme .
+
+
+###  https://w3id.org/adr-o#Deprecated
+adr-o:Deprecated rdf:type owl:NamedIndividual ,
+                          skos:Concept ;
+                 rdfs:seeAlso adr-o:Superseded ;
+                 skos:definition "The decision is no longer recommended for new work but has not been replaced by a specific successor. Contrast with Superseded, which always has a successor reachable via adr-o:supersededBy."@en ;
+                 skos:inScheme adr-o:statusScheme ;
+                 skos:prefLabel "Deprecated"@en ;
+                 skos:topConceptOf adr-o:statusScheme .
+
+
+###  https://w3id.org/adr-o#Proposed
+adr-o:Proposed rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               skos:definition "The decision has been drafted and circulated but not yet accepted. A Proposed record is under active deliberation."@en ;
+               skos:inScheme adr-o:statusScheme ;
+               skos:prefLabel "Proposed"@en ;
+               skos:topConceptOf adr-o:statusScheme .
+
+
+###  https://w3id.org/adr-o#Rejected
+adr-o:Rejected rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               skos:definition "The decision was proposed and explicitly declined. A Rejected record remains in the log — the record of the rejection is part of organizational history — but the decision it contained is not in force."@en ;
+               skos:inScheme adr-o:statusScheme ;
+               skos:prefLabel "Rejected"@en ;
+               skos:topConceptOf adr-o:statusScheme .
+
+
+###  https://w3id.org/adr-o#Superseded
+adr-o:Superseded rdf:type owl:NamedIndividual ,
+                          skos:Concept ;
+                 rdfs:seeAlso adr-o:Deprecated ;
+                 skos:definition "The decision has been replaced by a later DecisionRecord. A Superseded record should have at least one adr-o:supersededBy edge pointing to its successor."@en ;
+                 skos:inScheme adr-o:statusScheme ;
+                 skos:prefLabel "Superseded"@en ;
+                 skos:topConceptOf adr-o:statusScheme .
+
+
+###  https://w3id.org/adr-o#statusScheme
+adr-o:statusScheme rdf:type owl:NamedIndividual ,
+                            skos:ConceptScheme ;
+                   dcterms:title "ADR-O Status Scheme"@en ;
+                   rdfs:comment "The controlled vocabulary of DecisionRecord lifecycle statuses defined by ADR-O core. Domain profiles may extend the scheme with additional statuses (e.g. \"Tentative\", \"Challenged\") as long as new members declare skos:inScheme adr-o:statusScheme."@en ;
+                   skos:hasTopConcept adr-o:Accepted ,
+                                      adr-o:Deprecated ,
+                                      adr-o:Proposed ,
+                                      adr-o:Rejected ,
+                                      adr-o:Superseded .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+dcterms:date skos:scopeNote "In ADR-O: the canonical date predicate for a DecisionRecord (xsd:date). Preferred over dcterms:issued and prov:generatedAtTime."@en .
+
+
+dcterms:identifier skos:scopeNote "In ADR-O: the string identifier of a DecisionRecord (e.g. \"ADR-0042\"). For sortable chronological ordering use adr-o:index instead, which is xsd:integer."@en .
+
+
+dcterms:modified skos:scopeNote "In ADR-O: optional record-modification timestamp for the record lifecycle."@en .
+
+
+dcterms:references skos:scopeNote "In ADR-O: recommended for the \"References\" section of a DecisionRecord — external artefacts such as papers, specifications, URLs, or related non-ADR IRIs."@en .
+
+
+prov:wasAttributedTo skos:scopeNote "In ADR-O: permitted for authorship attribution to a prov:Agent, but dcterms:creator is canonical. Use when PROV-O provenance tooling is already in play."@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( adr-o:Accepted
+                        adr-o:Deprecated
+                        adr-o:Proposed
+                        adr-o:Rejected
+                        adr-o:Superseded
+                      ) ;
+  rdfs:comment "Asserts that the five core status individuals denote distinct resources. Required so that adr-o:hasStatus being owl:FunctionalProperty catches duplicate-status misannotations as OWL-level inconsistencies (without this, a reasoner would silently entail e.g. adr-o:Proposed owl:sameAs adr-o:Accepted under OWA rather than flagging the error). Domain profiles that add new status individuals should extend this declaration or add their own owl:differentFrom assertions."@en
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

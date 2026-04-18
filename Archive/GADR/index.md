@@ -1,0 +1,2 @@
+## GADR
+See https://adr.github.io/gadr/ and PDF document [Generalized Markdown Architectural Decision Records: Capturing the Essence of Decisions](./GADR-capturing-the-essence-of-decisions.pdf): Oliver Kopp, Anita Armbruster: Generalized Markdown Architectural Decision Records: Capturing the Essence of Decisions (short paper). ZEUS 2019: 55-57
