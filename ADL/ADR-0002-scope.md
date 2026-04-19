@@ -1,4 +1,4 @@
-# ADR-0002 — Ontology Scope: Domain-Agnostic Core with Domain-Specific Concept Schemes
+# ADR-0002 — ADR = Any Decision Record: Domain-Agnostic Core with Domain-Specific Profiles
 
 | Field        | Value |
 |--------------|-------|
@@ -10,11 +10,13 @@
 
 ## Context
 
-The project name, manifesto, and outreach material all frame ADR-O in terms of software architecture. This framing reflects the origin of the ADR practice and the intended initial audience, but it does not follow that the ontology itself must be scoped to software architecture decisions. Before any class names or IRIs are minted — a step that is effectively irreversible once the ontology is published — the intended scope must be settled.
+The acronym 'ADR' has traditionally expanded to 'Architecture Decision Record' — a label inherited from the practice's origin in software architecture teams. But neither the label nor the framing is a conceptual requirement: both are historical contingencies, and both are worth examining critically.
 
-**The problem ADR-O addresses is the loss of decision rationale outside the deliverable proper.** A codebase shows what was implemented, never why; the deliberation evaporates the moment the meeting ends. But this problem is not unique to software. An HR recruitment procedure, a set of agreed KPIs, a financial governance policy — none of these deliverables carry the reasoning behind their individual provisions. The gap between *what was decided* and *why* is structural to white-collar knowledge work, not a pathology of software teams.
+This decision addresses two questions that turn out to have the same answer: *what scope should ADR-O carry*, and *what should 'ADR' stand for in this project?*
 
-The question, then, is whether the ontology should encode software architecture as its scope at the class level (making other domains second-class subclassing exercises) or treat software architecture as one instantiation of a domain-agnostic core.
+**The problem ADR-O addresses is the loss of decision rationale outside deliverable proper.** A codebase shows what was implemented, never why; the deliberation evaporates the moment the meeting ends. But this challenge is not unique to software. An HR recruitment procedure, a set of agreed KPIs, a financial governance policy — none of these deliverables include the reasoning behind their individual provisions. The gap between *what was decided* and *why* is structural to white-collar knowledge work, not a pathology of software teams.
+
+The question, then, is whether the ontology should encode software architecture as its scope at the class level (making other domains second-class subclassing exercises) or treat software architecture as one instantiation of a domain-agnostic core. The naming question is the same question, one level up.
 
 ### Anticipated objections to domain-agnostic scope
 
@@ -30,11 +32,15 @@ The filter is real and valuable, but "architecture" is a proxy for it, not the t
 
 **"The `Concern` class is too engineering-centric to generalize cleanly."**
 
-This is the most substantive objection, but it dissolves on closer inspection. The engineering-centric appearance of `Concern` comes not from the class itself but from the concept schemes that *instantiate* it in software contexts — quality attributes like performance, security, and maintainability. The class, defined abstractly as "a matter of interest or importance to a stakeholder" (following ISO 42010), is entirely domain-neutral. What varies across domains is the controlled vocabulary of concern instances, not the modeling slot. And critically: this variation exists *within* software as well. A game engine team, a medical imaging team, and a cryptography team each need entirely different concern taxonomies. The extension mechanism that handles intra-software domain variation is identical to the mechanism that would handle inter-domain variation. There is no additional design cost to making it work for HR or finance, because the mechanism must be built regardless.
+This is a substantive objection, but it dissolves on closer inspection. The engineering-centric appearance of `Concern` comes not from the class itself but from the concept schemes that *instantiate* it in software contexts — quality attributes like performance, security, and maintainability. The class, defined abstractly as "a matter of interest or importance to a stakeholder" (following ISO 42010), is entirely domain-neutral. What varies across domains is the controlled vocabulary of concern instances, not the modeling slot. And critically: this variation exists *within* software as well. A game engine team, a medical imaging team, and a cryptography team each need entirely different concern taxonomies. The extension mechanism that handles intra-software domain variation is identical to the mechanism that would handle inter-domain variation. There is no additional design cost to making it work for HR or finance, because the mechanism must be built regardless.
+
+### The naming question
+
+The scope question and the naming question have the same answer. In 2021 MADR repurposed its own acronym from 'Markdown Architectural Decision Record' to 'Markdown (for) Any Decision Record,' making the same argument explicitly. They did it retroactively, with an established user base to migrate. ADR-O, having no publication history, can make the same move preemptively — before anything is published, before any user base exists, before any IRI is indexed anywhere — and arrive at consistency from the start rather than swimming upstream to it post-factum.
 
 ## Decision
 
-**ADR-O will be scoped as a domain-agnostic core ontology.** The core will define abstract classes and typed object properties applicable to any decision record in any domain. Domain-specific vocabularies will be expressed as SKOS concept schemes that instantiate the core's abstract anchor points without modifying the core namespace.
+**ADR-O will be scoped as a domain-agnostic core ontology, and the acronym 'ADR' in this project expands to 'Any Decision Record' preemptively.** The core will define abstract classes and typed object properties applicable to any decision record in any domain. Domain-specific vocabularies will be expressed as SKOS concept schemes that instantiate the core's abstract anchor points without modifying the core namespace.
 
 The concrete implications for class naming and IRI design:
 
@@ -65,7 +71,6 @@ The concrete implications for class naming and IRI design:
 
 **Open questions.**
 - What is the right way to express the significance criterion — the quality that distinguishes a record-worthy decision from a routine one — if not through the word "architecture"? A datatype property (`adr-o:significance`)? A scope note in the documentation? A SHACL constraint that profiling ontologies may tighten?
-- Should the outreach strategy introduce the domain-agnostic scope immediately, or establish the software beachhead first and broaden the framing once adoption is demonstrated?
 - How should domain profiles be discovered and registered? An informal registry? A SKOS collection maintained in the ADR-O repository? No central registry at all?
 
 ## References
@@ -74,3 +79,4 @@ The concrete implications for class naming and IRI design:
 - ISO/IEC/IEEE 42010:2011. *Systems and Software Engineering — Architecture Description.* Source of the domain-neutral definition of `Concern` as "a matter of interest or importance to a stakeholder."
 - W3C SKOS. https://www.w3.org/TR/skos-reference/ — The extension mechanism for domain-specific concept schemes.
 - Guessi et al., OntolAD (2015) — surveyed in ADR-0000; the abstract treatment of `Concern` in ISO 42010 informed the decision to keep the class domain-neutral.
+- Zimmermann, O. (2021). *ADR = Any Decision Record? Architecture, Design and Beyond.* https://medium.com/olzzio/adr-any-decision-record-916d1b64b28d — Makes the 'Any Decision Record' argument and records MADR's decision to repurpose its own acronym in v3.0.0.
