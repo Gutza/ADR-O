@@ -11,14 +11,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.2.0> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.2.1> ;
                           dcterms:created "2026-04-18"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
-                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Architecture Decision Records and, more generally, for Any Decision Record. Records are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, OutcomeFact) into framing, deliberation, and outcome roles, plus an explicit option pool, an explicit chosen alternative, and typed relationships to other decisions." ;
+                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Architecture Decision Records and, more generally, for Any Decision Record. Records are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, OutcomeFact) into framing, deliberation, and outcome roles, plus an explicit option pool, an explicit chosen alternative, and typed relationships to other decisions."^^<https://www.w3.org/ns/iana/media-types/text/markdown> ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.2.0-draft" ;
+                          owl:versionInfo "0.2.1-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary needed to represent a single decision record as a node in a typed graph: the record itself, the concerns it addresses, the system elements it affects, the alternatives considered, the chosen alternative, the reusable Considerations placed via reified ContextFact / DeliberationFact / OutcomeFact links into framing, deliberation, and outcome roles, and the typed relationships to every other record in the log. Record metadata (title, identifier, date, author, references) is delegated to Dublin Core Terms; provenance is aligned with PROV-O; controlled vocabularies (status, deliberation valences, outcome valences, and any domain-specific concern or relationship taxonomies) are expressed as SKOS concept schemes. The core ontology is domain-agnostic: software-architecture-specific terms, such as ArchitectureDecisionRecord, belong in domain profiles published in their own namespaces."@en .
 
 #################################################################
@@ -27,7 +27,7 @@
 
 ###  http://purl.org/dc/terms/created
 dcterms:created rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: optional record-creation timestamp, distinct from dcterms:date when the log distinguishes decision date from record lifecycle."@en .
+                skos:scopeNote "In ADR-O: optional record-creation timestamp, distinct from dcterms:date when the log distinguishes decision date from record lifecycle. The typical case is a post-factum ADR, where the decision happened earlier than the record was authored: dcterms:date captures when the decision was made, dcterms:created captures when the record itself was written."@en .
 
 
 ###  http://purl.org/dc/terms/creator
@@ -36,7 +36,8 @@ dcterms:creator rdf:type owl:AnnotationProperty ;
 
 
 ###  http://purl.org/dc/terms/description
-dcterms:description rdf:type owl:AnnotationProperty .
+dcterms:description rdf:type owl:AnnotationProperty ;
+                    skos:scopeNote "In ADR-O: the prose-description predicate for a DecisionRecord (record-level summary) and for a Consideration (the atom's full textual payload — the primary home for prose in any ADR-O record). Prose-carrying literals on this property SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
 
 
 ###  http://purl.org/dc/terms/license
@@ -49,12 +50,23 @@ dcterms:title rdf:type owl:AnnotationProperty ;
               skos:scopeNote "In ADR-O: the human-readable title of a DecisionRecord."@en .
 
 
+###  http://purl.org/dc/terms/version
+dcterms:version rdf:type owl:AnnotationProperty ;
+                skos:scopeNote "In ADR-O: optional internal version of a DecisionRecord — a literal version tag (e.g. \"1.2\") for tracking iterations of the same record between supersession events. Distinct from the supersession chain (adr-o:supersedes / adr-o:supersededBy), which models replacement by a successor record with a new identity. Use dcterms:version when the same record is being amended or clarified without yet warranting a supersession."@en .
+
+
 ###  http://www.w3.org/2004/02/skos/core#definition
-skos:definition rdf:type owl:AnnotationProperty .
+skos:definition rdf:type owl:AnnotationProperty ;
+                skos:scopeNote "In ADR-O: formal definition payload on a Consideration or SKOS concept individual. Prose-carrying literals on this property SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
 
 
 ###  http://www.w3.org/2004/02/skos/core#hasTopConcept
 skos:hasTopConcept rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#note
+skos:note rdf:type owl:AnnotationProperty ;
+          skos:scopeNote "In ADR-O: the parent property of the SKOS note family (skos:scopeNote, skos:editorialNote, skos:historyNote, skos:changeNote, skos:example). On Consideration nodes, note sub-properties carry supplementary annotation prose — clarifications, provenance remarks, editorial commentary — that complement the primary prose payload on dcterms:description. Prose-carrying literals on this property and its sub-properties SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
 
 
 ###  http://www.w3.org/2004/02/skos/core#inScheme
@@ -301,7 +313,7 @@ adr-o:Concern rdf:type owl:Class ;
 
 ###  https://w3id.org/adr-o#Consideration
 adr-o:Consideration rdf:type owl:Class ;
-                    rdfs:comment "A reusable atomic claim or observation that a DecisionRecord places into framing, deliberation, or outcome via a reified fact (ContextFact, DeliberationFact, or OutcomeFact). Considerations are first-class so the same atom can appear with stable IRI identity across multiple records and across multiple roles within a record — the YADR-style argument-reuse property. The text payload is carried via standard predicates such as dcterms:description and skos:prefLabel; ADR-O does not mint a dedicated text property. A Consideration may link to one or more Concerns via adr-o:addresses to record what kind of problem the atom touches. ADR-O recommends two complementary IRI patterns documented in DESIGN-NOTES: record-local fragments for atoms that emerge in a single decision, and a shared namespace for atoms deliberately reused across records or underpinning future decision templates; an owl:sameAs bridge promotes a record-local atom to a shared one without breaking existing references."@en ;
+                    rdfs:comment "A reusable atomic claim or observation that a DecisionRecord places into framing, deliberation, or outcome via a reified fact (ContextFact, DeliberationFact, or OutcomeFact). Considerations are first-class so the same atom can appear with stable IRI identity across multiple records and across multiple roles within a record — the YADR-style argument-reuse property. The prose payload is carried via dcterms:description (primary, Markdown-typed per ADR-0003), skos:definition (formal definition, Markdown-typed), and skos:note sub-properties (supplementary annotation prose, Markdown-typed); skos:prefLabel carries a short noun-phrase label, not prose. ADR-O does not mint a dedicated text property. A Consideration may link to one or more Concerns via adr-o:addresses to record what kind of problem the atom touches. ADR-O recommends two complementary IRI patterns documented in DESIGN-NOTES: record-local fragments for atoms that emerge in a single decision, and a shared namespace for atoms deliberately reused across records or underpinning future decision templates; an owl:sameAs bridge promotes a record-local atom to a shared one without breaking existing references."@en ;
                     rdfs:label "Consideration"@en .
 
 

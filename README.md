@@ -6,7 +6,7 @@ ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing d
 
 ## Status
 
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.2.0-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.2.0`). Treat this as a **technical preview**: version 0.2 introduced a breaking redesign of the record shape relative to the earlier unreleased 0.1-style sketch, and further breaking changes are possible before a stable release.
+The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.2.1-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.2.1`). Treat this as a **technical preview**: version 0.2 introduced a breaking redesign of the record shape relative to the earlier unreleased 0.1-style sketch, and further breaking changes are possible before a stable release.
 
 A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships. See [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) for the per-version rationale.
 
@@ -18,7 +18,7 @@ Traditional ADRs are useful for people but hard for machines to query consistent
 
 - **`DecisionRecord`** as the hub: metadata via Dublin Core Terms; typed links to other records (for example `supersedes`, `dependsOn`, `enables`, `conflictsWith`, `addresses`, `affects`); an option pool (`hasAlternative`) and a chosen option (`chosenAlternative`).
 - **Atom-first content:** reusable **`Consideration`** nodes placed by reified **`ContextFact`**, **`DeliberationFact`**, and **`OutcomeFact`** links into framing, deliberation, and outcome roles, with ordering on the record and valence schemes for deliberation and outcome facts. Status and valences use SKOS concept schemes.
-- **Design stance:** the RDF graph is the authoritative substrate. Human-readable Markdown is expected to be **materialised from** the graph by tools, not stored as the core shape of the record (see DESIGN-NOTES for the full argument).
+- **Design stance:** the RDF graph is the authoritative substrate. Human-readable Markdown is expected to be **materialised from** the graph by tools, not stored as the core shape of the record. Where the graph does carry prose literals (primarily on `Consideration` and `DecisionRecord` via `dcterms:description`, `skos:definition`, and `skos:note`), they are typed as `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` per ADR-0003 (see DESIGN-NOTES for the full argument).
 
 Together, this supports reliable graph traversal and richer analysis than keyword search over prose alone. Agents and services can consume **explicit triples** instead of re-inferring a decision graph from unstructured text every time.
 
@@ -34,7 +34,7 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 |--|--|
 | [`MANIFESTO.md`](/MANIFESTO.md) | Motivation and north star. |
 | [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
-| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft vs 0.2.0-draft). |
+| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft). |
 | [`ontology/IDEAS.md`](/ontology/IDEAS.md) | Design exploration and backlog-style ideas. |
 | [ADR-0000](/ADL/ADR-0000-inception.md) | Inception and survey of prior art. |
 | [ADR-0001](/ADL/ADR-0001-license.md) | License (CC BY 4.0). |

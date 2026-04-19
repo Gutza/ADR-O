@@ -220,3 +220,87 @@ This iteration changes the body shape of `DecisionRecord`, but a substantial por
 The jump from `0.1.0-draft` to `0.2.0-draft` is a destructive shape change: every triple using one of the removed predicates becomes invalid, and the new `Consideration` / `*Fact` infrastructure has no autogenerable correspondence to the old prose properties. Under any sane semantic-versioning interpretation this is a major break. Two facts make the cost negligible: the 0.1.0-draft ontology was never published or used outside the author's working copy, and the `-draft` suffix on both versions signals exactly this kind of pre-release churn.
 
 The convention adopted here — promoting `DESIGN-NOTES.md` itself to a versioned document with one section per ontology iteration — is the project's own answer to the question "where do we record the rationale for these large iterations without writing a flurry of micro-ADRs in `ADL/`?" Each version section is immutable history; later sections reverse earlier decisions explicitly rather than editing them in place. That property, applied to the design notes themselves, is the meta-application of the principle ADR-O exists to defend.
+
+## ADR-O 0.2.1-draft
+
+### Iteration character
+
+This iteration is purely tactical and non-destructive. The 0.2.0-draft architectural shape — atom-first reification, three `*Fact` link classes, two valence enums, `rdf:List` ordering, the "KG lives under tooling" stance — is preserved without modification. The 0.2.1-draft goal is to close the gap between the 0.2.0 ontology and the governing ADRs: specifically to apply ADR-0003's Markdown datatype convention, acknowledge the post-factum and real-time ADR authoring cases established in ADR-0005 in the relevant scope note, and add one small metadata predicate (`dcterms:version`) that the ROADMAP identified as an immediate gap. Changes are predominantly additive (new scope notes, new `owl:AnnotationProperty` declarations, one literal retyping), with one editorial correction to an existing `rdfs:comment` on `adr-o:Consideration`. No existing terms are removed, repurposed, or semantically altered.
+
+### Decisions from prior drafts applied in this iteration
+
+**ADR-0003 Markdown datatype convention — applied, with scope narrowed under the 0.2.0 architecture.**
+
+ADR-0003 was accepted one day after 0.2.0-draft shipped and explicitly deferred the ontology application to "the next ontology iteration." That iteration is now. The convention lands as `skos:scopeNote` annotations on the affected annotation properties; no `rdfs:range <…/text/markdown>` assertions are added (ADR-0003's "working answer" was "annotation now, SHACL constraint when shipped", and the SHACL companion remains deferred).
+
+The scope of the Markdown convention is narrowed in two respects relative to ADR-0003's original "Properties in scope" sentence, both grounded in tracing the ADR-0005 vim vignette through the 0.2.0 graph:
+
+1. **`*Fact` prose properties — none exist, none minted.** ADR-0003 referred to "the corresponding prose properties on `ContextFact`, `DeliberationFact`, and `OutcomeFact` when authors attach prose to a fact directly." At the time, the 0.2.0 atom-first shape was still being internalized. Under the 0.2.0 architecture, `*Fact` instances are pure structural placement nodes: they carry only `adr-o:consideration`, `adr-o:onAlternative` (where applicable), and a valence. Prose is reached transitively via `adr-o:consideration` → the linked `Consideration` IRI. Tracing the vignette confirms this: `:df-1` and `:df-2` carry zero literal properties. There are no Fact-level prose properties to retype, and none will be minted; the Markdown convention does not apply to `*Fact` instances at all.
+
+2. **`skos:prefLabel` — excluded, treated as a label.** ADR-0003 listed `skos:prefLabel` alongside `skos:definition` and `skos:note`. ADR-0003 also explicitly stated "rdfs:label is not in scope — a label is a short string identifier, not prose." The vim vignette shows `skos:prefLabel` functioning identically to a label throughout: `:alt-vim-migration` carries `skos:prefLabel "Migrate to vim"@en`; `:cons-vscode-plugin-investment` carries `skos:prefLabel "VSCode plugins enable fast onboarding"@en`. These are noun-phrase atom titles, not Markdown prose. The prose is in `dcterms:description`. Retyping these as `^^…/text/markdown` would create the contract-mismatch ADR-0003 exists to avoid. `skos:prefLabel` is therefore excluded; it joins `rdfs:label` and `dcterms:title` as short-label predicates outside the Markdown convention.
+
+The narrowed in-scope set is: `dcterms:description`, `skos:definition`, `skos:note` (and its sub-properties: `skos:scopeNote`, `skos:editorialNote`, `skos:historyNote`, `skos:changeNote`, `skos:example`).
+
+**`adr-o:Consideration` `rdfs:comment` corrected — corollary of the `skos:prefLabel` exclusion.** The 0.2.0-draft `rdfs:comment` on `adr-o:Consideration` stated: *"The text payload is carried via standard predicates such as `dcterms:description` and `skos:prefLabel`."* This directly contradicts the `skos:prefLabel` exclusion decision above: `Consideration` is the primary prose-carrier in the ontology, yet its own class comment named a short-label predicate as a prose carrier. The sentence is corrected to: *"The prose payload is carried via `dcterms:description` (primary, Markdown-typed per ADR-0003), `skos:definition` (formal definition, Markdown-typed), and `skos:note` sub-properties (supplementary annotation prose, Markdown-typed); `skos:prefLabel` carries a short noun-phrase label, not prose."* This is the only edit to an existing `adr-o:` term annotation in this iteration; it is a correction, not a semantic change.
+
+**Where Markdown prose actually lands — the vim vignette as a concrete trace.**
+
+The ADR-0005 ambient-transcription vignette (the five-minute 2032 vim-migration proposal-and-rejection) produces a `DecisionRecord`, one `Alternative`, two `DeliberationFact` placements, and two `Consideration` atoms. Every literal in the resulting graph falls into one of two buckets:
+
+- *Carries Markdown prose:* `Consideration.dcterms:description` (Alice's full spoken rationale, normalised — this is the primary home for prose in any ADR-O record); `Consideration.skos:note` sub-properties (supplementary annotation prose, e.g. clarifying which plugin generation the consideration refers to); `Consideration.skos:definition` (formal-definition payload when present); `DecisionRecord.dcterms:description` (record-level prose summary).
+- *Does not carry Markdown prose:* all three `*Fact` classes (zero literal properties, as noted above); `Alternative.skos:prefLabel` (`"Migrate to vim"@en`); `Consideration.skos:prefLabel` (`"VSCode plugins enable fast onboarding"@en`); `DecisionRecord.dcterms:title`, `dcterms:identifier`, `dcterms:date`, and all other non-prose metadata predicates.
+
+**One literal retyped in the ontology itself.** The ontology header `dcterms:description` at line 17 (the "A domain-agnostic RDF/OWL 2 ontology for Architecture Decision Records…" literal) is retyped to `^^<https://www.w3.org/ns/iana/media-types/text/markdown>`. This is the single in-ontology data literal flagged by the ROADMAP. Bulk retyping of existing `skos:definition` literals on status/valence individuals is deferred to a future data-cleanup pass (likely co-shipped with the SHACL companion), which will also be the moment to verify whether any existing `skos:prefLabel` literals were inadvertently written as prose rather than labels.
+
+**ADR-0005 post-factum and real-time ADR cases — acknowledged in `dcterms:created` scope note.** The 0.2.0-draft `dcterms:created` scope note ("optional record-creation timestamp, distinct from `dcterms:date` when the log distinguishes decision date from record lifecycle") was implicitly about post-factum ADRs without naming them. The ROADMAP flagged this as requiring an explicit name. The scope note is expanded to state: *"The typical case is a post-factum ADR, where the decision happened earlier than the record was authored: `dcterms:date` captures when the decision was made, `dcterms:created` captures when the record itself was written."*
+
+The `DecisionRecord` `rdfs:comment` ("A record of a single, load-bearing decision…") is left as-is per ROADMAP recommendation: ADR-0005 now supplies the correct reading of "load-bearing" as a retrospective property, and a defensive rewrite of the `rdfs:comment` would add weight without adding clarity.
+
+### Strong, well-articulated decisions
+
+**`dcterms:version` declared as `owl:AnnotationProperty` for per-record iteration tracking.** The ROADMAP identified the absence of an in-record version predicate as a gap: the supersession chain (`adr-o:supersedes` / `adr-o:supersededBy`) models replacement by a successor record with a new identity, but it cannot track minor amendments or clarifications to the same record that fall short of warranting a supersession. `dcterms:version` fills this gap — it carries a literal version tag (e.g. `"1.2"`) against a `DecisionRecord` IRI that remains stable across those amendments. The scope note explicitly disambiguates it from the supersession chain. This declaration is neutral on the still-deferred `adr-o:amends` and `adr-o:clarifies` predicates (Horizon 2/3); the scope note names the use case those predicates will eventually formalize, without prejudging their shape.
+
+**`skos:note` declared as `owl:AnnotationProperty`.** SKOS defines `skos:note` as the parent of the note family (`skos:scopeNote`, `skos:editorialNote`, `skos:historyNote`, `skos:changeNote`, `skos:example`). The ontology already used `skos:scopeNote` extensively (as it was declared) but did not formally register `skos:note` itself. Declaring it now makes the Markdown scope note on the parent property explicit and lets implementers reliably attach supplementary prose to `Consideration` nodes via any sub-property without finding an undeclared parent.
+
+### Softer defaults — "simplicity first, easier to add than to refactor"
+
+**Scope-note-only for the Markdown convention (no `rdfs:range`).** OWL gives annotation-property range declarations no DL semantics; asserting `rdfs:range <…/text/markdown>` would be editorial rather than operative. Keeping enforcement in the planned SHACL companion (where `sh:datatype` carries real enforcement weight) is the cleaner split. The scope notes are the convention's current home.
+
+**`skos:note` declared without asserting it as a sub-property of anything.** SKOS is not `owl:import`-ed, so asserting sub-property relationships with SKOS terms would require importing the full SKOS schema or adding potentially surprising axioms. The declaration stands alone; sub-property entailments are a matter of the SKOS schema, not something this ontology needs to assert.
+
+### Explicit deferrals — decisions to not decide right now
+
+**Bulk literal retyping of existing `skos:definition` strings on status/valence individuals.** The status-scheme and valence-scheme individuals carry `skos:definition` literals that are currently bare strings (no `^^…/text/markdown` type tag). Retyping them is a data-cleanup task, not a shape change; it is deferred to a future data pass, likely co-shipped with the SHACL companion, when all literal typing can be validated in one pass.
+
+**`skos:prefLabel` bulk retyping — permanently off the table.** `skos:prefLabel` literals in ADR-O graphs are short noun-phrase labels, not prose, and will not be retyped to the Markdown datatype. This is not a deferral; it is a closed decision (see "Decisions from prior drafts applied in this iteration" above).
+
+**SHACL shapes graph for validation.** Still deferred, promoted to "deferred pending stable 0.x shape" now that 0.2.1 closes the immediate annotation gaps. When shipped, the companion will add `sh:datatype <…/text/markdown>` constraints on the three prose-carrier properties, list-element typing, and the integrity rules that scope notes currently carry in prose.
+
+**`adr-o:significance` as a relative-importance annotation.** Still deferred; ADR-0005 explicitly recommends it as a post-entry annotation rather than an entry gate, but its shape (a literal, a SKOS concept, a numeric value?) is not resolved. Deferred to a future ADR.
+
+**A dedicated versioning-discipline ADR.** DESIGN-NOTES 0.1.0 flagged the absence of a versioning-strategy ADR (semantic versioning? release cadence? deprecation policy?) as worth writing before anyone depends on ADR-O in production. Still pending; the project has grown two more `-draft` iterations without resolving this, which makes the debt larger, not smaller.
+
+**`rdfs:seeAlso` per-ADR back-references from the ontology.** ROADMAP §2 notes that the ontology cites its public docs via `rdfs:seeAlso` but does not cite individual ADR IRIs. Adding them would make the relationship bidirectional — a taste call marked "not required." Remains deferred.
+
+### What 0.2.0-draft decisions still hold
+
+This iteration changes nothing structural. Every 0.2.0 commitment is preserved:
+
+- Atom-first reification: `Consideration` as a first-class reusable atom; `*Fact` link classes as placement nodes.
+- Three reified link classes (`ContextFact`, `DeliberationFact`, `OutcomeFact`); no Nygard body literals.
+- Per-class valence enums: `deliberationValenceScheme` (`Supports`, `Against`, `Neutral`); `outcomeValenceScheme` (`Benefit`, `AcceptedCost`, `Risk`, `FollowUp`); `owl:AllDifferent` blocks over each set.
+- `chosenAlternative` as `owl:FunctionalProperty` (0..1 cardinality); multi-winner decisions modelled as composite `Alternative`.
+- `rdf:List` ordering at the record level (`hasContext`, `hasDeliberation`, `hasOutcome`).
+- The "KG lives under tooling" design assumption (per ADR-0004): naming decisions, SHACL deferral, scope-notes-over-axioms pattern, `addresses` dual-home.
+- Status concept scheme and the five status individuals; SKOS-scheme wiring for `Status`, `DeliberationValence`, `OutcomeValence`.
+- `adr-o:index` as `xsd:integer`; `adr-o:supersedes` as sub-property of `prov:wasRevisionOf`.
+- No `owl:imports` for PROV-O / SKOS / DC Terms.
+- Hash IRIs; single Turtle file under `ontology/`; CC BY 4.0 license.
+
+### What 0.2.0-draft decisions are reversed
+
+None.
+
+### Versioning note
+
+The 0.2.0 → 0.2.1 bump is non-destructive. The complete set of changes: two new `owl:AnnotationProperty` declarations (`skos:note` and `dcterms:version`), each with a scope note; new scope notes on two existing annotation-property declarations (`dcterms:description`, `skos:definition`); one expanded scope note on an existing declaration (`dcterms:created`); one literal retyped in the ontology header (`dcterms:description`, bare string → Markdown datatype); one `rdfs:comment` corrected on `adr-o:Consideration` (removed the erroneous `skos:prefLabel` as a prose-carrier, named the three Markdown-typed prose predicates explicitly). No terms removed, no terms repurposed, no existing triples invalidated. A patch-version bump is the correct semantic-versioning signal for a `-draft` line under these conditions: no `adr-o:` terms were added or removed, and the one `adr-o:` annotation edited is a correction of a documentation error.
