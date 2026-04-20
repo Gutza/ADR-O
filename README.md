@@ -42,6 +42,19 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 | [ADR-0003](/ADL/ADR-0003-prose-literals-markdown.md) | Markdown as the format for prose-carrying literals. |
 | [ADR-0004](/ADL/ADR-0004-kg-under-tooling.md) | KG as substrate: tooling mediates all user interaction. |
 | [ADR-0005](/ADL/ADR-0005-log-all-decisions.md) | No entry gate beyond domain relevance; real-time and post-factum ADRs are first-class. |
+| [ADR-0006](/ADL/ADR-0006-core-relational-predicates.md) | Core relational predicates and PROV alignment (`addresses`, `affects`, `supersedes`, …). |
+| [ADR-0007](/ADL/ADR-0007-index-vs-identifier.md) | `adr-o:index` vs `dcterms:identifier`. |
+| [ADR-0008](/ADL/ADR-0008-status-skos-and-integrity.md) | Lifecycle status as a SKOS scheme with OWL integrity. |
+| [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md) | Deliberation and outcome valence schemes. |
+| [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md) | Atom-first `Consideration` and `*Fact` link classes. |
+| [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md) | Strict graph: no Nygard body literals on the record. |
+| [ADR-0012](/ADL/ADR-0012-alternatives-and-chosen-option.md) | Alternatives, chosen option, functional edges. |
+| [ADR-0013](/ADL/ADR-0013-addresses-dual-placement.md) | `addresses`: canonical vs record-level rollup. |
+| [ADR-0014](/ADL/ADR-0014-ontology-document-shape.md) | Ontology document: namespace, version IRIs, no `owl:imports`. |
+| [ADR-0015](/ADL/ADR-0015-dublin-core-and-prov-usage.md) | Canonical Dublin Core and PROV usage. |
+| [ADR-0016](/ADL/ADR-0016-dcterms-version-in-record.md) | `dcterms:version` for in-record iteration. |
+| [ADR-0017](/ADL/ADR-0017-markdown-properties-as-implemented.md) | Markdown prose properties as implemented (clarifies ADR-0003). |
+| [ADR-0018](/ADL/ADR-0018-consideration-iri-reuse-convention.md) | Editorial `Consideration` IRI reuse convention. |
 | [`Archive/index.md`](/Archive/index.md) | Archived references and outreach materials. |
 
 ## Intended outcomes

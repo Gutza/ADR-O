@@ -20,7 +20,9 @@ The expected tooling stack includes some combination of: AI agents that draft, s
 
 **ADR-O graphs are authoritative substrate, not user surface.** The expected operating environment of an ADR-O deployment includes some automated mediation between the RDF graph and human authors or readers. The ontology is designed for this layered world, not for a hypothetical use case in which someone writes and reads Turtle without further tooling.
 
-A load-bearing design heuristic follows from this stance: when choosing between two ontology shapes, prefer the one that pushes incidental complexity into the tooling layer in exchange for a cleaner, more traversable, and more complete KG — *unless* the complexity in question is something that no reasonable tooling implementation can reconstruct from the graph alone. That boundary — what tooling can reconstruct vs. what must be in the graph — is itself a design-critical distinction that future ADRs should make explicit when the question recurs.
+A load-bearing design heuristic follows from this stance: when choosing between two ontology shapes, prefer the one that pushes incidental complexity into the tooling layer in exchange for a cleaner, more traversable, and more complete KG — *unless* the complexity in question is something that no reasonable tooling implementation can reconstruct from the graph alone.
+
+This is the **reconstructability boundary rule**: if a representation detail can be reconstructed from the graph by reasonable tooling, keep it out of the ontology shape; if it cannot be reconstructed reliably, it belongs in the graph as first-class structure. Future ADRs that cite this decision should state explicitly which side of that boundary the contested detail falls on.
 
 One concrete corollary is already on record. ADR-0003 commits prose-carrying literals to the IANA-rooted Markdown datatype; the tooling layer to which this ADR commits ADR-O is expected to render that datatype natively. Renderers, GUIs, and AI-agent-facing surfaces alike are responsible for turning Markdown literals into the human-facing prose they encode, not for surfacing them as raw text. ADR-0003 documents the convention on the graph side; this ADR supplies the tooling-side half that closes the loop and makes "Markdown-typed literal" an operationally meaningful signal rather than a metadata annotation no layer acts on.
 
@@ -44,7 +46,7 @@ One concrete corollary is already on record. ADR-0003 commits prose-carrying lit
 - The assumption fails for consumers who attempt to use ADR-O graphs raw, with no tooling. They encounter a more skeletal model than the tooling-mediated human-facing view suggests: `Consideration` nodes carrying text payloads rather than Nygard-shaped prose, Markdown literals surfaced as raw text rather than rendered, `rdf:List` ordering that some lightweight readers handle awkwardly, integrity rules absent rather than enforced. This is the deliberate trade-off, not an oversight — but it must be stated plainly so that implementers choosing a raw-consumption deployment are not surprised.
 
 **Open questions.**
-- No single follow-up ADR is queued. The "what tooling can reconstruct vs. what must live in the graph" boundary named in the Decision is a recurring live question rather than a point deferral: each future occurrence is expected to be resolved in the context where it arises, citing this ADR's heuristic and making the context-specific reasoning explicit.
+- No single follow-up ADR is queued. The reconstructability boundary rule named in the Decision is a recurring live question rather than a point deferral: each future occurrence is expected to be resolved in context, citing this ADR and naming why the detail is or is not reconstructable from the graph.
 
 ## References
 

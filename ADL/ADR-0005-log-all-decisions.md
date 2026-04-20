@@ -24,7 +24,7 @@ When the economic motivation for the filter dissolves, what remains is a convent
 
 At authoring time, the author cannot know. Some of the most consequential decisions in a system's life start as unassuming defaults: a coding convention that spreads quietly through a codebase and later requires a major refactor; an implicit assumption about data shape that becomes architecturally load-bearing once three services depend on it; a one-line constant chosen "for now" that hardens into a contract before anyone notices. These are precisely the decisions that would be rejected at authoring time by a significance filter, and precisely the ones that need to be recovered retroactively for later deliberation (`git blame` wouldn't exist otherwise).
 
-The post-factum ADR — the record written after a decision has revealed itself as consequential — exists because retrospective discovery of "load-bearing-ness" is a recognised pattern in ADR practice. Its existence is the field's admission that a forward-looking significance filter is always a guess about the future; the post-factum pattern is the guess's failure mode.
+The **post-factum ADR** — the record written after a decision has revealed itself as consequential — exists because retrospective discovery of "load-bearing-ness" is a recognised pattern in ADR practice. Its existence is the field's admission that a forward-looking significance filter is always a guess about the future; the post-factum pattern is the guess's failure mode.
 
 ### The ambient-transcription vignette
 
@@ -53,6 +53,8 @@ Under this asymmetry, the rational authoring policy is to default to inclusion. 
 In markdown-in-folders, the entry gate is load-bearing infrastructure. It has to be: every record costs reviewer time and directory noise, and every record surfaces with equal visual weight in a file listing. A significance filter is how that medium scales.
 
 In a tooling-mediated graph, the entry gate is a vestigial metaphor. Record creation is cheap; tooling handles selective surfacing (demotion, trivial-tagging, query-layer filtering); and the cost asymmetry runs the other way. A false positive costs a tagged-trivial node that everyday query surfaces ignore by default. A false negative costs a missing node that later deliberation has to reason without.
+
+Framed with ADR-0004’s **reconstructability boundary rule**: relevance ranking, demotion, and "hide trivial unless asked" views are representation concerns that reasonable tooling can reconstruct from a dense graph, so they should stay out of the ontology shape. What cannot be reconstructed after omission is the decision node itself; that is why this ADR places the default on logging in-scope decisions.
 
 The traditional filter transplanted onto the new medium is not a refinement; it is a convention inherited from a different medium whose economics no longer hold.
 
