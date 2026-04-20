@@ -28,7 +28,7 @@ Alignment status between `adr-o.ttl` and each governing ADR, updated to reflect 
 - **ADR-0003 (Prose Literals Are Markdown):** ✅ Applied in 0.2.1-draft. `dcterms:description`, `skos:definition`, and `skos:note` carry Markdown scope notes; the ontology header literal is retyped. `skos:prefLabel` explicitly excluded (label, not prose — see DESIGN-NOTES 0.2.1-draft). SHACL `sh:datatype` enforcement deferred to the shapes companion. Bulk retyping of existing `skos:definition` literals on status/valence individuals deferred to a future data-cleanup pass. **ADR-0017** restates the narrowed property scope as implemented.
 - **ADR-0004 (The KG Lives Under Tooling):** ✅ Compatible; no ontology changes needed. The ontology's `rdf:List` ordering, scope-notes-over-axioms pattern, and deferred SHACL checks are all consistent with it. Stylistic option (not required): adding `rdfs:seeAlso` to individual ADR IRIs from the ontology header would make the relationship bidirectional.
 - **ADR-0005 (Log All Decisions in the ADL):** ✅ Compatible; no ontology changes needed. Both real-time (`Status=Proposed`, appendable `hasDeliberation` list) and post-factum (`dcterms:date` / `dcterms:created` split) authoring modes are supported. The `dcterms:created` scope note was updated in 0.2.1 to name the post-factum case explicitly.
-- **ADR-0006–ADR-0018 (ontology vocabulary and shape, post-factum from design notes):** ✅ Aligned with `adr-o.ttl` 0.2.1-draft — relational predicates, indexing, SKOS status and valences, atom-first facts, alternatives, ontology document shape, DC/PROV conventions, `dcterms:version`, Markdown scope as implemented, and editorial `Consideration` IRI patterns. See individual files under `ADL/`.
+- **ADR-0006–ADR-0020 (ontology vocabulary and shape, post-factum from design notes):** ✅ ADL-level direction is aligned through ADR-0020, including unified amendment semantics from ADR-0019/ADR-0020 (`amends`/`amendedBy`, no separate clarification predicate, no `Amended` status). The `.ttl` baseline remains 0.2.1-draft and should be read as pre-integration for these newer ADR additions. See individual files under `ADL/`.
 
 ## 3. Actionable Goals (The Roadmap)
 
@@ -102,12 +102,18 @@ Two complementary items follow from this:
 
 Both are research-grade additions that require careful design before any `.ttl` change. A dedicated ADL entry is a prerequisite.
 
-#### 3.2 Fine-Grained Evolution (`amends`, `clarifies`)
+#### 3.2 Fine-Grained Evolution (Amendments) — *Direction fixed by ADR-0019/ADR-0020*
 
-The supersession chain (`adr-o:supersedes` / `adr-o:supersededBy`) models full replacement. It cannot model partial modification (a later decision changes only one clause of an earlier one that remains otherwise in force) or pure clarification (no change to the decision, only additional interpretive context added). Both are common governance events that are currently expressed as prose "see also" links with no machine-traversable semantics.
+The supersession chain (`adr-o:supersedes` / `adr-o:supersededBy`) models full replacement. Partial modifications are now governed by accepted ADL decisions:
 
-- Introduce `adr-o:amends` and `adr-o:clarifies` as typed link predicates.
-- Introduce `Amended` and `Clarified` as new members of `adr-o:statusScheme` — a record that has been partially amended should reflect that in its status so that queries asking "which records are fully current as-written?" can filter correctly. An `Amended` record is still in force; a `Superseded` record is not. This distinction is currently impossible to make by graph traversal.
+- Use a unified amendment model: `adr-o:amends` / `adr-o:amendedBy`.
+- Do not split clarifications into a separate predicate; clarifications are modeled as amendments.
+- Do not introduce an `Amended` status individual; amendment state is reconstructed from topology (`adr-o:amendedBy` edges), consistent with the reconstructability boundary rule.
+
+Remaining roadmap work here is implementation and tooling hardening, not vocabulary design:
+
+- integrate the accepted amendment predicates into the ontology release line after 0.2.1-draft;
+- ensure "Current State" retrieval in tooling follows topology-first merge logic (anchor + all amendments), rather than status-only filtering.
 
 #### 3.3 Pattern-Based Design (GADR / `DecisionTemplate`)
 
