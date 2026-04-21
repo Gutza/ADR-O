@@ -38,6 +38,7 @@
   filename: "ADR-0007-index-vs-identifier.md"
   status: "Unknown"
   summary: "Bootstrapped ADL index entry."
+  amendedBy: [25]
 - index: 9
   title: "Status skos and integrity"
   filename: "ADR-0008-status-skos-and-integrity.md"
@@ -103,6 +104,7 @@
   filename: "ADR-0020-amendments.md"
   status: "Unknown"
   summary: "Bootstrapped ADL index entry."
+  amendedBy: [25]
 - index: 22
   title: "Social role predicates"
   filename: "ADR-0021-social-role-predicates.md"
@@ -120,3 +122,9 @@
   filename: "ADR-0023-add-hastype-annotation-property.md"
   status: "Proposed"
   summary: "Adds adr-o:hasType as an annotation property to classify records using extension SKOS concepts."
+- index: 25
+  title: "Sequential IDs for all decision records"
+  filename: "ADR-0024-sequential-ids-for-all-decision-records.md"
+  status: "Accepted"
+  summary: "Every DecisionRecord receives a unique sequential adr-o:index at creation time; amendment relationships are expressed via predicates, not ID suffixes."
+  amends: [8, 21]

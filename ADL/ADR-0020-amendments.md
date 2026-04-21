@@ -7,6 +7,7 @@
 | Status      | Accepted |
 | Date        | 2026-04-20 |
 | Author      | Bogdan Stăncescu <bogdan@moongate.ro> |
+| Amended by  | ADR-0024 |
 
 ## Context
 
