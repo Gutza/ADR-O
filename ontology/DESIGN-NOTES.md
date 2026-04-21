@@ -14,6 +14,7 @@ Every reference to an ADR points to the corresponding file in `ADL/`.
 Where a passage has been **lifted** into the ADL as the durable record, an inline marker follows it, for example *(→ [ADR-0006](/ADL/ADR-0006-core-relational-predicates.md))*. Markers are additive; the prose above them stays the historical source of truth for that iteration.
 
 </div>
+
 </div>
 
 <div data-dn-section="machine-readable-markup">
@@ -24,6 +25,7 @@ Where a passage has been **lifted** into the ADL as the durable record, an inlin
 This document also uses HTML `<div>` containers with `data-dn-*` attributes for programmatic scanning. `data-dn-version` identifies a version section, `data-dn-section` identifies subsection semantics, and `data-dn-passage` marks atomic passages. `data-dn-record` classifies passage status (`adl`, `deferral`, `superseded`, `meta`, `repo-only`, `partial-rationale`), while `data-dn-adl-refs` and `data-dn-roadmap` carry optional ADR and roadmap anchors. Inline prose markers remain authoritative for humans; attributes provide a parallel machine contract.
 
 </div>
+
 </div>
 
 <div data-dn-version="0.1.0-draft" data-dn-record="meta" id="adro-0-1-0-draft">
@@ -56,6 +58,78 @@ A reasoner caveat worth recording: some lightweight OWL 2 RL implementations —
 **Namespace: `https://w3id.org/adr-o#`.** Directly per README and ADR-0000. *(→ [ADR-0014](/ADL/ADR-0014-ontology-document-shape.md); inception context in [ADR-0000](/ADL/ADR-0000-inception.md))*
 
 **`adr-o:supersedes` as a sub-property of `prov:wasRevisionOf`.** ADR-0000 identified this alignment explicitly: the ADR supersession chain *is* a PROV-O revision chain, and modelling it as a sub-property means PROV-O-aware tooling automatically sees every supersession as a revision without any extra wiring. *(→ [ADR-0006](/ADL/ADR-0006-core-relational-predicates.md))*
+
+</div>
+
+<div data-dn-version="0.2.4-draft" data-dn-record="meta" id="adro-0-2-4-draft">
+
+## ADR-O 0.2.4-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-024" data-dn-record="adl" data-dn-adl-refs="0023">
+
+This iteration is a small, strictly additive vocabulary extension focused on record-level type metadata. The 0.2.3-draft substrate remains intact; no classes are removed or repurposed, no cardinalities are tightened, and no existing triples are invalidated. The change applies ADR-0023 by adding `adr-o:hasType` as an annotation property for classifying `DecisionRecord` instances with profile-defined SKOS concepts.
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="hastype-added-024" data-dn-record="adl" data-dn-adl-refs="0023" data-dn-roadmap="H2.1">
+
+**`adr-o:hasType` added as `owl:AnnotationProperty` (`DecisionRecord` → `skos:Concept`).** This closes the long-running deferral around record-level type metadata by giving the ADR front-matter Type field a first-class graph landing place. The term is intentionally lightweight and extension-friendly: ADR-O core does not ship a mandatory type scheme, and profiles provide their own SKOS concepts and concept schemes in their namespaces. *(→ [ADR-0023](/ADL/ADR-0023-add-hastype-annotation-property.md))*
+
+</div>
+</div>
+
+<div data-dn-section="deferrals">
+
+### Explicit deferrals — decisions to not decide right now
+
+<div data-dn-passage="deferral-lifted-hastype-024" data-dn-record="adl" data-dn-adl-refs="0023">
+
+**The `adr-o:hasType` deferral is now lifted.** Earlier passages that deferred Type/Group categorization are resolved by ADR-0023 and implemented in 0.2.4-draft.
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.2.3-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-024" data-dn-record="meta">
+
+All 0.2.3-draft decisions remain in force, including amendment topology (`amends`/`amendedBy`), social-role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`), and the broader 0.2.x atom-first architecture. The 0.2.4 addition is orthogonal record-level type metadata.
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.2.3-draft decisions are reversed
+
+<div data-dn-passage="reversed-none-024" data-dn-record="meta">
+
+None.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-024" data-dn-record="adl" data-dn-adl-refs="0023">
+
+The 0.2.3 → 0.2.4 bump is non-destructive and additive: one annotation property is introduced (`adr-o:hasType`), one scope note documents the ADR linkage, and ontology version metadata is advanced to `0.2.4-draft`. No removals or behavioral reversals occur. Patch-level increment is therefore the correct signal for this draft line.
+
+</div>
+</div>
 
 </div>
 </div>
@@ -634,7 +708,7 @@ This iteration is a small, non-destructive vocabulary extension focused on socia
 
 <div data-dn-passage="creator-scope-note-coexistence-023" data-dn-record="adl" data-dn-adl-refs="0021,0015">
 
-**`dcterms:creator` remains canonical metadata, now explicitly coexisting with social-role predicates.** The scope note is tightened to state that `dcterms:creator` remains the compatibility-oriented metadata predicate, while `authoredBy`/`decidedBy`/`consulted`/`informed` are the graph-native role edges for traversable social topology. This is an additive clarification, not a replacement of ADR-0015 semantics. *(→ [ADR-0021](/ADL/ADR-0021-social-role-predicates.md); baseline [ADR-0015](/ADL/ADR-0015-dublin-core-and-prov-usage.md))* *(Expansion semantics and conflict rule formalized by [ADR-0022](/ADL/ADR-0022-creator-authoredby-coexistence.md).)*
+**`dcterms:creator` remains canonical metadata, now explicitly coexisting with social-role predicates.** The scope note is tightened to state that `dcterms:creator` remains the compatibility-oriented metadata predicate, while `authoredBy`/`decidedBy`/`consulted`/`informed` are the graph-native role edges for traversable social topology. This is an additive clarification, not a replacement of ADR-0015 semantics, and it follows the tooling-mediated expansion pattern later formalized in ADR-0022. *(→ [ADR-0021](/ADL/ADR-0021-social-role-predicates.md); baseline [ADR-0015](/ADL/ADR-0015-dublin-core-and-prov-usage.md); expansion and conflict rule [ADR-0022](/ADL/ADR-0022-creator-authoredby-coexistence.md).)*
 
 </div>
 </div>

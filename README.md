@@ -6,7 +6,7 @@ ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing d
 
 ## Status
 
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.2.3-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.2.3`). Treat this as a **technical preview**: version 0.2 introduced a breaking redesign of the record shape relative to the earlier unreleased 0.1-style sketch, and further breaking changes are possible before a stable release.
+The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.2.4-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.2.4`). Treat this as a **technical preview**: version 0.2 introduced a breaking redesign of the record shape relative to the earlier unreleased 0.1-style sketch, and further breaking changes are expected before a stable release.
 
 A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships. See [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) for the per-version rationale.
 
@@ -26,7 +26,7 @@ Together, this supports reliable graph traversal and richer analysis than keywor
 
 ADR-O aims for the **smallest complete domain-agnostic core**: the vocabulary is not locked to any domain's class names or concerns — domain-specific terms belong in **profiles** in their own namespaces. Software architecture teams are a natural first-adopter audience, but the core is designed for any decision-making context.
 
-The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`supersedes` as a sub-property of `prov:wasRevisionOf`), and uses SKOS for controlled values. It **defines only** ADR-specific terms that are missing from those stacks. It **aligns with** ISO 42010–style separation of concerns (and lessons from OntolAD) without importing heavy external ontologies as `owl:imports` — see DESIGN-NOTES for that trade-off.
+The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`supersedes` as a sub-property of `prov:wasRevisionOf`), and uses SKOS for controlled values. It **defines only** ADR-specific terms that are missing from those stacks. It **aligns with** ISO 42010-style separation of concerns (and lessons from OntolAD) without importing heavy external ontologies as `owl:imports`; this document-shape discipline is codified in [ADR-0014](/ADL/ADR-0014-ontology-document-shape.md) (with inception context in [ADR-0000](/ADL/ADR-0000-inception.md)).
 
 ## Repository map (start here)
 
@@ -34,7 +34,7 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 |--|--|
 | [`MANIFESTO.md`](/MANIFESTO.md) | Motivation and north star. |
 | [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
-| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft, 0.2.2-draft, 0.2.3-draft). |
+| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft, 0.2.2-draft, 0.2.3-draft, 0.2.4-draft). |
 | [`ontology/IDEAS.md`](/ontology/IDEAS.md) | Design exploration and backlog-style ideas. |
 | [ADR-0000](/ADL/ADR-0000-inception.md) | Inception and survey of prior art. |
 | [ADR-0001](/ADL/ADR-0001-license.md) | License (CC BY 4.0). |
@@ -59,6 +59,7 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 | [ADR-0020](/ADL/ADR-0020-amendments.md) | Amendment predicates and rejection of an `Amended` status. |
 | [ADR-0021](/ADL/ADR-0021-social-role-predicates.md) | Social role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`) with explicit RACI mapping. |
 | [ADR-0022](/ADL/ADR-0022-creator-authoredby-coexistence.md) | `dcterms:creator` / `adr-o:authoredBy` coexistence: tooling-mediated expansion pattern. |
+| [ADR-0023](/ADL/ADR-0023-add-hastype-annotation-property.md) | `adr-o:hasType` as record-level type metadata via profile-defined SKOS concepts. |
 | [`Archive/index.md`](/Archive/index.md) | Archived references and outreach materials. |
 
 ## Intended outcomes

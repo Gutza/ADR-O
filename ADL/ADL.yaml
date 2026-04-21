@@ -1,0 +1,122 @@
+- index: 1
+  title: "Inception"
+  filename: "ADR-0000-inception.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 2
+  title: "License"
+  filename: "ADR-0001-license.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 3
+  title: "Scope"
+  filename: "ADR-0002-scope.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 4
+  title: "Prose literals markdown"
+  filename: "ADR-0003-prose-literals-markdown.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 5
+  title: "KG under tooling"
+  filename: "ADR-0004-kg-under-tooling.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 6
+  title: "Log all decisions"
+  filename: "ADR-0005-log-all-decisions.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 7
+  title: "Core relational predicates"
+  filename: "ADR-0006-core-relational-predicates.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 8
+  title: "Index vs identifier"
+  filename: "ADR-0007-index-vs-identifier.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 9
+  title: "Status skos and integrity"
+  filename: "ADR-0008-status-skos-and-integrity.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 10
+  title: "Deliberation and outcome valence"
+  filename: "ADR-0009-deliberation-and-outcome-valence.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 11
+  title: "Consideration and reified facts"
+  filename: "ADR-0010-consideration-and-reified-facts.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 12
+  title: "Strict graph no nygard body"
+  filename: "ADR-0011-strict-graph-no-nygard-body.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 13
+  title: "Alternatives and chosen option"
+  filename: "ADR-0012-alternatives-and-chosen-option.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 14
+  title: "Addresses dual placement"
+  filename: "ADR-0013-addresses-dual-placement.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 15
+  title: "Ontology document shape"
+  filename: "ADR-0014-ontology-document-shape.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 16
+  title: "Dublin core and prov usage"
+  filename: "ADR-0015-dublin-core-and-prov-usage.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 17
+  title: "Dcterms version in record"
+  filename: "ADR-0016-dcterms-version-in-record.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 18
+  title: "Markdown properties as implemented"
+  filename: "ADR-0017-markdown-properties-as-implemented.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 19
+  title: "Consideration iri reuse convention"
+  filename: "ADR-0018-consideration-iri-reuse-convention.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 20
+  title: "Clarifications are amendments"
+  filename: "ADR-0019-clarifications-are-amendments.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 21
+  title: "Amendments"
+  filename: "ADR-0020-amendments.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+- index: 22
+  title: "Social role predicates"
+  filename: "ADR-0021-social-role-predicates.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+  amendedBy: [23]
+- index: 23
+  title: "Creator authoredby coexistence"
+  filename: "ADR-0022-creator-authoredby-coexistence.md"
+  status: "Unknown"
+  summary: "Bootstrapped ADL index entry."
+  amends: [22]
+- index: 24
+  title: "Add hasType annotation property"
+  filename: "ADR-0023-add-hastype-annotation-property.md"
+  status: "Proposed"
+  summary: "Adds adr-o:hasType as an annotation property to classify records using extension SKOS concepts."
