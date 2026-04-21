@@ -1,13 +1,17 @@
-# ADR-0024 — Sequential IDs for All Decision Records
+---
+id: 24
+type: Core design
+status: Accepted
+date: 2026-04-21
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+amends:
+  - ADR-0007
+  - ADR-0020
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0024 |
-| Type         | Core design |
-| Status       | Accepted |
-| Date         | 2026-04-21 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
-| Amends       | ADR-0007, ADR-0020 |
+# ADR-0024 — Sequential IDs for All Decision Records
 
 ## Context
 

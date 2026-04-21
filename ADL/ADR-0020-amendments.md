@@ -1,13 +1,16 @@
-# ADR-0020 — Amendment Model: Predicates and the Rejection of "Amended" Status
+---
+id: 20
+type: Core vocabulary
+status: Accepted
+date: 2026-04-20
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+amendedBy:
+  - ADR-0024
+---
 
-| Field       | Value |
-|--------------|-------|
-| ID          | ADR-0020 |
-| Type        | Core vocabulary |
-| Status      | Accepted |
-| Date        | 2026-04-20 |
-| Author      | Bogdan Stăncescu <bogdan@moongate.ro> |
-| Amended by  | ADR-0024 |
+# ADR-0020 — Amendment Model: Predicates and the Rejection of "Amended" Status
 
 ## Context
 

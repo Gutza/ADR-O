@@ -1,12 +1,14 @@
-# ADR-0000 — Inception Record: A Greenfield RDF Ontology for Architecture Decision Records
+---
+id: 0
+type: Inception record
+status: Accepted
+date: 2026-04-17
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0000 |
-| Type         | Inception record (project justification, not an intra-project decision) |
-| Status       | Accepted |
-| Date         | 2026-04-17 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0000 — Inception Record: A Greenfield RDF Ontology for Architecture Decision Records
 
 ## Context
 

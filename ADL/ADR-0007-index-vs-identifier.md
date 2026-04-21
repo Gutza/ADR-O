@@ -1,13 +1,16 @@
-# ADR-0007 — Numeric `adr-o:index` vs String `dcterms:identifier`
+---
+id: 7
+type: Core vocabulary
+status: Accepted
+date: 2026-04-19
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+amendedBy:
+  - ADR-0024
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0007 |
-| Type         | Core vocabulary |
-| Status       | Accepted |
-| Date         | 2026-04-19 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
-| Amended by   | ADR-0024 |
+# ADR-0007 — Numeric `adr-o:index` vs String `dcterms:identifier`
 
 ## Context
 

@@ -1,12 +1,14 @@
-# ADR-0023 — Add hasType annotation property
+---
+id: 23
+type: Ontology vocabulary
+status: Accepted
+date: 2026-04-21
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0023 |
-| Type         | Ontology vocabulary |
-| Status       | Accepted |
-| Date         | 2026-04-21 |
-| Author       | Bogdan Stăncescu (bogdan@moongate.ro) |
+# ADR-0023 — Add hasType annotation property
 
 ## Context
 

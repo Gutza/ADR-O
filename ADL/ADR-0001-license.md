@@ -1,12 +1,14 @@
-# ADR-0001 — Project License: Creative Commons Attribution 4.0 International
+---
+id: 1
+type: Project governance
+status: Accepted
+date: 2026-04-17
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0001 |
-| Type         | Project governance |
-| Status       | Accepted |
-| Date         | 2026-04-17 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0001 — Project License: Creative Commons Attribution 4.0 International
 
 ## Context
 

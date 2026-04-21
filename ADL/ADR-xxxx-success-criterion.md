@@ -1,12 +1,14 @@
-# Architecture Design Discussion — Design-Time Measurability: `adr-o:successCriterion` as a Direct Datatype Property
+---
+id: TBD
+type: Core vocabulary
+status: Proposed
+date: 2026-04-18
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | TBD |
-| Type         | Core vocabulary |
-| Status       | Proposed |
-| Date         | 2026-04-18 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# Architecture Design Discussion — Design-Time Measurability: `adr-o:successCriterion` as a Direct Datatype Property
 
 ## Context
 

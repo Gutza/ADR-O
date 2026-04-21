@@ -1,12 +1,14 @@
-# ADR-0005 — Log All Decisions in the ADL
+---
+id: 5
+type: Project governance
+status: Accepted
+date: 2026-04-19
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0005 |
-| Type         | Project governance |
-| Status       | Accepted |
-| Date         | 2026-04-19 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0005 — Log All Decisions in the ADL
 
 ## Context
 

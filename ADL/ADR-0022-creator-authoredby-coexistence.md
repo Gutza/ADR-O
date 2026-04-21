@@ -1,13 +1,16 @@
-# ADR-0022 — `dcterms:creator` / `adr-o:authoredBy` Coexistence: The Tooling-Mediated Expansion Pattern
+---
+id: 22
+type: Core vocabulary
+status: Accepted
+date: 2026-04-20
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+amends:
+  - ADR-0021
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0022 |
-| Type         | Core vocabulary |
-| Status       | Accepted |
-| Amends       | ADR-0021 |
-| Date         | 2026-04-20 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0022 — `dcterms:creator` / `adr-o:authoredBy` Coexistence: The Tooling-Mediated Expansion Pattern
 
 ## Context
 

@@ -1,12 +1,14 @@
-# ADR-0002 — ADR = Any Decision Record: Domain-Agnostic Core with Domain-Specific Profiles
+---
+id: 2
+type: Core design
+status: Accepted
+date: 2026-04-18
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0002 |
-| Type         | Core design |
-| Status       | Accepted |
-| Date         | 2026-04-18 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0002 — ADR = Any Decision Record: Domain-Agnostic Core with Domain-Specific Profiles
 
 ## Context
 

@@ -1,12 +1,14 @@
-# ADR-0019 — Unified Amendment Model: Collapsing Clarifications and Amendments
+---
+id: 19
+type: Core vocabulary
+status: Accepted
+date: 2026-04-20
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field       | Value |
-|--------------|-------|
-| ID          | ADR-0019 |
-| Type        | Core vocabulary |
-| Status      | Accepted |
-| Date        | 2026-04-20 |
-| Author      | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0019 — Unified Amendment Model: Collapsing Clarifications and Amendments
 
 ## Context
 

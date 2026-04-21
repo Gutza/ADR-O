@@ -1,12 +1,14 @@
-# ADR-0011 — Strict Graph: No Nygard Body Literals on the Record
+---
+id: 11
+type: Core design
+status: Accepted
+date: 2026-04-19
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0011 |
-| Type         | Core design |
-| Status       | Accepted |
-| Date         | 2026-04-19 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0011 — Strict Graph: No Nygard Body Literals on the Record
 
 ## Context
 

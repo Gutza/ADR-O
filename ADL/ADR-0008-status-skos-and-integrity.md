@@ -1,12 +1,14 @@
-# ADR-0008 — Lifecycle Status as a SKOS Scheme with OWL Integrity
+---
+id: 8
+type: Core vocabulary
+status: Accepted
+date: 2026-04-19
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0008 |
-| Type         | Core vocabulary |
-| Status       | Accepted |
-| Date         | 2026-04-19 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0008 — Lifecycle Status as a SKOS Scheme with OWL Integrity
 
 ## Context
 

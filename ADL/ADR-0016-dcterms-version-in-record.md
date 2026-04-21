@@ -1,12 +1,14 @@
-# ADR-0016 — `dcterms:version` for In-Record Iteration
+---
+id: 16
+type: Core vocabulary
+status: Accepted
+date: 2026-04-19
+author:
+  name: Bogdan Stăncescu
+  email: bogdan@moongate.ro
+---
 
-| Field        | Value |
-|--------------|-------|
-| ID           | ADR-0016 |
-| Type         | Core vocabulary |
-| Status       | Accepted |
-| Date         | 2026-04-19 |
-| Author       | Bogdan Stăncescu <bogdan@moongate.ro> |
+# ADR-0016 — `dcterms:version` for In-Record Iteration
 
 ## Context
 
