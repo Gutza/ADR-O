@@ -105,7 +105,7 @@ These are items that were considered during this iteration and deliberately punt
 
 **Kruchten-style directed `prevents` / `isPreventedBy` alongside symmetric `conflictsWith`.** Flagged as an open question in ADR-0000. Added later as sub-properties of `conflictsWith`, non-breaking.
 
-**MADR-style decider / consulted / informed roles.** MADR distinguishes these; ADR-O does not in this iteration. `dcterms:creator` is the only authorship predicate. If a team needs the distinction, a domain profile can mint the role properties.
+**MADR-style decider / consulted / informed roles.** MADR distinguishes these; ADR-O does not in this iteration. `dcterms:creator` is the only authorship predicate. If a team needs the distinction, a domain profile can mint the role properties. *(Lifted by [ADR-0021](/ADL/ADR-0021-social-role-predicates.md).)*
 
 **`significance` / the "architectural" filter from ADR-0002.** Open question in ADR-0002. Not addressed here; the domain-agnostic core does not currently constrain what counts as record-worthy.
 
@@ -253,7 +253,7 @@ These are items considered during this iteration and deliberately punted. Listin
 
 **Kruchten-style directed `prevents` / `isPreventedBy`** alongside symmetric `conflictsWith`. Still deferred from 0.1.0 reasoning.
 
-**MADR-style decider / consulted / informed roles.** Still deferred from 0.1.0.
+**MADR-style decider / consulted / informed roles.** Still deferred from 0.1.0. *(Lifted by [ADR-0021](/ADL/ADR-0021-social-role-predicates.md).)*
 
 **`significance` / "architectural" filter.** Still deferred from 0.1.0.
 
@@ -501,6 +501,184 @@ None.
 <div data-dn-passage="versioning-note-021" data-dn-record="adl" data-dn-adl-refs="0015,0016,0017">
 
 The 0.2.0 → 0.2.1 bump is non-destructive. The complete set of changes: two new `owl:AnnotationProperty` declarations (`skos:note` and `dcterms:version`), each with a scope note; new scope notes on two existing annotation-property declarations (`dcterms:description`, `skos:definition`); one expanded scope note on an existing declaration (`dcterms:created`); one literal retyped in the ontology header (`dcterms:description`, bare string → Markdown datatype); one `rdfs:comment` corrected on `adr-o:Consideration` (removed the erroneous `skos:prefLabel` as a prose-carrier, named the three Markdown-typed prose predicates explicitly). No terms removed, no terms repurposed, no existing triples invalidated. A patch-version bump is the correct semantic-versioning signal for a `-draft` line under these conditions: no `adr-o:` terms were added or removed, and the one `adr-o:` annotation edited is a correction of a documentation error. *(Normative restatement of these deltas: [ADR-0015](/ADL/ADR-0015-dublin-core-and-prov-usage.md), [ADR-0016](/ADL/ADR-0016-dcterms-version-in-record.md), [ADR-0017](/ADL/ADR-0017-markdown-properties-as-implemented.md).)*
+
+</div>
+</div>
+
+</div>
+
+<div data-dn-version="0.2.2-draft" data-dn-record="meta" id="adro-0-2-2-draft">
+
+## ADR-O 0.2.2-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-022" data-dn-record="adl" data-dn-adl-refs="0020">
+
+This iteration is a small, non-destructive vocabulary extension focused on amendments. The 0.2.1-draft shape remains intact: no classes are removed or repurposed, no cardinalities are tightened, and no existing records are invalidated. The change is to operationalize the amendment model from ADR-0020 by minting two relational predicates (`adr-o:amends`, `adr-o:amendedBy`) and by explicitly rejecting status inflation (`adr-o:Amended` is not added). The goal is to represent patch-style evolution directly in graph topology rather than in redundant status labels. *(→ [ADR-0020](/ADL/ADR-0020-amendments.md))*
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="amendment-predicates-added-022" data-dn-record="adl" data-dn-adl-refs="0020">
+
+**`adr-o:amends` / `adr-o:amendedBy` added as a directed amendment pair over `DecisionRecord`.** `adr-o:amends` links a patch record to an anchor record it amends; `adr-o:amendedBy` is the declared inverse for anchor-to-patches traversal. Both use `DecisionRecord` as domain and range, and both are intentionally non-functional (0..N) so one anchor can accumulate multiple amendment records over time. This preserves the supersession chain for identity replacement while adding a separate channel for layered modification. *(→ [ADR-0020](/ADL/ADR-0020-amendments.md))*
+
+</div>
+
+<div data-dn-passage="amended-status-rejected-022" data-dn-record="adl" data-dn-adl-refs="0020,0004,0008">
+
+**`adr-o:Amended` status explicitly rejected.** Amendment presence is treated as topological fact (`?anchor adr-o:amendedBy ?patch`) rather than as a duplicated state label on `hasStatus`. This follows ADR-0004's reconstructability boundary rule: if tooling can derive a condition from graph structure, ADR-O should not store a second, synchronization-prone indicator for the same condition. The status scheme remains unchanged (`Proposed`, `Accepted`, `Deprecated`, `Superseded`, `Rejected`). *(→ [ADR-0020](/ADL/ADR-0020-amendments.md); rule source [ADR-0004](/ADL/ADR-0004-kg-under-tooling.md), status scheme [ADR-0008](/ADL/ADR-0008-status-skos-and-integrity.md))*
+
+</div>
+</div>
+
+<div data-dn-section="softer">
+
+### Softer defaults — "simplicity first, easier to add than to refactor"
+
+<div data-dn-passage="dcterms-version-scope-note-tightened-022" data-dn-record="adl" data-dn-adl-refs="0020,0016">
+
+**`dcterms:version` scope note wording tightened to "amended" only.** The 0.2.1 wording referenced "amended or clarified"; after ADR-0020's unification, clarifications are represented as amendments, so the scope note now names only amendment. This is editorial alignment, not a semantic change to `dcterms:version` itself. *(→ [ADR-0020](/ADL/ADR-0020-amendments.md); original declaration [ADR-0016](/ADL/ADR-0016-dcterms-version-in-record.md))*
+
+</div>
+</div>
+
+<div data-dn-section="deferrals">
+
+### Explicit deferrals — decisions to not decide right now
+
+<div data-dn-passage="deferral-lifted-amends-clarifies-022" data-dn-record="adl" data-dn-adl-refs="0020">
+
+**The 0.2.0 deferral on typed amendment links is now lifted.** `amends` is implemented, `clarifies` is not added as a separate predicate, and status additions (`Amended`, `Clarified`) are explicitly rejected as redundant. The open work is now tooling behavior (merge-and-render of anchor plus amendments), not core vocabulary design.
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.2.1-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-022" data-dn-record="meta">
+
+All 0.2.1-draft structural decisions remain in force: atom-first reification, three `*Fact` classes, strict graph (no Nygard literals), per-class valence schemes, `chosenAlternative` as functional, and `rdf:List` ordering. The Markdown-typing convention and `dcterms:version` declaration from 0.2.1 also remain unchanged in intent. 0.2.2 adds amendment topology; it does not revise the 0.2.1 substrate.
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.2.1-draft decisions are reversed
+
+<div data-dn-passage="reversed-none-022" data-dn-record="meta">
+
+None.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-022" data-dn-record="adl" data-dn-adl-refs="0020">
+
+The 0.2.1 → 0.2.2 bump is non-destructive and additive: two object properties are introduced (`amends`, `amendedBy`), one existing scope note is tightened for terminology consistency (`dcterms:version`), and ontology version metadata is advanced to `0.2.2-draft`. No removals or behavioral reversals occur. Patch-level increment is therefore the correct signal for this draft line.
+
+</div>
+</div>
+
+</div>
+
+<div data-dn-version="0.2.3-draft" data-dn-record="meta" id="adro-0-2-3-draft">
+
+## ADR-O 0.2.3-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-023" data-dn-record="adl" data-dn-adl-refs="0021">
+
+This iteration is a small, non-destructive vocabulary extension focused on social-role topology for decision records. The 0.2.2-draft substrate remains intact; no classes are removed or repurposed, no cardinalities are tightened, and no existing triples are invalidated. The change applies ADR-0021 by adding four `DecisionRecord` role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`) and by clarifying how these role edges coexist with the existing metadata predicate `dcterms:creator`. *(→ [ADR-0021](/ADL/ADR-0021-social-role-predicates.md))*
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="social-role-predicates-added-023" data-dn-record="adl" data-dn-adl-refs="0021" data-dn-roadmap="H2.1">
+
+**`adr-o:authoredBy`, `adr-o:decidedBy`, `adr-o:consulted`, and `adr-o:informed` added as object properties on `DecisionRecord`.** All four are declared as `owl:ObjectProperty` with `rdfs:domain adr-o:DecisionRecord` and `rdfs:range prov:Agent`, making social-role accountability directly queryable in graph topology. This closes the previously deferred MADR-style social-role gap and operationalizes the roadmap's Horizon 2.1 "Social Graph (RACI)" item. *(→ [ADR-0021](/ADL/ADR-0021-social-role-predicates.md))*
+
+</div>
+
+<div data-dn-passage="raci-nuance-record-vs-execution-023" data-dn-record="adl" data-dn-adl-refs="0021">
+
+**Explicit RACI mapping with a constrained meaning of "Responsible".** The mapping is documented as `authoredBy` = Responsible, `decidedBy` = Accountable, `consulted` = Consulted, `informed` = Informed. Crucially, "Responsible" is constrained to **record responsibility** (authorship/accountability for the ADR artifact), and is not asserted as execution ownership for implementation work. This avoids semantic drift while preserving domain-specific naming. *(→ [ADR-0021](/ADL/ADR-0021-social-role-predicates.md))*
+
+</div>
+</div>
+
+<div data-dn-section="softer">
+
+### Softer defaults — "simplicity first, easier to add than to refactor"
+
+<div data-dn-passage="creator-scope-note-coexistence-023" data-dn-record="adl" data-dn-adl-refs="0021,0015">
+
+**`dcterms:creator` remains canonical metadata, now explicitly coexisting with social-role predicates.** The scope note is tightened to state that `dcterms:creator` remains the compatibility-oriented metadata predicate, while `authoredBy`/`decidedBy`/`consulted`/`informed` are the graph-native role edges for traversable social topology. This is an additive clarification, not a replacement of ADR-0015 semantics. *(→ [ADR-0021](/ADL/ADR-0021-social-role-predicates.md); baseline [ADR-0015](/ADL/ADR-0015-dublin-core-and-prov-usage.md))* *(Expansion semantics and conflict rule formalized by [ADR-0022](/ADL/ADR-0022-creator-authoredby-coexistence.md).)*
+
+</div>
+</div>
+
+<div data-dn-section="deferrals">
+
+### Explicit deferrals — decisions to not decide right now
+
+<div data-dn-passage="deferral-lifted-social-roles-023" data-dn-record="adl" data-dn-adl-refs="0021">
+
+**The MADR-style social-role deferral is now lifted.** Earlier design-note passages that deferred decider/consulted/informed role predicates are now resolved by ADR-0021 and implemented in 0.2.3-draft.
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.2.2-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-023" data-dn-record="meta">
+
+All 0.2.2-draft decisions remain in force, including amendment topology (`amends`/`amendedBy`), unchanged status scheme, and the broader 0.2.x atom-first architecture. The 0.2.3 additions are orthogonal social-role predicates and documentation alignment.
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.2.2-draft decisions are reversed
+
+<div data-dn-passage="reversed-none-023" data-dn-record="meta">
+
+None.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-023" data-dn-record="adl" data-dn-adl-refs="0021">
+
+The 0.2.2 → 0.2.3 bump is non-destructive and additive: four object properties are introduced (`authoredBy`, `decidedBy`, `consulted`, `informed`), one existing scope note (`dcterms:creator`) is clarified for coexistence semantics, and ontology version metadata is advanced to `0.2.3-draft`. No removals or behavioral reversals occur. Patch-level increment is therefore the correct signal for this draft line.
 
 </div>
 </div>

@@ -11,14 +11,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.2.2> ;
-                          dcterms:created "2026-04-18"^^xsd:date ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.2.3> ;
+                          dcterms:created "2026-04-20"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
-                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Architecture Decision Records and, more generally, for Any Decision Record. Records are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, OutcomeFact) into framing, deliberation, and outcome roles, plus an explicit option pool, an explicit chosen alternative, and typed relationships to other decisions."^^<https://www.w3.org/ns/iana/media-types/text/markdown> ;
+                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record, inspired by the software industry's Architecture Decision Records. Records are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, OutcomeFact) into framing, deliberation, and outcome roles, plus an explicit option pool, an explicit chosen alternative, and typed relationships to other decisions." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.2.2-draft" ;
+                          owl:versionInfo "0.2.3-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary needed to represent a single decision record as a node in a typed graph: the record itself, the concerns it addresses, the system elements it affects, the alternatives considered, the chosen alternative, the reusable Considerations placed via reified ContextFact / DeliberationFact / OutcomeFact links into framing, deliberation, and outcome roles, and the typed relationships to every other record in the log. Record metadata (title, identifier, date, author, references) is delegated to Dublin Core Terms; provenance is aligned with PROV-O; controlled vocabularies (status, deliberation valences, outcome valences, and any domain-specific concern or relationship taxonomies) are expressed as SKOS concept schemes. The core ontology is domain-agnostic: software-architecture-specific terms, such as ArchitectureDecisionRecord, belong in domain profiles published in their own namespaces."@en .
 
 #################################################################
@@ -32,7 +32,7 @@ dcterms:created rdf:type owl:AnnotationProperty ;
 
 ###  http://purl.org/dc/terms/creator
 dcterms:creator rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: the canonical authorship predicate. Accepts either a literal (e.g. \"Jane Doe <jane@example.org>\") or an IRI pointing to a structured agent (e.g. a prov:Agent or foaf:Person). The IRI form is preferred for graph-traversable authorship queries but is not mandated."@en .
+                skos:scopeNote "In ADR-O: the ingress authorship predicate and DC-compatibility layer. Accepts either a literal (e.g. \"Jane Doe <jane@example.org>\") or an IRI pointing to a structured agent (e.g. a prov:Agent or foaf:Person). For explicit social-role topology on DecisionRecord use adr-o:authoredBy / adr-o:decidedBy / adr-o:consulted / adr-o:informed (ADR-0021). Tooling is expected to promote a bare dcterms:creator to adr-o:authoredBy when the latter is absent; when both are present and point to different agents, adr-o:authoredBy is authoritative for social-role queries (ADR-0022)."@en .
 
 
 ###  http://purl.org/dc/terms/description
@@ -64,13 +64,13 @@ skos:definition rdf:type owl:AnnotationProperty ;
 skos:hasTopConcept rdf:type owl:AnnotationProperty .
 
 
+###  http://www.w3.org/2004/02/skos/core#inScheme
+skos:inScheme rdf:type owl:AnnotationProperty .
+
+
 ###  http://www.w3.org/2004/02/skos/core#note
 skos:note rdf:type owl:AnnotationProperty ;
           skos:scopeNote "In ADR-O: the parent property of the SKOS note family (skos:scopeNote, skos:editorialNote, skos:historyNote, skos:changeNote, skos:example). On Consideration nodes, note sub-properties carry supplementary annotation prose — clarifications, provenance remarks, editorial commentary — that complement the primary prose payload on dcterms:description. Prose-carrying literals on this property and its sub-properties SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
-
-
-###  http://www.w3.org/2004/02/skos/core#inScheme
-skos:inScheme rdf:type owl:AnnotationProperty .
 
 
 ###  http://www.w3.org/2004/02/skos/core#prefLabel
@@ -138,6 +138,14 @@ adr-o:amends rdf:type owl:ObjectProperty ;
              rdfs:label "amends"@en .
 
 
+###  https://w3id.org/adr-o#authoredBy
+adr-o:authoredBy rdf:type owl:ObjectProperty ;
+                 rdfs:domain adr-o:DecisionRecord ;
+                 rdfs:range prov:Agent ;
+                 rdfs:comment "Links a DecisionRecord to the agent responsible for authoring the record artifact. In ADR-O's explicit RACI mapping, this is the Responsible (R) role in record-authoring terms; it does not necessarily imply execution ownership for implementing the underlying decision. This predicate is authoritative for social-role queries: when both this predicate and dcterms:creator are present on the same record and disagree, this predicate wins. Tooling is expected to promote a bare dcterms:creator to this predicate when it is absent (ADR-0022)."@en ;
+                 rdfs:label "authored by"@en .
+
+
 ###  https://w3id.org/adr-o#chosenAlternative
 adr-o:chosenAlternative rdf:type owl:ObjectProperty ,
                                  owl:FunctionalProperty ;
@@ -168,6 +176,22 @@ adr-o:consideration rdf:type owl:ObjectProperty ,
                     rdfs:range adr-o:Consideration ;
                     rdfs:comment "Links a reified fact (ContextFact, DeliberationFact, or OutcomeFact) to the Consideration it places. Functional: a fact carries exactly one Consideration. The same Consideration IRI may be the object of arbitrarily many such links across arbitrarily many records and roles; that reuse — the YADR-style identity property — is the core of the atom-first design: the argument that supported Option A during deliberation is literally the same node that may later appear as a Benefit in an OutcomeFact, not a copy of it."@en ;
                     rdfs:label "consideration"@en .
+
+
+###  https://w3id.org/adr-o#consulted
+adr-o:consulted rdf:type owl:ObjectProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range prov:Agent ;
+                rdfs:comment "Links a DecisionRecord to agents consulted before or during the decision process. In ADR-O's explicit RACI mapping, this is the Consulted (C) role."@en ;
+                rdfs:label "consulted"@en .
+
+
+###  https://w3id.org/adr-o#decidedBy
+adr-o:decidedBy rdf:type owl:ObjectProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range prov:Agent ;
+                rdfs:comment "Links a DecisionRecord to the agent with decision authority. In ADR-O's explicit RACI mapping, this is the Accountable (A) role."@en ;
+                rdfs:label "decided by"@en .
 
 
 ###  https://w3id.org/adr-o#deliberationValence
@@ -237,6 +261,14 @@ adr-o:hasStatus rdf:type owl:ObjectProperty ,
                 rdfs:range adr-o:Status ;
                 rdfs:comment "Links a DecisionRecord to its lifecycle status. Domain profiles may extend the base status vocabulary by adding new skos:Concepts with skos:inScheme adr-o:statusScheme — such additions automatically gain adr-o:Status membership."@en ;
                 rdfs:label "has status"@en .
+
+
+###  https://w3id.org/adr-o#informed
+adr-o:informed rdf:type owl:ObjectProperty ;
+               rdfs:domain adr-o:DecisionRecord ;
+               rdfs:range prov:Agent ;
+               rdfs:comment "Links a DecisionRecord to agents who should be informed about the decision. In ADR-O's explicit RACI mapping, this is the Informed (I) role."@en ;
+               rdfs:label "informed"@en .
 
 
 ###  https://w3id.org/adr-o#onAlternative
@@ -310,6 +342,10 @@ skos:Concept rdf:type owl:Class .
 
 ###  http://www.w3.org/2004/02/skos/core#ConceptScheme
 skos:ConceptScheme rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/prov#Agent
+prov:Agent rdf:type owl:Class .
 
 
 ###  http://www.w3.org/ns/prov#Entity

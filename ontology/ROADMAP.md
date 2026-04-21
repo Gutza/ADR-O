@@ -2,7 +2,7 @@
 
 This document is the living strategic roadmap for ADR-O. It was originally drafted before any real-world modeling had been attempted with the ontology; it has since been aggressively revised in light of the **Dogfood Report** (see `DOGFOOD-REPORT.md`), which documents the conversion of ADR-0001 and ADR-0005 into RDF graphs using ADR-O 0.2.1. Where the original roadmap reasoned from template audits and structural review alone, this revision is grounded in observed friction during actual modeling.
 
-The single most important finding from that exercise is the one that reframes the entire roadmap: **ADR-O 0.2.1 is a high-performance Decision Index. It is not yet a Knowledge System.** It answers "what was decided and why" as a set of weighted claims with reliable IRI identity. It cannot yet answer "what was the logical structure of the argument," "what criteria were the alternatives evaluated against," or "who made this call." Closing that gap — moving from Index to Knowledge System — is what the horizons below are organized around.
+The single most important finding from that exercise is the one that reframes the entire roadmap: **ADR-O 0.2.x is a high-performance Decision Index. It is not yet a Knowledge System.** It answers "what was decided and why" as a set of weighted claims with reliable IRI identity. With 0.2.3, social-role attribution (`authoredBy` / `decidedBy` / `consulted` / `informed`) is now first-class, but the model still cannot yet answer "what was the logical structure of the argument" or "what criteria were alternatives evaluated against." Closing those remaining gaps — moving from Index to Knowledge System — is what the horizons below are organized around.
 
 ## 1. SWOT Analysis
 
@@ -23,12 +23,12 @@ The single most important finding from that exercise is the one that reframes th
 
 ## 2. Compatibility Baseline
 
-Alignment status between `adr-o.ttl` and each governing ADR, updated to reflect 0.2.1-draft:
+Alignment status between `adr-o.ttl` and each governing ADR, updated to reflect 0.2.3-draft:
 
 - **ADR-0003 (Prose Literals Are Markdown):** ✅ Applied in 0.2.1-draft. `dcterms:description`, `skos:definition`, and `skos:note` carry Markdown scope notes; the ontology header literal is retyped. `skos:prefLabel` explicitly excluded (label, not prose — see DESIGN-NOTES 0.2.1-draft). SHACL `sh:datatype` enforcement deferred to the shapes companion. Bulk retyping of existing `skos:definition` literals on status/valence individuals deferred to a future data-cleanup pass. **ADR-0017** restates the narrowed property scope as implemented.
 - **ADR-0004 (The KG Lives Under Tooling):** ✅ Compatible; no ontology changes needed. The ontology's `rdf:List` ordering, scope-notes-over-axioms pattern, and deferred SHACL checks are all consistent with it. Stylistic option (not required): adding `rdfs:seeAlso` to individual ADR IRIs from the ontology header would make the relationship bidirectional.
 - **ADR-0005 (Log All Decisions in the ADL):** ✅ Compatible; no ontology changes needed. Both real-time (`Status=Proposed`, appendable `hasDeliberation` list) and post-factum (`dcterms:date` / `dcterms:created` split) authoring modes are supported. The `dcterms:created` scope note was updated in 0.2.1 to name the post-factum case explicitly.
-- **ADR-0006–ADR-0020 (ontology vocabulary and shape, post-factum from design notes):** ✅ ADL-level direction is aligned through ADR-0020, including unified amendment semantics from ADR-0019/ADR-0020 (`amends`/`amendedBy`, no separate clarification predicate, no `Amended` status). The `.ttl` baseline remains 0.2.1-draft and should be read as pre-integration for these newer ADR additions. See individual files under `ADL/`.
+- **ADR-0006–ADR-0022 (ontology vocabulary and shape, post-factum from design notes):** ✅ ADL-level direction is aligned through ADR-0022. The `.ttl` baseline is now 0.2.3-draft and includes both unified amendment semantics from ADR-0019/ADR-0020 (`amends`/`amendedBy`, no separate clarification predicate, no `Amended` status) and social-role predicates from ADR-0021 (`authoredBy`, `decidedBy`, `consulted`, `informed`). ADR-0022 formalizes the tooling-mediated expansion pattern governing coexistence between `dcterms:creator` and `adr-o:authoredBy`. See individual files under `ADL/`.
 
 ## 3. Actionable Goals (The Roadmap)
 
@@ -55,9 +55,9 @@ The governing test for any proposed addition here: *can a current ADR-O 0.2.1 SP
 
 #### 2.1 The Social Graph (RACI) — *Priority: highest*
 
-The dogfood report gives Organizational Context the single ❌ in the final verdict table. Both dogfooded records carry a `Type` field and name parties beyond the author; neither has a landing place in 0.2.1.
+The dogfood report gave Organizational Context the single ❌ in the final verdict table. Both dogfooded records carried a `Type` field and named parties beyond the author; in 0.2.3, social-role predicates now provide a first-class landing place for those actors.
 
-- [ ] Introduce `adr-o:decidedBy`, `adr-o:consulted`, and `adr-o:informed` as `owl:ObjectProperty` (range: an agent IRI or literal, consistent with `dcterms:creator`). These decouple the *Author* (who wrote the record) from the *Decision Maker* (who had authority) and the *Consulted* and *Informed* parties. Without them, "who is accountable for this decision?" requires reading prose.
+- [x] Introduce `adr-o:authoredBy`, `adr-o:decidedBy`, `adr-o:consulted`, and `adr-o:informed` as `owl:ObjectProperty` predicates (object: agent IRI, e.g. `prov:Agent`). These expose an explicit RACI mapping in domain terms — *Responsible* as record authorship (`authoredBy`, not necessarily execution ownership), *Accountable* as decision authority (`decidedBy`), plus *Consulted* and *Informed* parties. Without them, "who is accountable for this decision?" requires reading prose. Implemented in `0.2.3-draft` via ADR-0021.
 - [ ] Introduce `adr-o:hasType` as an `owl:AnnotationProperty` pointing to a SKOS concept (no core scheme — same extension pattern as `adr-o:Concern`). The Type field appeared in both dogfooded records ("Project Governance," "Core Design"); it is epistemic metadata about the record, not domain-specific content. It has been deferred since 0.1.0-draft on the grounds that domain-specific categorisation doesn't belong in the core namespace — but Type categorises the *record*, not the *domain*. That argument no longer holds.
 
 #### 2.2 Criteria and Evaluation — *Priority: high (new gap, not in prior roadmap)*
