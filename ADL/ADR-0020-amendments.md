@@ -53,7 +53,7 @@ The responsibility for detecting amendments is pushed to the tooling layer. To r
 
 | Alternative | Reason not chosen |
 |-------------|-------------------|
-| **Functional Amendment (1:1)** | Would force a "chain" of amendments (A $\rightarrow$ B $\rightarrow$ C), effectively turning amendments into a second supersession chain and losing the "hub-and-patch" model. |
+| **Functional Amendment (1:1)** | Would force a "chain" of amendments (A → B → C), effectively turning amendments into a second supersession chain and losing the "hub-and-patch" model. |
 | **Introduce `adr-o:Amended` status** | Redundant. It mirrors the topological signal and adds a write operation (updating the status of the anchor) without improving the retrieval of the actual amendment nodes. |
 | **Use `rdfs:seeAlso`** | Too vague; fails to capture the directed, temporal nature of a modification as an evolutionary event. |
 

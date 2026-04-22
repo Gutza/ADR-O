@@ -757,4 +757,101 @@ The 0.2.2 → 0.2.3 bump is non-destructive and additive: four object properties
 </div>
 </div>
 
+<div data-dn-version="0.2.4-draft" data-dn-record="meta" id="adro-0-2-4-draft">
+
+## ADR-O 0.2.4-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-024" data-dn-record="adl" data-dn-adl-refs="0023">
+
+This iteration is a small, non-destructive vocabulary extension focused on record-level type metadata. The 0.2.3-draft substrate remains intact and `adr-o:hasType` is introduced as annotation-level classification for `DecisionRecord` instances.
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="hastype-added-024" data-dn-record="adl" data-dn-adl-refs="0023" data-dn-roadmap="H2.1">
+
+**`adr-o:hasType` added as `owl:AnnotationProperty` (`DecisionRecord` -> `skos:Concept`).** This closes the long-running type deferral with a profile-extensible shape and no required core concept scheme. *(→ [ADR-0023](/ADL/ADR-0023-add-hastype-annotation-property.md))*
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-024" data-dn-record="adl" data-dn-adl-refs="0023">
+
+The 0.2.3 -> 0.2.4 bump is non-destructive and additive: one annotation property is introduced (`adr-o:hasType`) and ontology version metadata is advanced to `0.2.4-draft`.
+
+</div>
+</div>
+
+</div>
+
+<div data-dn-version="0.2.5-draft" data-dn-record="meta" id="adro-0-2-5-draft">
+
+## ADR-O 0.2.5-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-025" data-dn-record="adl" data-dn-adl-refs="0024,0025,0026">
+
+This iteration is a targeted consistency release that applies ADR-0024, ADR-0025, and ADR-0026 to the ontology line. The shape remains non-destructive while extending relational expressivity with causal topology predicates and ontology provenance links.
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="sequential-id-discipline-025" data-dn-record="adl" data-dn-adl-refs="0024">
+
+**Sequential IDs for all records are treated as universal policy, including amendment records.** Relationship role is encoded by topology (`amends` / `amendedBy`), not identifier formatting. *(→ [ADR-0024](/ADL/ADR-0024-sequential-ids-for-all-decision-records.md))*
+
+</div>
+
+<div data-dn-passage="causal-topology-predicates-025" data-dn-record="adl" data-dn-adl-refs="0025" data-dn-roadmap="H3.1">
+
+**ADR-0025 causal topology predicates are materialized in the ontology.** Scope 2 predicates (`constrainedBy`, `prohibitedBy`, `recommends`, `discourages`, `enabledBy`) now link `Consideration` to prior `OutcomeFact` anchors, and Scope 3 bridge predicates (`materializes`, `justifiedBy`) provide DecisionRecord-to-resource provenance. *(→ [ADR-0025](/ADL/ADR-0025-causal-network.md))*
+
+</div>
+
+<div data-dn-passage="ontology-provenance-namespace-025" data-dn-record="adl" data-dn-adl-refs="0026">
+
+**Ontology provenance is now explicit via `adr-odr` namespace usage and `adr-o:justifiedBy` annotations on newly introduced terms.** This gives machine-traversable links from ontology terms back to the ADRs that justified them and closes the provenance gap called out by ADR-0026. *(→ [ADR-0026](/ADL/ADR-0026-ontology-provenance.md))*
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.2.4-draft decisions are reversed
+
+<div data-dn-passage="reversed-none-025" data-dn-record="meta">
+
+None.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-025" data-dn-record="adl" data-dn-adl-refs="0024,0025,0026">
+
+The 0.2.4 -> 0.2.5 bump is non-destructive and additive: new object properties implement ADR-0025 causal topology and provenance links, ontology-prefix metadata is expanded for ADR record IRIs (`adr-odr`), and ontology version metadata advances to `0.2.5-draft`.
+
+</div>
 </div>

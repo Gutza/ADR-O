@@ -128,3 +128,13 @@
   status: "Accepted"
   summary: "Every DecisionRecord receives a unique sequential adr-o:index at creation time; amendment relationships are expressed via predicates, not ID suffixes."
   amends: [8, 21]
+- index: 26
+  title: "Causal topology: scopes, modal constraints, and materialization"
+  filename: "ADR-0025-causal-network.md"
+  status: "Accepted"
+  summary: "Defines a three-scope causal architecture linking deliberation constraints and deliverable provenance through outcome-centered, machine-traversable relations."
+- index: 27
+  title: "Ontology provenance: the adr-odr namespace"
+  filename: "ADR-0026-ontology-provenance.md"
+  status: "Accepted"
+  summary: "Introduces adr-o:justifiedBy citations for ontology terms and establishes the adr-odr namespace with stable w3id-backed ADR IRIs."

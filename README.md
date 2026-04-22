@@ -6,7 +6,7 @@ ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing d
 
 ## Status
 
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.2.4-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.2.4`). Treat this as a **technical preview**: version 0.2 introduced a breaking redesign of the record shape relative to the earlier unreleased 0.1-style sketch, and further breaking changes are expected before a stable release.
+The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.2.5-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.2.5`). Treat this as a **technical preview**: version 0.2 introduced a breaking redesign of the record shape relative to the earlier unreleased 0.1-style sketch, and further breaking changes are expected before a stable release.
 
 A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships. See [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) for the per-version rationale.
 
@@ -34,7 +34,7 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 |--|--|
 | [`MANIFESTO.md`](/MANIFESTO.md) | Motivation and north star. |
 | [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
-| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft, 0.2.2-draft, 0.2.3-draft, 0.2.4-draft). |
+| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft, 0.2.2-draft, 0.2.3-draft, 0.2.4-draft, 0.2.5-draft). |
 | [`ontology/IDEAS.md`](/ontology/IDEAS.md) | Design exploration and backlog-style ideas. |
 | [ADR-0000](/ADL/ADR-0000-inception.md) | Inception and survey of prior art. |
 | [ADR-0001](/ADL/ADR-0001-license.md) | License (CC BY 4.0). |
@@ -60,6 +60,10 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 | [ADR-0021](/ADL/ADR-0021-social-role-predicates.md) | Social role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`) with explicit RACI mapping. |
 | [ADR-0022](/ADL/ADR-0022-creator-authoredby-coexistence.md) | `dcterms:creator` / `adr-o:authoredBy` coexistence: tooling-mediated expansion pattern. |
 | [ADR-0023](/ADL/ADR-0023-add-hastype-annotation-property.md) | `adr-o:hasType` as record-level type metadata via profile-defined SKOS concepts. |
+| [ADR-0024](/ADL/ADR-0024-sequential-ids-for-all-decision-records.md) | Sequential IDs for all records, including amendments; topology carries amendment role. |
+| [ADR-0025](/ADL/ADR-0025-causal-network.md) | Three-scope causal topology and project materialization/provenance predicates. |
+| [ADR-0026](/ADL/ADR-0026-ontology-provenance.md) | Ontology provenance via `adr-odr` namespace and `adr-o:justifiedBy` citations. |
+| [ADR-xxxx](/ADL/ADR-xxxx-success-criterion.md) | Proposed success criterion for v0.3.0 as a practical adoption checkpoint. |
 | [`Archive/index.md`](/Archive/index.md) | Archived references and outreach materials. |
 
 ## Intended outcomes

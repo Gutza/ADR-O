@@ -16,20 +16,20 @@ The conversion confirmed that the 0.2.0 "Atom-First" redesign is fundamentally s
 
 The exercise revealed that while the ontology captures the *conclusion* of a decision, it performs a "lossy compression" on the *process* of reaching that conclusion.
 
-### 3.1 The Matrix Problem (Structured Data $\rightarrow$ Claims)
+### 3.1 The Matrix Problem (Structured Data → Claims)
 In **ADR-0001**, the author uses a Markdown table to compare licenses across four binary dimensions (Attribution, ShareAlike, Copyleft, and OBOnorm).
 *   **The Friction:** ADR-O does not model "Feature Sets" or "Criteria." It models "Considerations" as atoms of prose.
 *   **The Result:** To represent the table in RDF, the "data" (e.g., *Apache 2.0 = Attribution Required*) had to be converted into a "claim" (e.g., *The fact that Apache 2.0 requires attribution is a reason to support it*). 
 *   **Conclusion:** The model is currently a **Claim-Graph**, not a **Feature-Graph**. If we wish to preserve the "Matrix" view, we need a way to model `Criteria` and the `Evaluation` of an `Alternative` against that `Criterion`.
 
-### 3.2 The Narrative Problem (Stories $\rightarrow$ Facts)
+### 3.2 The Narrative Problem (Stories → Facts)
 **ADR-0005** relies heavily on a detailed "Ambient-Transcription Vignette" (the 2032 Vim migration scenario) to illustrate the end-state of the project.
 *   **The Friction:** The vignette is a narrative arc involving characters (John, Alice, Bob) and a temporal sequence. RDF is a set of unordered assertions.
 *   **The Result:** The vignette was collapsed into a single `Consideration` node. The "soul" of the argument—the dialogue and the illustrative storytelling—was stripped away, leaving only the resulting "fact" (that real-time instrumentation is possible).
 *   **Conclusion:** The ontology is designed for **knowledge retrieval**, not **narrative preservation**. It captures the *what* and the *why*, but discards the *how* of the storytelling.
 
-### 3.3 The Logical Flow Problem (Syllogisms $\rightarrow$ Lists)
-**ADR-0005** is structured as a logical proof: *Premise 1 (Economics of Medium) + Premise 2 (Tooling) $\rightarrow$ Conclusion (Log All).*
+### 3.3 The Logical Flow Problem (Syllogisms → Lists)
+**ADR-0005** is structured as a logical proof: *Premise 1 (Economics of Medium) + Premise 2 (Tooling) → Conclusion (Log All).*
 *   **The Friction:** The ontology uses `rdf:List` for ordering, but lists are sequences, not logical dependencies.
 *   **The Result:** We can list the premises in the `hasContext` list, but we cannot explicitly model the "Therefore" link. We can state that Premise 1 *supports* the decision, but we cannot state that Premise 1 *is a prerequisite for the logic* of the decision.
 *   **Conclusion:** The model lacks **Argumentative Topology**. It treats considerations as a "bucket of weights" rather than a "chain of logic."
