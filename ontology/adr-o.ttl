@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.2.6> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.3.0> ;
                           dcterms:created "2026-04-22"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record, inspired by the software industry's Architecture Decision Records. Records are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, OutcomeFact) into framing, deliberation, and outcome roles, plus an explicit option pool, an explicit chosen alternative, and typed relationships to other decisions." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.2.6-draft" ;
+                          owl:versionInfo "0.3.0-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary needed to represent a single decision record as a node in a typed graph: the record itself, the concerns it addresses, the system elements it affects, the alternatives considered, the chosen alternative, the reusable Considerations placed via reified ContextFact / DeliberationFact / OutcomeFact links into framing, deliberation, and outcome roles, and the typed relationships to every other record in the log. Record metadata (title, identifier, date, author, references) is delegated to Dublin Core Terms; provenance is aligned with PROV-O; controlled vocabularies (status, deliberation valences, outcome valences, and any domain-specific concern or relationship taxonomies) are expressed as SKOS concept schemes. The core ontology is domain-agnostic: software-architecture-specific terms, such as ArchitectureDecisionRecord, belong in domain profiles published in their own namespaces."@en .
 
 #################################################################
@@ -182,19 +182,20 @@ adr-o:conflictsWith rdf:type owl:ObjectProperty ,
                     adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#consideration
-adr-o:consideration rdf:type owl:ObjectProperty ,
-                             owl:FunctionalProperty ;
-                    rdfs:domain [ rdf:type owl:Class ;
-                                  owl:unionOf ( adr-o:ContextFact
-                                                adr-o:DeliberationFact
-                                                adr-o:OutcomeFact
-                                              )
-                                ] ;
-                    rdfs:range adr-o:Consideration ;
-                    rdfs:comment "Links a reified fact (ContextFact, DeliberationFact, or OutcomeFact) to the Consideration it places. Functional: a fact carries exactly one Consideration. The same Consideration IRI may be the object of arbitrarily many such links across arbitrarily many records and roles; that reuse — the YADR-style identity property — is the core of the atom-first design: the argument that supported Option A during deliberation is literally the same node that may later appear as a Benefit in an OutcomeFact, not a copy of it."@en ;
-                    rdfs:label "consideration"@en ;
-                    adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
+###  https://w3id.org/adr-o#manifests
+adr-o:manifests rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( adr-o:ContextFact
+                                            adr-o:DeliberationFact
+                                            adr-o:OutcomeFact
+                                          )
+                            ] ;
+                rdfs:range adr-o:Consideration ;
+                rdfs:comment "Links a reified fact (ContextFact, DeliberationFact, or OutcomeFact) to the Consideration it manifests. Functional: a fact carries at most one Consideration. The same Consideration IRI may be the object of arbitrarily many such links across arbitrarily many records and roles; that reuse - the YADR-style identity property - is the core of the atom-first design: the argument that supported Option A during deliberation is literally the same node that may later appear as a Benefit in an OutcomeFact, not a copy of it."@en ;
+                rdfs:label "manifests"@en ;
+                adr-o:justifiedBy adr-odr:ADR-0027-facts-manifest-considerations ,
+                                   adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
 ###  https://w3id.org/adr-o#consulted

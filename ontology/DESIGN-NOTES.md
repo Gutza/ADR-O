@@ -427,6 +427,8 @@ This iteration is purely tactical and non-destructive. The 0.2.0-draft architect
 
 ### Decisions from prior drafts applied in this iteration
 
+This section lifts prior accepted decisions into 0.2.1-draft implementation scope *(→ [ADR-0015](/ADL/ADR-0015-dublin-core-and-prov-usage.md); → [ADR-0016](/ADL/ADR-0016-dcterms-version-in-record.md)).*
+
 <div data-dn-passage="adr-0003-markdown-applied" data-dn-record="adl" data-dn-adl-refs="0017,0003">
 
 **ADR-0003 Markdown datatype convention — applied, with scope narrowed under the 0.2.0 architecture.**
@@ -886,6 +888,56 @@ The 0.2.4 -> 0.2.5 bump is non-destructive and additive: new object properties i
 <div data-dn-passage="iteration-character-overview-026" data-dn-record="meta">
 
 This iteration is a purely editorial comment-prose pass with no structural or semantic changes. All `rdfs:comment` scope-label prefixes in the ontology were normalised to the three canonical names established by ADR-0025: **ADR scope**, **ADL scope**, and **Project scope**. No terms were added, removed, or semantically altered; no axioms changed.
+
+</div>
+
+<div data-dn-version="0.3.0-draft" data-dn-record="meta" id="adro-0-3-0-draft">
+
+## ADR-O 0.3.0-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-030" data-dn-record="adl" data-dn-adl-refs="0027">
+
+This iteration applies ADR-0027 as a deliberate predicate rename in the ADR scope fact-placement model. The ontology keeps the same atom-first architecture and the same cardinality/typing behavior, but replaces the noun-predicate `adr-o:consideration` with the verb-predicate `adr-o:manifests` to make the edge semantics explicit in triples.
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="manifests-predicate-030" data-dn-record="adl" data-dn-adl-refs="0027">
+
+**`adr-o:manifests` replaces `adr-o:consideration` for Fact -> Consideration placement.** Domain remains the union of `ContextFact`, `DeliberationFact`, and `OutcomeFact`; range remains `Consideration`; and the property remains `owl:FunctionalProperty` (0..1 in OWL, with exact-one expected via tooling/SHACL conventions). The rename is lexical-semantic: it clarifies relation meaning ("a fact manifests a consideration") without changing the underlying shape. *(→ [ADR-0027](/ADL/ADR-0027-facts-manifest-considerations.md); base model [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.2.6-draft decisions are reversed
+
+<div data-dn-passage="reversed-consideration-predicate-030" data-dn-record="adl" data-dn-adl-refs="0027,0010">
+
+**The 0.2.x naming decision to use `adr-o:consideration` as the Fact-placement predicate is reversed.** The relation remains the same structurally but is now expressed as `adr-o:manifests` to avoid noun-predicate ambiguity and align naming with verb semantics used elsewhere in the ontology (notably `materializes`).
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-030" data-dn-record="adl" data-dn-adl-refs="0027">
+
+The 0.2.6 -> 0.3.0 bump is intentionally breaking: one object-property IRI is renamed (`adr-o:consideration` -> `adr-o:manifests`) while preserving domain/range/functionality and conceptual role. Existing graphs and queries that use the old predicate require migration. Because ADR-O remains pre-1.0 and ADR-0027 explicitly accepts this break for semantic clarity, a minor-line break to `0.3.0-draft` is used as the compatibility signal.
+
+</div>
+</div>
 
 </div>
 </div>

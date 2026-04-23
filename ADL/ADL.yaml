@@ -54,6 +54,7 @@
   filename: "ADR-0010-consideration-and-reified-facts.md"
   status: "Accepted"
   summary: "Bootstrapped ADL index entry."
+  amendedBy: [27]
 - index: 11
   title: "Strict graph no nygard body"
   filename: "ADR-0011-strict-graph-no-nygard-body.md"
@@ -120,7 +121,7 @@
 - index: 23
   title: "Add hasType annotation property"
   filename: "ADR-0023-add-hastype-annotation-property.md"
-  status: "Proposed"
+  status: "Accepted"
   summary: "Adds adr-o:hasType as an annotation property to classify records using extension SKOS concepts."
 - index: 24
   title: "Sequential IDs for all decision records"
@@ -138,3 +139,9 @@
   filename: "ADR-0026-ontology-provenance.md"
   status: "Accepted"
   summary: "Introduces adr-o:justifiedBy citations for ontology terms and establishes the adr-odr namespace with stable w3id-backed ADR IRIs."
+- index: 27
+  title: "Rename adr-o:consideration to adr-o:manifests"
+  filename: "ADR-0027-facts-manifest-considerations.md"
+  status: "Accepted"
+  summary: "Renames the fact-to-consideration predicate from adr-o:consideration to adr-o:manifests for clearer role-manifestation semantics."
+  amends: [10]
