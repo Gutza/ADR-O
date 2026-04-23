@@ -24,7 +24,9 @@ The real-time agent scenario (ADR-0005 vignette) demands that an agent be able t
 
 ### 1. The Three Scopes of Causation
 
-#### Scope 1: Intra-ADR (The Deliberation)
+#### ADR Scope
+The **ADR scope** is the tightest of the three, and it represents a single deliberation – a single complete [Y-statement](/Archive/Y-Statements.md).
+
 Within a single record, causality is **argumentative**. A `Consideration` is weighed against an `Alternative` to produce a decision. This scope is designed to be a machine-readable encoding of ZIO's **Y-Statement** structure:
 
 | Y-Statement Clause | ADR-O Construct |
@@ -38,7 +40,9 @@ Within a single record, causality is **argumentative**. A `Consideration` is wei
 
 The `adr-o:outcomeValence` predicate is the structural encoding of the Y-Statement's payoff/cost distinction. It transforms a prose "acceptance" into a queryable fact.
 
-#### Scope 2: Intra-ADL (The Causal Network)
+#### ADL Scope
+The **ADL scope** materializes the causal network, materializing the causation relationships between ADRs inside the ADL.
+
 Between decisions, causality is **retrospective**. A later decision recognizes that a prior decision's outcome shapes its current options.
 
 - **Causal anchor:** `adr-o:OutcomeFact` (minted by a `DecisionRecord` at the time of acceptance).
@@ -48,23 +52,21 @@ Between decisions, causality is **retrospective**. A later decision recognizes t
     - `adr-o:recommends` (RFC 2119: **SHOULD**)
     - `adr-o:discourages` (RFC 2119: **SHOULD NOT**)
     - `adr-o:enabledBy` (RFC 2119: **MAY**)
-- **Causal direction:** `Consideration` (in later ADR) → `OutcomeFact` (from prior ADR).
+- **Causal direction:** `Consideration` (in later ADR) $\rightarrow$ `OutcomeFact` (from prior ADR).
 - **Nature:** A claim made by the later decision about its own constraints. The prior decision does not "push" constraints forward; the later decision "pulls" them back.
 
-#### Scope 3: Project (The Deliverable)
-Between the ADL and the system artifacts it describes.
+#### Project Scope
+The **Project scope** breaks out of the ADL, and contains both the ADL and the deliverable artifact documented by it; at this scope we're concerned with connections between the ADL and the system artifacts it describes.
 - **Predicates:**
     - `adr-o:materializes` (`DecisionRecord` $\to$ `rdfs:Resource`)
     - `adr-o:justifiedBy` (`rdfs:Resource` $\to$ `DecisionRecord`)
 - **Causal direction:** The deliverable points back to its justification.
 - **Nature:** Provenance. The deliverable is a materialized effect of a decision.
 
----
-
 ### 2. The Causation Model
 
 **The Causal Loop:**
-An `OutcomeFact` carries an `outcomeValence` (e.g., `adr-o:AcceptedCost`). This valence is an **intra-ADR** statement about the decision's cost. In a subsequent ADR, a `Consideration` may point to that `OutcomeFact` via a **Scope 2** predicate like `adr-o:constrainedBy`.
+An `OutcomeFact` carries an `outcomeValence` (e.g., `adr-o:AcceptedCost`). This valence is an **ADR scope** statement about the decision's cost. In a subsequent ADR, a `Consideration` may point to that `OutcomeFact` via an **ADL scope** predicate like `adr-o:constrainedBy`.
 
 **The Materialization Bridge:**
 `adr-o:materializes` links a `DecisionRecord` to a system artifact (lock file, config, class). The artifact then carries `adr-o:justifiedBy` back to the decision. This is the **Scope 3** entry point for anyone asking "Why does this file exist?".
@@ -81,8 +83,6 @@ mr-adl:cons-B  a adr-o:Consideration ;
                adr-o:constrainedBy  mr-adl:outcome-A .
 ```
 
----
-
 ### 3. The Supersession Corollary
 
 **A superseded `DecisionRecord` has no active causal footprint.**
@@ -90,8 +90,6 @@ mr-adl:cons-B  a adr-o:Consideration ;
 When `ADR-B` `supersedes` `ADR-A`, `ADR-A`'s `OutcomeFact`s become **semantically void**. They still exist in the graph as historical facts, but they no longer act as constraints or enablers for future decisions.
 
 **Tooling implication:** Any `Consideration` that is `constrainedBy` an `OutcomeFact` of a superseded decision is flagged as having a **stale constraint**. This is a primary value of the graph—it reveals when a decision is relying on a premise that is no longer in force.
-
----
 
 ### 4. Reasoning and Inferences
 
@@ -105,8 +103,6 @@ If a `Consideration` is simultaneously `enabledBy` and `prohibitedBy` outcomes f
 
 **Impact Analysis**
 "If I supersede ADR-X, which downstream Considerations in the ADL now have voided constraints?" This becomes a simple SPARQL query over the causal graph, rather than a manual audit.
-
----
 
 ## Real-time ADR Agent
 
@@ -123,8 +119,6 @@ Starting from the real-time ADR concept in ADR-0005, ADR-0025 enables the upgrad
 > **John:** "Fine, we'll just find a vim plugin."
 >
 > **Agent:** "Before you do—ADR-0723 is also a causal anchor for **four other decisions**: the CI pipeline (ADR-0112), the onboarding guide (ADR-0201), the contributor contract (ADR-0415), and the security scan workflow (ADR-0503). All four of those decisions are `constrainedBy` that same outcome. If you change the linting mechanism, you're not just changing an editor—you're pulling the rug out from under four downstream decisions. Would you like me to map the impact chain?"
-
----
 
 ## Alternatives considered
 
@@ -148,6 +142,9 @@ Starting from the real-time ADR concept in ADR-0005, ADR-0025 enables the upgrad
 - The graph becomes denser; requires tooling to surface relevance.
 - Authors (or agents) must assert the links.
 
+**Open questions.**
+- We haven't considered the fourth scope yet: the **Organization scope** we will need to formalize when we will consider implementing GADR, when Considerations are lifted from individual ADLs and shared across the organization.
+
 ## References
 
 - ADR-0004 — The KG Lives Under Tooling (agents as active participants).
@@ -156,5 +153,3 @@ Starting from the real-time ADR concept in ADR-0005, ADR-0025 enables the upgrad
 - ADR-0011 — Strict Graph (no Nygard body literals to hide constraints in).
 - RFC 2119 — Requirement levels (MUST, SHOULD, MAY).
 - ADR-0026 — Ontology provenance (the specific application of this model).
-
-You are exactly right. I was treating the agent like a search engine ("let me find the document") rather than a graph-navigator. The real value of the network-of-atoms is **transversal**.

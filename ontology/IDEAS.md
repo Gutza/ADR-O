@@ -212,8 +212,6 @@ more-information: |
 
 For GADR, please look at local file `Archive/GADR/GADR-capturing-the-essence-of-decisions.pdf`.
 
----
-
 **The argument reuse problem**
 
 YADR is the most structurally revealing of the three formats. The YAML anchor/alias mechanism (`&argument-a` → `*argument-a`) encodes a genuinely important semantic claim: the argument you made in favour of Option 1 during evaluation *is the same argument* that appears as a positive consequence in the decision outcome. Not a copy of it — the same thing. MADR handles this with copy-paste, which means the "Pros" section and the "Consequences" section can silently drift. YADR makes the identity explicit within the document.

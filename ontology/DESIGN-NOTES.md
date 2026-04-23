@@ -28,6 +28,23 @@ This document also uses HTML `<div>` containers with `data-dn-*` attributes for 
 
 </div>
 
+<div data-dn-section="terminology-note">
+<div data-dn-passage="scope-terminology-alias-map" data-dn-record="meta">
+
+## Terminology note: causal scope naming
+
+ADR-0025 established three canonical names for the causal scopes. Earlier drafts and git history use several informal aliases; the table below maps them to the canonical terms for reference.
+
+| Legacy alias | Canonical name (ADR-0025) |
+|:---|:---|
+| `intra-ADR`, `Scope-1`, `within-record` | **ADR scope** |
+| `inter-ADR`, `cross-ADR`, `intra-ADL`, `Scope-2` | **ADL scope** |
+| `Project-level scope`, `Scope-3` | **Project scope** |
+
+</div>
+
+</div>
+
 <div data-dn-version="0.1.0-draft" data-dn-record="meta" id="adro-0-1-0-draft">
 
 ## ADR-O 0.1.0-draft
@@ -823,7 +840,7 @@ This iteration is a targeted consistency release that applies ADR-0024, ADR-0025
 
 <div data-dn-passage="causal-topology-predicates-025" data-dn-record="adl" data-dn-adl-refs="0025" data-dn-roadmap="H3.1">
 
-**ADR-0025 causal topology predicates are materialized in the ontology.** Scope 2 predicates (`constrainedBy`, `prohibitedBy`, `recommends`, `discourages`, `enabledBy`) now link `Consideration` to prior `OutcomeFact` anchors, and Scope 3 bridge predicates (`materializes`, `justifiedBy`) provide DecisionRecord-to-resource provenance. *(→ [ADR-0025](/ADL/ADR-0025-causal-network.md))*
+**ADR-0025 causal topology predicates are materialized in the ontology.** ADL scope predicates (`constrainedBy`, `prohibitedBy`, `recommends`, `discourages`, `enabledBy`) now link `Consideration` to prior `OutcomeFact` anchors, and Project scope bridge predicates (`materializes`, `justifiedBy`) provide DecisionRecord-to-resource provenance. *(→ [ADR-0025](/ADL/ADR-0025-causal-network.md))*
 
 </div>
 
@@ -854,4 +871,56 @@ None.
 The 0.2.4 -> 0.2.5 bump is non-destructive and additive: new object properties implement ADR-0025 causal topology and provenance links, ontology-prefix metadata is expanded for ADR record IRIs (`adr-odr`), and ontology version metadata advances to `0.2.5-draft`.
 
 </div>
+</div>
+
+</div>
+
+<div data-dn-version="0.2.6-draft" data-dn-record="meta" id="adro-0-2-6-draft">
+
+## ADR-O 0.2.6-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-026" data-dn-record="meta">
+
+This iteration is a purely editorial comment-prose pass with no structural or semantic changes. All `rdfs:comment` scope-label prefixes in the ontology were normalised to the three canonical names established by ADR-0025: **ADR scope**, **ADL scope**, and **Project scope**. No terms were added, removed, or semantically altered; no axioms changed.
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="scope-label-normalisation-026" data-dn-record="meta">
+
+**Canonical scope labels enforced in all `rdfs:comment` literals.** Pre-existing informal aliases — `Intra-ADR scope`, `Intra-ADL scope`, and `Project-level scope` — have been replaced throughout the ontology with their canonical equivalents. The same normalisation was applied to all normative prose documents (`ADL/*.md`, `ontology/ROADMAP.md`). A scope-naming canon section has been added to `AGENTS.md` to prevent future drift, and a terminology alias table has been added to `ontology/DESIGN-NOTES.md` for readers consulting git history or external references.
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.2.5-draft decisions are reversed
+
+<div data-dn-passage="reversed-none-026" data-dn-record="meta">
+
+None.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-026" data-dn-record="meta">
+
+The 0.2.5 -> 0.2.6 bump is purely editorial: fifteen `rdfs:comment` literals are updated (eleven `Intra-ADL scope:` → `ADL scope:`, two `Intra-ADR scope:` → `ADR scope:`, two `Project-level scope:` → `Project scope:`), and ontology version metadata advances to `0.2.6-draft`. No `adr-o:` terms are added, removed, or semantically changed. Patch-level increment is the correct signal.
+
+</div>
+</div>
+
 </div>

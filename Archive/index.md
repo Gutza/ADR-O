@@ -10,6 +10,6 @@ This folder is an archive of useful resources online, some of which have been do
 
 ## Notable Articles
 - Michael Nygard's seminal [Documenting Architecture Decisions](https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions) Cognitect blog post back in 2011
-- [Y-Statements](https://medium.com/olzzio/y-statements-10eb07b5a177), a blog post by Dr. Olaf Zimmermann crystallizing the shape of decisions
+- [Y-Statements](https://medium.com/olzzio/y-statements-10eb07b5a177), a blog post by Dr. Olaf Zimmermann crystallizing the shape of decisions, summarized in [Y-Statements](./Y-Statements.md)
 - [GADR](https://adr.github.io/gadr/), Generalized Architectural Decision Records, a proposal by Oliver Kopp, Anita Armbruster on how to share knowledge across ADLs (also see folder [GADR](/Archive/GADR/) for a local copy of their paper)
 - [From Architectural Decisions to Design Decisions](https://medium.com/olzzio/from-architectural-decisions-to-design-decisions-f05f6d57032b) and [ADR = Any Decision Record?](https://medium.com/olzzio/adr-any-decision-record-916d1b64b28d), a couple of articles by Dr. Olaf Zimmermann from 2021 making the argument that ADRs are fundamentally domain-agnostic

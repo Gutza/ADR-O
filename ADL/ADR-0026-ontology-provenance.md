@@ -26,7 +26,7 @@ We need a mechanism that:
 
 **1. Apply `adr-o:justifiedBy` to the ontology terms.**
 
-The `adr-o:justifiedBy` predicate, established in **ADR-0025** as the Scope 3 causal link from a materialized resource back to its decision, is applied here to the ontology's own terms. An ontology term is a resource that was "materialized" by a design decision; therefore, it is naturally the subject of `adr-o:justifiedBy`.
+The `adr-o:justifiedBy` predicate, established in **ADR-0025** as the Project scope causal link from a materialized resource back to its decision, is applied here to the ontology's own terms. An ontology term is a resource that was "materialized" by a design decision; therefore, it is naturally the subject of `adr-o:justifiedBy`.
 
 Every `adr-o:` term and axiom in the ontology should carry at least one `adr-o:justifiedBy` triple pointing to the ADR (or ADRs) that established it.
 
