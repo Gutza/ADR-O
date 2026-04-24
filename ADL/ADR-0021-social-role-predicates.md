@@ -8,6 +8,7 @@ author:
   email: bogdan@moongate.ro
 amendedBy:
   - ADR-0022
+  - ADR-0028
 ---
 
 # ADR-0021 — Social Role Predicates for Decision Records (RACI-Mapped)

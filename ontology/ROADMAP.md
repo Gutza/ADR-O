@@ -7,7 +7,7 @@ The single most important finding from that exercise is the one that reframes th
 ## 1. SWOT Analysis
 
 ### STRENGTHS (What We Do Well)
-- **Atom-First Identity:** Solves the YADR identity problem via `Consideration` nodes reused across records and roles with stable IRI identity.
+- **Atom-First Identity:** `Consideration` nodes with stable IRI identity enable machine-verifiable intra-record coherence; cross-record connectivity uses reference reuse via `adr-o:derivedFrom`/`adr-o:derives` (ADR-0028).
 - **Social Graph (RACI):** `authoredBy`, `decidedBy`, `consulted`, and `informed` provide a first-class RACI mapping; `dcterms:creator` coexists as a DC-compatibility layer per ADR-0022. Social-role queries are now answerable without reading prose.
 - **Option Pool Integrity:** `hasAlternative` + `chosenAlternative` + valenced `DeliberationFact`s give machine-traversable decision outcomes without text parsing.
 - **Domain Agnostic:** Portable across any professional domain (`ADR-0002`).
@@ -44,13 +44,21 @@ Alignment status between `adr-o.ttl` and each governing ADR, updated to reflect 
 
 The three horizons below correspond to three distinct ambitions. Horizon 1 is closed. Horizons 2 and 3 together trace the path from Decision Index to Knowledge System.
 
+<div data-dn-section="governing-tests-roadmap">
+
 ### The Governing Tests
+
+<div data-dn-passage="governing-tests-framework-roadmap" data-dn-record="adl" data-dn-adl-refs="0025">
 
 Two tests govern every proposed addition to Horizons 2 and 3. An addition is justified only when it passes at least one; it is deferred if prose retrieval alone can answer the question and structural modeling adds no traversal power.
 
 **Test 1 — SPARQL traversability:** Can a current ADR-O SPARQL query answer this question without reading prose? If no, and the question is one a decision log should answer structurally, the addition is justified.
 
 **Test 2 — Y-statement roundtrip:** Can ADR-O decompose a six-clause [Y-statement](/Archive/Y-Statements.md) from markdown into triples and recompose those triples back into a Y-statement without information loss? A clause is *lossless* if its content maps onto a named, machine-traversable ADR-O construct; it is *lossy* if it collapses into a prose literal or is indistinguishable from another clause (or by using meta-prose in the triples to describe the shape of the clause).
+
+</div>
+
+<div data-dn-passage="y-statement-roundtrip-analysis-roadmap" data-dn-record="adl" data-dn-adl-refs="0025">
 
 The current roundtrip status after 0.2.5-draft / ADR-0025:
 
@@ -65,6 +73,10 @@ The current roundtrip status after 0.2.5-draft / ADR-0025:
 | *[implicit: Facing → Decided link]* | — | ❌ Missing — premises (`ContextFact`s) and conclusion (`chosenAlternative`) are co-located but have no inference edge within a record; ADR scope syllogistic structure is invisible to SPARQL |
 
 The three lossy/missing entries are the three items Horizons 2 and 3 are now organised around.
+
+</div>
+
+</div>
 
 ### Horizon 1: Tactical Alignment — *CLOSED (delivered in v0.2.1)*
 
@@ -106,6 +118,8 @@ The trade-off half of the original item (`accepting-that` / `AcceptedCost`) was 
 - The design boundary to decide before shipping: whether `Goal` is a subclass of `Concern` (goals and concerns as two poles of the same concern space), a sibling class, or entirely separate. The minimal ship is sibling + `intendsToAchieve`; the richer option would allow `Concern` and `Goal` to be linked (e.g., a `Goal` is the resolution of a `Concern`), which is a later extension not required for the first version.
 
 #### 2.4 ADR Scope Argumentative Topology — *Priority: medium-high*
+
+> **Status: not yet implemented in `adr-o.ttl`.** Neither `adr-o:presupposes` nor `adr-o:entails` exists in the ontology. Blocked on the design-decision ADL entry that must resolve direction (presupposition vs. entailment) and the scope of `Facing → Decided` bridge edges before any `.ttl` change.
 
 ADR-0025 closed the *ADL scope* argumentative gap: a `Consideration` in a later decision can now point back to an `OutcomeFact` from a prior decision via modal-strength predicates (`constrainedBy`, `prohibitedBy`, `recommends`, `discourages`, `enabledBy`). What remains is the *ADR scope* dimension: logical dependency between `Consideration` nodes *within one record's deliberation*.
 

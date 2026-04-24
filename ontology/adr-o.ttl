@@ -12,414 +12,344 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.3.0> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.4.0> ;
                           dcterms:created "2026-04-22"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
-                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record, inspired by the software industry's Architecture Decision Records. Records are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, OutcomeFact) into framing, deliberation, and outcome roles, plus an explicit option pool, an explicit chosen alternative, and typed relationships to other decisions." ;
+                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.3.0-draft" ;
-                          skos:scopeNote "ADR-O defines the minimum vocabulary needed to represent a single decision record as a node in a typed graph: the record itself, the concerns it addresses, the system elements it affects, the alternatives considered, the chosen alternative, the reusable Considerations placed via reified ContextFact / DeliberationFact / OutcomeFact links into framing, deliberation, and outcome roles, and the typed relationships to every other record in the log. Record metadata (title, identifier, date, author, references) is delegated to Dublin Core Terms; provenance is aligned with PROV-O; controlled vocabularies (status, deliberation valences, outcome valences, and any domain-specific concern or relationship taxonomies) are expressed as SKOS concept schemes. The core ontology is domain-agnostic: software-architecture-specific terms, such as ArchitectureDecisionRecord, belong in domain profiles published in their own namespaces."@en .
+                          owl:versionInfo "0.4.0-draft" ;
+                          skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Considerations. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
 #    Annotation properties
 #################################################################
 
-###  http://purl.org/dc/terms/created
 dcterms:created rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: optional record-creation timestamp, distinct from dcterms:date when the log distinguishes decision date from record lifecycle. The typical case is a post-factum ADR, where the decision happened earlier than the record was authored: dcterms:date captures when the decision was made, dcterms:created captures when the record itself was written."@en .
+                skos:scopeNote "In ADR-O: optional record-creation timestamp. Distinct from dcterms:date when the log distinguishes decision date from record authorship (e.g. post-factum ADRs)."@en .
 
 
-###  http://purl.org/dc/terms/creator
 dcterms:creator rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: the ingress authorship predicate and DC-compatibility layer. Accepts either a literal (e.g. \"Jane Doe <jane@example.org>\") or an IRI pointing to a structured agent (e.g. a prov:Agent or foaf:Person). For explicit social-role topology on DecisionRecord use adr-o:authoredBy / adr-o:decidedBy / adr-o:consulted / adr-o:informed (ADR-0021). Tooling is expected to promote a bare dcterms:creator to adr-o:authoredBy when the latter is absent; when both are present and point to different agents, adr-o:authoredBy is authoritative for social-role queries (ADR-0022)."@en .
+                skos:scopeNote "In ADR-O: the ingress authorship predicate and DC-compatibility layer. Accepts literals or agent IRIs. Tooling expands this to adr-o:authoredBy when absent; adr-o:authoredBy is authoritative if both differ."@en .
 
 
-###  http://purl.org/dc/terms/description
 dcterms:description rdf:type owl:AnnotationProperty ;
-                    skos:scopeNote "In ADR-O: the prose-description predicate for a DecisionRecord (record-level summary) and for a Consideration (the atom's full textual payload — the primary home for prose in any ADR-O record). Prose-carrying literals on this property SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
+                    skos:scopeNote "In ADR-O: prose-description for a DecisionRecord (summary) or Consideration (primary payload). SHOULD be typed as text/markdown."@en .
 
 
-###  http://purl.org/dc/terms/license
 dcterms:license rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: per-record license override if the record is licensed differently from the log as a whole."@en .
+                skos:scopeNote "In ADR-O: per-record license override if different from the log."@en .
 
 
-###  http://purl.org/dc/terms/title
 dcterms:title rdf:type owl:AnnotationProperty ;
               skos:scopeNote "In ADR-O: the human-readable title of a DecisionRecord."@en .
 
 
-###  http://purl.org/dc/terms/version
 dcterms:version rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: optional internal version of a DecisionRecord — a literal version tag (e.g. \"1.2\") for tracking iterations of the same record between supersession events. Distinct from the supersession chain (adr-o:supersedes / adr-o:supersededBy), which models replacement by a successor record with a new identity. Use dcterms:version when the same record is being amended without yet warranting a supersession."@en .
+                skos:scopeNote "In ADR-O: optional version tag for a DecisionRecord. Restricted to Tier 2 (Presentation) changes; Tier 1 changes require a new record via adr-o:amends."@en .
 
 
-###  http://www.w3.org/2004/02/skos/core#definition
 skos:definition rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: formal definition payload on a Consideration or SKOS concept individual. Prose-carrying literals on this property SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
+                skos:scopeNote "In ADR-O: formal definition payload on a Consideration or SKOS concept. SHOULD be typed as text/markdown."@en .
 
 
-###  http://www.w3.org/2004/02/skos/core#hasTopConcept
-skos:hasTopConcept rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#inScheme
-skos:inScheme rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#note
 skos:note rdf:type owl:AnnotationProperty ;
-          skos:scopeNote "In ADR-O: the parent property of the SKOS note family (skos:scopeNote, skos:editorialNote, skos:historyNote, skos:changeNote, skos:example). On Consideration nodes, note sub-properties carry supplementary annotation prose — clarifications, provenance remarks, editorial commentary — that complement the primary prose payload on dcterms:description. Prose-carrying literals on this property and its sub-properties SHOULD be typed with ^^<https://www.w3.org/ns/iana/media-types/text/markdown> per ADR-0003. Datatype enforcement is deferred to the planned SHACL companion."@en .
+          skos:scopeNote "In ADR-O: parent of the SKOS note family. On Considerations, sub-properties carry supplementary annotation prose. SHOULD be typed as text/markdown."@en .
 
 
-###  http://www.w3.org/2004/02/skos/core#prefLabel
-skos:prefLabel rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#scopeNote
-skos:scopeNote rdf:type owl:AnnotationProperty .
-
-
-###  https://w3id.org/adr-o#hasType
 adr-o:hasType rdf:type owl:AnnotationProperty ;
               rdfs:domain adr-o:DecisionRecord ;
               rdfs:range skos:Concept ;
-              skos:scopeNote "In ADR-O: optional record-level type metadata linking a DecisionRecord to a profile-defined SKOS concept that classifies the record itself (for example, governance versus core design). ADR-O intentionally defines no core type scheme; extension profiles provide controlled vocabularies by publishing SKOS concepts and concept schemes in their own namespaces (ADR-0023)."@en ;
+              skos:scopeNote "In ADR-O: optional record-level type metadata. Profiles provide the appropriate SKOS concept schemes."@en ;
               adr-o:justifiedBy adr-odr:ADR-0023-add-hastype-annotation-property .
-
-
-###  http://www.w3.org/2004/02/skos/core#topConceptOf
-skos:topConceptOf rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Datatypes
-#################################################################
-
-###  http://www.w3.org/2001/XMLSchema#date
-xsd:date rdf:type rdfs:Datatype .
 
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.w3.org/ns/prov#wasRevisionOf
 prov:wasRevisionOf rdf:type owl:ObjectProperty ;
-                   skos:scopeNote "In ADR-O: the PROV-O super-property of adr-o:supersedes. Use adr-o:supersedes for ADR-O records; prov:wasRevisionOf is entailed automatically."@en .
+                   skos:scopeNote "In ADR-O: super-property of adr-o:supersedes. Supersession is a revision."@en .
 
 
-###  https://w3id.org/adr-o#addresses
 adr-o:addresses rdf:type owl:ObjectProperty ;
                 rdfs:range adr-o:Concern ;
-                rdfs:comment "Links a subject to a Concern it resolves or responds to. The domain is intentionally unrestricted in OWL so that two complementary uses can coexist: the canonical, fine-grained use is on adr-o:Consideration (\"this specific atom is about latency\"), while the use on adr-o:DecisionRecord (\"this whole record is broadly about latency\") is a permitted editorial rollup that human and tooling layers may apply for discovery convenience. Both uses are valid; the consideration-level one is authoritative when both are present. Leaving the domain open also reserves room for a future GADR-style decision-template class to inherit the same predicate without breaking either existing use. Complements adr-o:affects, which captures the *manifestation* side of a decision."@en ;
+                rdfs:comment "Links a subject to a Concern it resolves. Domain is unrestricted: canonical use is on Consideration; record-level use is an editorial rollup."@en ;
                 rdfs:label "addresses"@en ;
-                rdfs:seeAlso adr-o:affects ;
                 adr-o:justifiedBy adr-odr:ADR-0013-addresses-dual-placement ,
                                    adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#affects
-adr-o:affects rdf:type owl:ObjectProperty ;
-              rdfs:domain adr-o:DecisionRecord ;
-              rdfs:range rdfs:Resource ;
-              rdfs:comment """Links a DecisionRecord to a system element, component, artefact, procedure, or any other IRI-identifiable resource that the decision makes real, modifies, or constrains, modeling the *manifestation* side of a decision. The range is deliberately open (rdfs:Resource); domain profiles are expected to supply the discipline of what counts as an affected element.
-
-This predicate makes targeted questions (\"why is this synthetic column here?\") and filter-by-system queries (\"which decisions shaped our hardware stack?\") answerable in SPARQL."""@en ;
-              rdfs:label "affects"@en ;
-              rdfs:seeAlso adr-o:addresses ;
-              adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
-
-
-###  https://w3id.org/adr-o#amendedBy
 adr-o:amendedBy rdf:type owl:ObjectProperty ;
                 owl:inverseOf adr-o:amends ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range adr-o:DecisionRecord ;
-                rdfs:comment "ADL scope: inverse of adr-o:amends; links an anchor DecisionRecord to records that amend it. A record can be amended by zero, one, or many records."@en ;
+                rdfs:comment "ADL scope: inverse of adr-o:amends; links an anchor DecisionRecord to records that amend it."@en ;
                 rdfs:label "amended by"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0020-amendments .
 
 
-###  https://w3id.org/adr-o#amends
 adr-o:amends rdf:type owl:ObjectProperty ;
              rdfs:domain adr-o:DecisionRecord ;
              rdfs:range adr-o:DecisionRecord ;
-             rdfs:comment "ADL scope: a DecisionRecord amends another DecisionRecord without fully replacing it. Unlike adr-o:supersedes, this models layered modification where the anchor record remains in force and accumulates patch records over time."@en ;
+             rdfs:comment "ADL scope: a DecisionRecord partially modifies another without replacing it. The anchor remains in force."@en ;
              rdfs:label "amends"@en ;
              adr-o:justifiedBy adr-odr:ADR-0020-amendments .
 
 
-###  https://w3id.org/adr-o#authoredBy
 adr-o:authoredBy rdf:type owl:ObjectProperty ;
                  rdfs:domain adr-o:DecisionRecord ;
                  rdfs:range prov:Agent ;
-                 rdfs:comment "Links a DecisionRecord to the agent responsible for authoring the record artifact. In ADR-O's explicit RACI mapping, this is the Responsible (R) role in record-authoring terms; it does not necessarily imply execution ownership for implementing the underlying decision. This predicate is authoritative for social-role queries: when both this predicate and dcterms:creator are present on the same record and disagree, this predicate wins. Tooling is expected to promote a bare dcterms:creator to this predicate when it is absent (ADR-0022)."@en ;
+                 rdfs:comment "Links a DecisionRecord to the agent responsible for authoring the record artifact (RACI: Responsible). Does not necessarily imply implementation ownership."@en ;
                  rdfs:label "authored by"@en ;
                  adr-o:justifiedBy adr-odr:ADR-0022-creator-authoredby-coexistence ,
                                     adr-odr:ADR-0021-social-role-predicates .
 
 
-###  https://w3id.org/adr-o#chosenAlternative
 adr-o:chosenAlternative rdf:type owl:ObjectProperty ,
                                  owl:FunctionalProperty ;
                         rdfs:domain adr-o:DecisionRecord ;
                         rdfs:range adr-o:Alternative ;
-                        rdfs:comment "The Alternative selected by a DecisionRecord — the machine-traversable answer to \"what was decided?\". Functional: at most one chosen alternative per record. The chosen alternative is expected to also appear in adr-o:hasAlternative; integrity checks of this kind fall outside OWL DL and are deferred to the planned (not yet shipped) SHACL companion. Records that combine multiple options into a single decision (\"use both X and Y\") should mint a composite Alternative rather than relax this cardinality. A record may have no chosen alternative — typically while still in adr-o:Proposed status."@en ;
+                        rdfs:comment "The selected Alternative. Functional: at most one per record. Multi-winner decisions use a composite Alternative."@en ;
                         rdfs:label "chosen alternative"@en ;
                         adr-o:justifiedBy adr-odr:ADR-0012-alternatives-and-chosen-option .
 
 
-###  https://w3id.org/adr-o#conflictsWith
 adr-o:conflictsWith rdf:type owl:ObjectProperty ,
                              owl:SymmetricProperty ;
                     rdfs:domain adr-o:DecisionRecord ;
                     rdfs:range adr-o:DecisionRecord ;
-                    rdfs:comment "States that two DecisionRecords are in tension: holding both imposes a trade-off, contradiction, or friction that should be surfaced. Modelled as symmetric for simplicity; a later revision may add directed Kruchten-style sub-properties (prevents / isPreventedBy) without breaking this property."@en ;
+                    rdfs:comment "Symmetric tension between two DecisionRecords."@en ;
                     rdfs:label "conflicts with"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#manifests
 adr-o:manifests rdf:type owl:ObjectProperty ,
                          owl:FunctionalProperty ;
                 rdfs:domain [ rdf:type owl:Class ;
                               owl:unionOf ( adr-o:ContextFact
                                             adr-o:DeliberationFact
-                                            adr-o:OutcomeFact
+                                            adr-o:ExpectedOutcome
                                           )
                             ] ;
                 rdfs:range adr-o:Consideration ;
-                rdfs:comment "Links a reified fact (ContextFact, DeliberationFact, or OutcomeFact) to the Consideration it manifests. Functional: a fact carries at most one Consideration. The same Consideration IRI may be the object of arbitrarily many such links across arbitrarily many records and roles; that reuse - the YADR-style identity property - is the core of the atom-first design: the argument that supported Option A during deliberation is literally the same node that may later appear as a Benefit in an OutcomeFact, not a copy of it."@en ;
+                rdfs:comment "Links a reified fact to the Consideration it manifests. Functional: one Consideration per fact."@en ;
                 rdfs:label "manifests"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0027-facts-manifest-considerations ,
                                    adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#consulted
 adr-o:consulted rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range prov:Agent ;
-                rdfs:comment "Links a DecisionRecord to agents consulted before or during the decision process. In ADR-O's explicit RACI mapping, this is the Consulted (C) role."@en ;
+                rdfs:comment "Agents consulted during the decision process (RACI: Consulted)."@en ;
                 rdfs:label "consulted"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0021-social-role-predicates .
 
 
-###  https://w3id.org/adr-o#decidedBy
 adr-o:decidedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range prov:Agent ;
-                rdfs:comment "Links a DecisionRecord to the agent with decision authority. In ADR-O's explicit RACI mapping, this is the Accountable (A) role."@en ;
+                rdfs:comment "Agent with decision authority (RACI: Accountable)."@en ;
                 rdfs:label "decided by"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0021-social-role-predicates .
 
 
-###  https://w3id.org/adr-o#deliberationValence
 adr-o:deliberationValence rdf:type owl:ObjectProperty ,
                                    owl:FunctionalProperty ;
                           rdfs:domain adr-o:DeliberationFact ;
                           rdfs:range adr-o:DeliberationValence ;
-                          rdfs:comment "ADR scope: the valence with which a DeliberationFact's Consideration weighs on its Alternative: Supports, Against, or Neutral. Functional. Kept distinct from adr-o:outcomeValence because the two enums are disjoint by design (deliberation valences evaluate options, outcome valences describe what materialised post-decision); collapsing them into one predicate would either require a permissive union range or push enforcement entirely into SHACL."@en ;
+                          rdfs:comment "ADR scope: whether a DeliberationFact Supports, opposes (Against), or is Neutral toward its Alternative."@en ;
                           rdfs:label "deliberation valence"@en ;
                           adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#dependsOn
 adr-o:dependsOn rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range adr-o:DecisionRecord ;
-                rdfs:comment "ADL scope: a DecisionRecord relies on another DecisionRecord; the referenced decision must hold for the referring decision to be coherent. Useful for change-impact analysis: if the depended-on record changes or is superseded, the dependent record should be reviewed."@en ;
+                rdfs:comment "ADL scope: a DecisionRecord relies on another; the referenced decision must hold for coherence."@en ;
                 rdfs:label "depends on"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#enables
 adr-o:enables rdf:type owl:ObjectProperty ;
               rdfs:domain adr-o:DecisionRecord ;
               rdfs:range adr-o:DecisionRecord ;
-              rdfs:comment "ADL scope: a DecisionRecord makes another DecisionRecord possible or materially easier. The converse relational direction from dependsOn in spirit, but not a formal inverse: A enables B does not imply B dependsOn A, because B may have alternative enablers."@en ;
+              rdfs:comment "ADL scope: a DecisionRecord makes another DecisionRecord possible or easier."@en ;
               rdfs:label "enables"@en ;
               adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#enabledBy
 adr-o:enabledBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:Consideration ;
-                rdfs:range adr-o:OutcomeFact ;
-                rdfs:comment "ADL scope: links a Consideration in a later decision to an OutcomeFact from a prior decision that enables that consideration. Modal strength maps to RFC 2119 MAY (optional enablement)."@en ;
+                rdfs:range adr-o:ExpectedOutcome ;
+                rdfs:comment "ADL scope: a Consideration is enabled by a prior decision's ExpectedOutcome. Modal strength: MAY."@en ;
                 rdfs:label "enabled by"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
-###  https://w3id.org/adr-o#hasAlternative
 adr-o:hasAlternative rdf:type owl:ObjectProperty ;
                      rdfs:domain adr-o:DecisionRecord ;
                      rdfs:range adr-o:Alternative ;
-                     rdfs:comment "Links a DecisionRecord to an Alternative that was considered during its deliberation. The full option pool, regardless of whether any DeliberationFact was authored about a given alternative; this is what allows a Proposed or partially deliberated record to enumerate options before any weighing has occurred. The chosen alternative is identified separately by adr-o:chosenAlternative; rejected alternatives are those for which adr-o:chosenAlternative does not point and which are weighed against in DeliberationFacts."@en ;
+                     rdfs:comment "Links a DecisionRecord to its option pool, regardless of selection status."@en ;
                      rdfs:label "has alternative"@en ;
                      adr-o:justifiedBy adr-odr:ADR-0012-alternatives-and-chosen-option .
 
 
-###  https://w3id.org/adr-o#hasContext
 adr-o:hasContext rdf:type owl:ObjectProperty ,
                           owl:FunctionalProperty ;
                  rdfs:domain adr-o:DecisionRecord ;
                  rdfs:range rdf:List ;
-                 rdfs:comment "Links a DecisionRecord to an ordered list of ContextFacts that frame the decision: situational facts, standing constraints, and prior assumptions that precede deliberation. Functional: at most one such list per record. List elements are intended to be ContextFact individuals; OWL DL does not enforce list-member typing, and that constraint is deferred to the planned (not yet shipped) SHACL companion. The list ordering is preserved so tooling that materialises Markdown for human readers can render the framing in the author's intended sequence."@en ;
+                 rdfs:comment "Ordered list of ContextFacts framing the decision. Functional: one list per record."@en ;
                  rdfs:label "has context"@en ;
                  adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#hasDeliberation
 adr-o:hasDeliberation rdf:type owl:ObjectProperty ,
                                owl:FunctionalProperty ;
                       rdfs:domain adr-o:DecisionRecord ;
                       rdfs:range rdf:List ;
-                      rdfs:comment "Links a DecisionRecord to an ordered list of DeliberationFacts: the per-Alternative weighing of Considerations that informed the decision. Functional: at most one such list per record. List elements are intended to be DeliberationFact individuals; OWL DL does not enforce list-member typing, deferred to SHACL. Ordering is preserved so tooling can reconstruct the author's narrative order across alternatives."@en ;
+                      rdfs:comment "Ordered list of DeliberationFacts weighing Alternatives. Functional: one list per record."@en ;
                       rdfs:label "has deliberation"@en ;
                       adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#hasOutcome
-adr-o:hasOutcome rdf:type owl:ObjectProperty ,
-                          owl:FunctionalProperty ;
-                 rdfs:domain adr-o:DecisionRecord ;
-                 rdfs:range rdf:List ;
-                 rdfs:comment "Links a DecisionRecord to an ordered list of OutcomeFacts: post-decision realities — benefits realised, costs accepted, risks emerged, follow-ups required. Functional: at most one such list per record. List elements are intended to be OutcomeFact individuals; OWL DL does not enforce list-member typing, deferred to SHACL. OutcomeFacts default to talking about the chosen Alternative; an explicit adr-o:onAlternative on an OutcomeFact enables counterfactuals about a rejected option."@en ;
-                 rdfs:label "has outcome"@en ;
-                 adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
+adr-o:hasExpectedOutcome rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain adr-o:DecisionRecord ;
+                         rdfs:range rdf:List ;
+                         rdfs:comment "Ordered list of ExpectedOutcomes — t₀ commitments regarding intended effects. Functional: one list per record."@en ;
+                         rdfs:label "has expected outcome"@en ;
+                         adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                            adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#hasStatus
 adr-o:hasStatus rdf:type owl:ObjectProperty ,
                          owl:FunctionalProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range adr-o:Status ;
-                rdfs:comment "Links a DecisionRecord to its lifecycle status. Domain profiles may extend the base status vocabulary by adding new skos:Concepts with skos:inScheme adr-o:statusScheme — such additions automatically gain adr-o:Status membership."@en ;
+                rdfs:comment "Lifecycle status of a DecisionRecord. Range is the adr-o:statusScheme."@en ;
                 rdfs:label "has status"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
 
-###  https://w3id.org/adr-o#informed
 adr-o:informed rdf:type owl:ObjectProperty ;
                rdfs:domain adr-o:DecisionRecord ;
                rdfs:range prov:Agent ;
-               rdfs:comment "Links a DecisionRecord to agents who should be informed about the decision. In ADR-O's explicit RACI mapping, this is the Informed (I) role."@en ;
+               rdfs:comment "Agents to be informed about the decision (RACI: Informed)."@en ;
                rdfs:label "informed"@en ;
                adr-o:justifiedBy adr-odr:ADR-0021-social-role-predicates .
 
 
-###  https://w3id.org/adr-o#onAlternative
 adr-o:onAlternative rdf:type owl:ObjectProperty ,
                              owl:FunctionalProperty ;
                     rdfs:domain [ rdf:type owl:Class ;
                                   owl:unionOf ( adr-o:DeliberationFact
-                                                adr-o:OutcomeFact
+                                                adr-o:ExpectedOutcome
                                               )
                                 ] ;
                     rdfs:range adr-o:Alternative ;
-                    rdfs:comment "Links a DeliberationFact or OutcomeFact to the Alternative it concerns. Functional: a fact pertains to at most one Alternative. Authoring conventions, formally enforceable by the planned SHACL companion: required on DeliberationFact (a deliberation always weighs an option); optional on OutcomeFact (when absent, the implicit subject is the chosen Alternative; an explicit value enables counterfactual outcomes about a rejected option); not used on ContextFact (which by construction is not about any specific option)."@en ;
+                    rdfs:comment "Links a Fact to the Alternative it concerns. Required on DeliberationFact; optional on ExpectedOutcome."@en ;
                     rdfs:label "on alternative"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0012-alternatives-and-chosen-option .
 
 
-###  https://w3id.org/adr-o#outcomeValence
 adr-o:outcomeValence rdf:type owl:ObjectProperty ,
                               owl:FunctionalProperty ;
-                     rdfs:domain adr-o:OutcomeFact ;
-                     rdfs:range adr-o:OutcomeValence ;
-                     rdfs:comment "ADR scope: the valence with which an OutcomeFact's Consideration manifested after the decision: Benefit, AcceptedCost, Risk, or FollowUp. Functional. Kept distinct from adr-o:deliberationValence because the two enums are disjoint by design. AcceptedCost is explicitly the home for the YADR-style \"accepting-that\" pattern — costs the author voluntarily takes on as part of the chosen path, distinct from a Risk (contingent) and from the negative of a Benefit."@en ;
+                     rdfs:domain adr-o:ExpectedOutcome ;
+                     rdfs:range adr-o:ExpectedOutcomeValence ;
+                     rdfs:comment "ADR scope: intended valence of an ExpectedOutcome (ExpectedGain, ExpectedCost, ExpectedRisk, ExpectedDependency). A t₀ claim."@en ;
                      rdfs:label "outcome valence"@en ;
-                     adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+                     adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                        adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#supersededBy
 adr-o:supersededBy rdf:type owl:ObjectProperty ;
                    owl:inverseOf adr-o:supersedes ;
                    rdfs:domain adr-o:DecisionRecord ;
                    rdfs:range adr-o:DecisionRecord ;
-                   rdfs:comment "ADL scope: inverse of adr-o:supersedes; states that a DecisionRecord has been replaced by a later DecisionRecord."@en ;
+                   rdfs:comment "ADL scope: inverse of adr-o:supersedes; record has been replaced by a successor."@en ;
                    rdfs:label "superseded by"@en ;
                    adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#supersedes
 adr-o:supersedes rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf prov:wasRevisionOf ;
                  rdfs:domain adr-o:DecisionRecord ;
                  rdfs:range adr-o:DecisionRecord ;
-                 rdfs:comment "ADL scope: a DecisionRecord replaces an earlier DecisionRecord. Subproperty of prov:wasRevisionOf, so PROV-O-aware tooling sees every supersession as a revision. Typically paired with transitioning the prior record's adr-o:hasStatus to adr-o:Superseded."@en ;
+                 rdfs:comment "ADL scope: a DecisionRecord replaces an earlier one. Subproperty of prov:wasRevisionOf."@en ;
                  rdfs:label "supersedes"@en ;
                  adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-###  https://w3id.org/adr-o#constrainedBy
 adr-o:constrainedBy rdf:type owl:ObjectProperty ;
                     rdfs:domain adr-o:Consideration ;
-                    rdfs:range adr-o:OutcomeFact ;
-                    rdfs:comment "ADL scope: links a Consideration in a later decision to an OutcomeFact from a prior decision that constrains that consideration. Modal strength maps to RFC 2119 MUST."@en ;
+                    rdfs:range adr-o:ExpectedOutcome ;
+                    rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that constrains it. Modal strength: MUST."@en ;
                     rdfs:label "constrained by"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
-###  https://w3id.org/adr-o#prohibitedBy
 adr-o:prohibitedBy rdf:type owl:ObjectProperty ;
                    rdfs:domain adr-o:Consideration ;
-                   rdfs:range adr-o:OutcomeFact ;
-                   rdfs:comment "ADL scope: links a Consideration in a later decision to an OutcomeFact from a prior decision that prohibits that consideration. Modal strength maps to RFC 2119 MUST NOT."@en ;
+                   rdfs:range adr-o:ExpectedOutcome ;
+                   rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that prohibits it. Modal strength: MUST NOT."@en ;
                    rdfs:label "prohibited by"@en ;
                    adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
-###  https://w3id.org/adr-o#recommends
 adr-o:recommends rdf:type owl:ObjectProperty ;
-                 rdfs:domain adr-o:Consideration ;
-                 rdfs:range adr-o:OutcomeFact ;
-                 rdfs:comment "ADL scope: links a Consideration in a later decision to an OutcomeFact from a prior decision that recommends that consideration. Modal strength maps to RFC 2119 SHOULD."@en ;
-                 rdfs:label "recommends"@en ;
-                 adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
+                rdfs:domain adr-o:Consideration ;
+                rdfs:range adr-o:ExpectedOutcome ;
+                rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that recommends it. Modal strength: SHOULD."@en ;
+                rdfs:label "recommends"@en ;
+                adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
-###  https://w3id.org/adr-o#discourages
 adr-o:discourages rdf:type owl:ObjectProperty ;
                   rdfs:domain adr-o:Consideration ;
-                  rdfs:range adr-o:OutcomeFact ;
-                  rdfs:comment "ADL scope: links a Consideration in a later decision to an OutcomeFact from a prior decision that discourages that consideration. Modal strength maps to RFC 2119 SHOULD NOT."@en ;
+                  rdfs:range adr-o:ExpectedOutcome ;
+                  rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that discourages it. Modal strength: SHOULD NOT."@en ;
                   rdfs:label "discourages"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
-###  https://w3id.org/adr-o#materializes
-adr-o:materializes rdf:type owl:ObjectProperty ;
-                   rdfs:domain adr-o:DecisionRecord ;
-                   rdfs:range rdfs:Resource ;
-                   rdfs:comment "Project scope: provenance bridge linking a DecisionRecord to a resource that exists because of that decision (for example a file, class, workflow, or policy artefact)."@en ;
-                   rdfs:label "materializes"@en ;
-                   adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
-
-
-###  https://w3id.org/adr-o#justifiedBy
 adr-o:justifiedBy rdf:type owl:ObjectProperty ;
                   rdfs:domain rdfs:Resource ;
                   rdfs:range adr-o:DecisionRecord ;
-                  rdfs:comment "Project scope: provenance bridge linking a resource back to the DecisionRecord that justifies its existence or current shape. Used both for project artefacts and for ontology-term provenance."@en ;
+                  rdfs:comment "Project scope: provenance bridge linking a resource (artifact or ontology term) back to its justifying DecisionRecord."@en ;
                   rdfs:label "justified by"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0026-ontology-provenance ,
                                      adr-odr:ADR-0025-causal-network .
+
+
+adr-o:derivedFrom rdf:type owl:ObjectProperty ;
+                  owl:inverseOf adr-o:derives ;
+                  rdfs:domain adr-o:Consideration ;
+                  rdfs:range adr-o:Consideration ;
+                  rdfs:comment "A Consideration is derived from another. Preserves semantic connectivity across records without identity reuse."@en ;
+                  rdfs:label "derived from"@en ;
+                  adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
+
+
+adr-o:derives rdf:type owl:ObjectProperty ;
+              rdfs:domain adr-o:Consideration ;
+              rdfs:range adr-o:Consideration ;
+              rdfs:comment "A Consideration serves as the source from which another is derived."@en ;
+              rdfs:label "derives"@en ;
+              adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  https://w3id.org/adr-o#index
 adr-o:index rdf:type owl:DatatypeProperty ,
                      owl:FunctionalProperty ;
             rdfs:domain adr-o:DecisionRecord ;
             rdfs:range xsd:integer ;
-            rdfs:comment "The ordering index of a DecisionRecord within its log, as a non-negative integer. Recommended for every ADR with Status != \"Proposed\" so SPARQL can sort a subgraph chronologically without parsing string identifiers. Distinct from dcterms:identifier, which carries the human-readable string ID (e.g. \"ADR-0042\") and does not sort cleanly. Required for organizational-history queries that traverse supersession chains in temporal order."@en ;
+            rdfs:comment "Ordering index of a DecisionRecord within its log. Required for chronological sorting."@en ;
             rdfs:label "index"@en ;
             adr-o:justifiedBy adr-odr:ADR-0007-index-vs-identifier .
 
@@ -428,74 +358,44 @@ adr-o:index rdf:type owl:DatatypeProperty ,
 #    Classes
 #################################################################
 
-###  http://www.w3.org/1999/02/22-rdf-syntax-ns#List
-rdf:List rdf:type owl:Class .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#Resource
-rdfs:Resource rdf:type owl:Class .
-
-
-###  http://www.w3.org/2004/02/skos/core#Concept
-skos:Concept rdf:type owl:Class .
-
-
-###  http://www.w3.org/2004/02/skos/core#ConceptScheme
-skos:ConceptScheme rdf:type owl:Class .
-
-
-###  http://www.w3.org/ns/prov#Agent
-prov:Agent rdf:type owl:Class .
-
-
-###  http://www.w3.org/ns/prov#Entity
-prov:Entity rdf:type owl:Class .
-
-
-###  https://w3id.org/adr-o#Alternative
 adr-o:Alternative rdf:type owl:Class ;
-                  rdfs:comment "An option considered during the deliberation that produced a DecisionRecord. Alternatives are first-class nodes, not footnotes, so that every option — including those that were rejected — can be traversed by SPARQL queries answering organizational-history questions. Whether an Alternative was chosen is determined by adr-o:chosenAlternative on the owning DecisionRecord; rejection rationales are captured by DeliberationFacts that reference the alternative with negative valence."@en ;
+                  rdfs:comment "An option considered during a decision. First-class nodes enable traversal of rejected alternatives."@en ;
                   rdfs:label "Alternative"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0012-alternatives-and-chosen-option .
 
 
-###  https://w3id.org/adr-o#Concern
 adr-o:Concern rdf:type owl:Class ;
-              rdfs:comment "A matter of interest or importance to a stakeholder (terminology from ISO/IEC/IEEE 42010). Deliberately an abstract anchor class: ADR-O populates no concept scheme for it, because the relevant concern vocabulary is domain-specific and varies even within software (security, maintainability, latency budgets, regulatory posture, etc.). Domain profiles are expected to publish SKOS concept schemes whose members instantiate Concern and are valid values for adr-o:addresses."@en ;
+              rdfs:comment "A matter of interest or importance to a stakeholder (ISO 42010). Abstract anchor class; domain-specific concerns are instantiated via SKOS schemes."@en ;
               rdfs:label "Concern"@en ;
               adr-o:justifiedBy adr-odr:ADR-0002-scope .
 
 
-###  https://w3id.org/adr-o#Consideration
 adr-o:Consideration rdf:type owl:Class ;
-                    rdfs:comment "A reusable atomic claim or observation that a DecisionRecord places into framing, deliberation, or outcome via a reified fact (ContextFact, DeliberationFact, or OutcomeFact). Considerations are first-class so the same atom can appear with stable IRI identity across multiple records and across multiple roles within a record — the YADR-style argument-reuse property. The prose payload is carried via dcterms:description (primary, Markdown-typed per ADR-0003), skos:definition (formal definition, Markdown-typed), and skos:note sub-properties (supplementary annotation prose, Markdown-typed); skos:prefLabel carries a short noun-phrase label, not prose. ADR-O does not mint a dedicated text property. A Consideration may link to one or more Concerns via adr-o:addresses to record what kind of problem the atom touches. ADR-O recommends two complementary IRI patterns documented in DESIGN-NOTES: record-local fragments for atoms that emerge in a single decision, and a shared namespace for atoms deliberately reused across records or underpinning future decision templates; an owl:sameAs bridge promotes a record-local atom to a shared one without breaking existing references."@en ;
+                    rdfs:comment "A reusable atomic claim or observation placed into roles via reified facts. Intra-record identity enables coherence checks (e.g. need = expected gain). Cross-record reuse is reference-based via adr-o:derivedFrom."@en ;
                     rdfs:label "Consideration"@en ;
-                    adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
+                    adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                       adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#ContextFact
 adr-o:ContextFact rdf:type owl:Class ;
-                  rdfs:comment "A reified link placing a Consideration into the framing of a DecisionRecord: situational facts, standing constraints, and prior assumptions that precede deliberation. ContextFacts have no adr-o:onAlternative (they do not pertain to any specific option) and no valence (they are not weighed for or against anything). Attached to records via adr-o:hasContext as members of an ordered rdf:List."@en ;
+                  rdfs:comment "Reified link placing a Consideration into framing: situational facts, constraints, and prior assumptions."@en ;
                   rdfs:label "Context Fact"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#DecisionRecord
 adr-o:DecisionRecord rdf:type owl:Class ;
                      rdfs:subClassOf prov:Entity ;
-                     rdfs:comment "A record of a single, load-bearing decision together with its option pool, its chosen alternative, the framing / deliberation / outcome facts that explain it, and its typed relationships to other decision records. The central class of ADR-O. Deliberately domain-agnostic: software architecture decisions are one possible instantiation, but the class can also cover HR, finance, policy, and any other white-collar knowledge domain in which decisions need to be recorded separately from the final deliverable. Domain-specific subclasses (e.g. the software development specific ArchitectureDecisionRecord) belong in domain profile namespaces, not in the ADR-O core."@en ;
+                     rdfs:comment "A record of a single, load-bearing decision. Domain-agnostic core."@en ;
                      rdfs:label "Decision Record"@en ;
                      adr-o:justifiedBy adr-odr:ADR-0002-scope .
 
 
-###  https://w3id.org/adr-o#DeliberationFact
 adr-o:DeliberationFact rdf:type owl:Class ;
-                       rdfs:comment "A reified link placing a Consideration into the deliberation of a DecisionRecord, against a specific Alternative, with a deliberation valence (Supports, Against, or Neutral). The required adr-o:onAlternative captures which option the consideration weighs on; the required adr-o:deliberationValence captures how. The chosen Alternative is queryable as the option whose DeliberationFacts skew positive — but the authoritative answer to \"what was decided?\" is adr-o:chosenAlternative on the DecisionRecord, not inferred from valence aggregates. Attached to records via adr-o:hasDeliberation as members of an ordered rdf:List."@en ;
+                       rdfs:comment "Reified link placing a Consideration into deliberation against an Alternative with a valence."@en ;
                        rdfs:label "Deliberation Fact"@en ;
                        adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#DeliberationValence
 adr-o:DeliberationValence rdf:type owl:Class ;
                           owl:equivalentClass [ owl:intersectionOf ( skos:Concept
                                                                      [ rdf:type owl:Restriction ;
@@ -506,35 +406,34 @@ adr-o:DeliberationValence rdf:type owl:Class ;
                                                 rdf:type owl:Class
                                               ] ;
                           rdfs:subClassOf skos:Concept ;
-                          rdfs:comment "The valence of a DeliberationFact: Supports, Against, or Neutral. Defined as any skos:Concept that is a member of adr-o:deliberationValenceScheme, mirroring the wiring used by adr-o:Status. Domain profiles that extend the scheme with additional valences automatically populate this class without any ontology change. The deliberately small enum — a single \"Neutral\" rather than a finer split between \"orthogonal\" and \"in-scope-but-non-decisive\" — is a KISS choice for the technical preview; refining it later is non-breaking."@en ;
+                          rdfs:comment "Valence of a DeliberationFact: Supports, Against, or Neutral."@en ;
                           rdfs:label "Deliberation Valence"@en ;
                           adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#OutcomeFact
-adr-o:OutcomeFact rdf:type owl:Class ;
-                  rdfs:comment "A reified link placing a Consideration into the post-decision outcome of a DecisionRecord, with an outcome valence (Benefit, AcceptedCost, Risk, or FollowUp). adr-o:onAlternative is optional: when absent, the fact is understood to apply to the chosen Alternative; when present, it enables counterfactual outcomes about a rejected option (\"if we had gone with B, this risk would have materialised\"). The AcceptedCost valence is the home for the YADR-style \"accepting-that\" pattern: costs the author voluntarily takes on as part of the chosen path. Attached to records via adr-o:hasOutcome as members of an ordered rdf:List."@en ;
-                  rdfs:label "Outcome Fact"@en ;
-                  adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
+adr-o:ExpectedOutcome rdf:type owl:Class ;
+                      rdfs:comment "A t₀ commitment about what the chosen alternative is intended to produce. Not a tₙ observation."@en ;
+                      rdfs:label "Expected Outcome"@en ;
+                      adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                         adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
-###  https://w3id.org/adr-o#OutcomeValence
-adr-o:OutcomeValence rdf:type owl:Class ;
-                     owl:equivalentClass [ owl:intersectionOf ( skos:Concept
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty skos:inScheme ;
-                                                                  owl:hasValue adr-o:outcomeValenceScheme
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
-                                         ] ;
-                     rdfs:subClassOf skos:Concept ;
-                     rdfs:comment "The valence of an OutcomeFact: Benefit, AcceptedCost, Risk, or FollowUp. Defined as any skos:Concept that is a member of adr-o:outcomeValenceScheme, mirroring the wiring used by adr-o:Status. Domain profiles that extend the scheme with additional valences automatically populate this class without any ontology change."@en ;
-                     rdfs:label "Outcome Valence"@en ;
-                     adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+adr-o:ExpectedOutcomeValence rdf:type owl:Class ;
+                             owl:equivalentClass [ owl:intersectionOf ( skos:Concept
+                                                                        [ rdf:type owl:Restriction ;
+                                                                          owl:onProperty skos:inScheme ;
+                                                                          owl:hasValue adr-o:expectedOutcomeValenceScheme
+                                                                        ]
+                                                                      ) ;
+                                                   rdf:type owl:Class
+                                                 ] ;
+                             rdfs:subClassOf skos:Concept ;
+                             rdfs:comment "The intended valence of an ExpectedOutcome: ExpectedGain, ExpectedCost, ExpectedRisk, or ExpectedDependency."@en ;
+                             rdfs:label "Expected Outcome Valence"@en ;
+                             adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                                adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Status
 adr-o:Status rdf:type owl:Class ;
              owl:equivalentClass [ owl:intersectionOf ( skos:Concept
                                                         [ rdf:type owl:Restriction ;
@@ -545,7 +444,7 @@ adr-o:Status rdf:type owl:Class ;
                                    rdf:type owl:Class
                                  ] ;
              rdfs:subClassOf skos:Concept ;
-             rdfs:comment "A lifecycle status for a DecisionRecord. Defined as any skos:Concept that is a member of adr-o:statusScheme, so domain profiles that extend the scheme with additional status values (e.g. \"Tentative\", \"Challenged\") automatically populate this class. Status is the range of adr-o:hasStatus: this is how the status vocabulary is wired into the DecisionRecord rather than merely coexisting with it."@en ;
+             rdfs:comment "A lifecycle status for a DecisionRecord. Range of adr-o:hasStatus."@en ;
              rdfs:label "Status"@en ;
              adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
@@ -554,122 +453,114 @@ adr-o:Status rdf:type owl:Class ;
 #    Individuals
 #################################################################
 
-###  https://w3id.org/adr-o#Accepted
 adr-o:Accepted rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The decision is in force. Accepted is the default steady-state status for a record that reflects current practice."@en ;
+               skos:definition "The decision is in force. Default steady-state status."@en ;
                skos:inScheme adr-o:statusScheme ;
                skos:prefLabel "Accepted"@en ;
                skos:topConceptOf adr-o:statusScheme ;
                adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
 
-###  https://w3id.org/adr-o#AcceptedCost
-adr-o:AcceptedCost rdf:type owl:NamedIndividual ,
+adr-o:ExpectedCost rdf:type owl:NamedIndividual ,
                             skos:Concept ;
-                   skos:definition "The Consideration is a cost the author voluntarily accepts as part of choosing this Alternative — the YADR-style \"accepting-that\" pattern. Distinct from a Risk (which may or may not materialise) and from the negative of a Benefit; an AcceptedCost is acknowledged up front as the price of the choice."@en ;
-                   skos:inScheme adr-o:outcomeValenceScheme ;
-                   skos:prefLabel "Accepted Cost"@en ;
-                   skos:topConceptOf adr-o:outcomeValenceScheme ;
-                   adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+                   skos:definition "The Consideration is a cost voluntarily accepted at t₀ — the \"accepting-that\" commitment."@en ;
+                   skos:inScheme adr-o:expectedOutcomeValenceScheme ;
+                   skos:prefLabel "Expected Cost"@en ;
+                   skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
+                   adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                      adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Against
 adr-o:Against rdf:type owl:NamedIndividual ,
                        skos:Concept ;
-              skos:definition "The Consideration weighs against the Alternative: it is a reason not to choose this option."@en ;
+              skos:definition "The Consideration weighs against the Alternative."@en ;
               skos:inScheme adr-o:deliberationValenceScheme ;
               skos:prefLabel "Against"@en ;
               skos:topConceptOf adr-o:deliberationValenceScheme ;
               adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Benefit
-adr-o:Benefit rdf:type owl:NamedIndividual ,
-                       skos:Concept ;
-              skos:definition "The Consideration manifested after the decision as a positive outcome attributable to the chosen Alternative."@en ;
-              skos:inScheme adr-o:outcomeValenceScheme ;
-              skos:prefLabel "Benefit"@en ;
-              skos:topConceptOf adr-o:outcomeValenceScheme ;
-              adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+adr-o:ExpectedGain rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   skos:definition "The Consideration is a positive outcome expected at t₀."@en ;
+                   skos:inScheme adr-o:expectedOutcomeValenceScheme ;
+                   skos:prefLabel "Expected Gain"@en ;
+                   skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
+                   adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                      adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Deprecated
 adr-o:Deprecated rdf:type owl:NamedIndividual ,
                           skos:Concept ;
                  rdfs:seeAlso adr-o:Superseded ;
-                 skos:definition "The decision is no longer recommended for new work but has not been replaced by a specific successor. Contrast with Superseded, which always has a successor reachable via adr-o:supersededBy."@en ;
+                 skos:definition "The decision is no longer recommended but has no specific successor."@en ;
                  skos:inScheme adr-o:statusScheme ;
                  skos:prefLabel "Deprecated"@en ;
                  skos:topConceptOf adr-o:statusScheme ;
                  adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
 
-###  https://w3id.org/adr-o#FollowUp
-adr-o:FollowUp rdf:type owl:NamedIndividual ,
-                        skos:Concept ;
-               skos:definition "The Consideration represents work or further deliberation triggered by the decision: a successor task, a future ADR worth writing, or an ongoing concern to monitor."@en ;
-               skos:inScheme adr-o:outcomeValenceScheme ;
-               skos:prefLabel "Follow-up"@en ;
-               skos:topConceptOf adr-o:outcomeValenceScheme ;
-               adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+adr-o:ExpectedDependency rdf:type owl:NamedIndividual ,
+                                  skos:Concept ;
+                         skos:definition "The Consideration represents work or further deliberation triggered at t₀."@en ;
+                         skos:inScheme adr-o:expectedOutcomeValenceScheme ;
+                         skos:prefLabel "Expected Dependency"@en ;
+                         skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
+                         adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                            adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Neutral
 adr-o:Neutral rdf:type owl:NamedIndividual ,
                        skos:Concept ;
-              skos:definition "The Consideration is in scope for the deliberation but does not push the choice in either direction. Recorded so that a factor noted as immaterial today is still preserved should later conditions make it decisive."@en ;
+              skos:definition "The Consideration is in scope but does not weigh either way."@en ;
               skos:inScheme adr-o:deliberationValenceScheme ;
               skos:prefLabel "Neutral"@en ;
               skos:topConceptOf adr-o:deliberationValenceScheme ;
               adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Proposed
 adr-o:Proposed rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The decision has been drafted and circulated but not yet accepted. A Proposed record is under active deliberation."@en ;
+               skos:definition "The decision has been drafted but not yet accepted."@en ;
                skos:inScheme adr-o:statusScheme ;
                skos:prefLabel "Proposed"@en ;
                skos:topConceptOf adr-o:statusScheme ;
                adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
 
-###  https://w3id.org/adr-o#Rejected
 adr-o:Rejected rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The decision was proposed and explicitly declined. A Rejected record remains in the log — the record of the rejection is part of organizational history — but the decision it contained is not in force."@en ;
+               skos:definition "The decision was proposed and explicitly declined."@en ;
                skos:inScheme adr-o:statusScheme ;
                skos:prefLabel "Rejected"@en ;
                skos:topConceptOf adr-o:statusScheme ;
                adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
 
-###  https://w3id.org/adr-o#Risk
-adr-o:Risk rdf:type owl:NamedIndividual ,
-                    skos:Concept ;
-           skos:definition "The Consideration represents a possible negative outcome whose materialisation is not certain. Unlike an AcceptedCost, a Risk is contingent."@en ;
-           skos:inScheme adr-o:outcomeValenceScheme ;
-           skos:prefLabel "Risk"@en ;
-           skos:topConceptOf adr-o:outcomeValenceScheme ;
-           adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+adr-o:ExpectedRisk rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   skos:definition "A possible negative outcome acknowledged at t₀."@en ;
+                   skos:inScheme adr-o:expectedOutcomeValenceScheme ;
+                   skos:prefLabel "Expected Risk"@en ;
+                   skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
+                   adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                      adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#Superseded
 adr-o:Superseded rdf:type owl:NamedIndividual ,
                           skos:Concept ;
                  rdfs:seeAlso adr-o:Deprecated ;
-                 skos:definition "The decision has been replaced by a later DecisionRecord. A Superseded record should have at least one adr-o:supersededBy edge pointing to its successor."@en ;
+                 skos:definition "The decision has been replaced by a successor."@en ;
                  skos:inScheme adr-o:statusScheme ;
                  skos:prefLabel "Superseded"@en ;
                  skos:topConceptOf adr-o:statusScheme ;
                  adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
 
 
-###  https://w3id.org/adr-o#Supports
 adr-o:Supports rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The Consideration weighs in favour of the Alternative: it is a reason to choose this option."@en ;
+               skos:definition "The Consideration weighs in favour of the Alternative."@en ;
                skos:inScheme adr-o:deliberationValenceScheme ;
                skos:prefLabel "Supports"@en ;
                skos:topConceptOf adr-o:deliberationValenceScheme ;
@@ -680,55 +571,37 @@ adr-o:Supports rdf:type owl:NamedIndividual ,
 adr-o:deliberationValenceScheme rdf:type owl:NamedIndividual ,
                                          skos:ConceptScheme ;
                                 dcterms:title "ADR-O Deliberation Valence Scheme"@en ;
-                                rdfs:comment "The controlled vocabulary of DeliberationFact valences defined by ADR-O core. Domain profiles may extend the scheme with additional valences as long as new members declare skos:inScheme adr-o:deliberationValenceScheme."@en ;
+                                rdfs:comment "Controlled vocabulary of DeliberationFact valences."@en ;
                                 skos:hasTopConcept adr-o:Against ,
                                                    adr-o:Neutral ,
                                                    adr-o:Supports ;
                                 adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#outcomeValenceScheme
-adr-o:outcomeValenceScheme rdf:type owl:NamedIndividual ,
-                                    skos:ConceptScheme ;
-                           dcterms:title "ADR-O Outcome Valence Scheme"@en ;
-                           rdfs:comment "The controlled vocabulary of OutcomeFact valences defined by ADR-O core. Domain profiles may extend the scheme with additional valences as long as new members declare skos:inScheme adr-o:outcomeValenceScheme."@en ;
-                           skos:hasTopConcept adr-o:AcceptedCost ,
-                                              adr-o:Benefit ,
-                                              adr-o:FollowUp ,
-                                              adr-o:Risk ;
-                           adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+###  https://w3id.org/adr-o#expectedOutcomeValenceScheme
+adr-o:expectedOutcomeValenceScheme rdf:type owl:NamedIndividual ,
+                                            skos:ConceptScheme ;
+                                   dcterms:title "Expected Outcome Valence Scheme"@en ;
+                                   rdfs:comment "t₀ claims about intended outcomes. None are guarantees."@en ;
+                                   skos:hasTopConcept adr-o:ExpectedCost ,
+                                                      adr-o:ExpectedGain ,
+                                                      adr-o:ExpectedDependency ,
+                                                      adr-o:ExpectedRisk ;
+                                   adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
+                                                      adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
 ###  https://w3id.org/adr-o#statusScheme
 adr-o:statusScheme rdf:type owl:NamedIndividual ,
                             skos:ConceptScheme ;
                    dcterms:title "ADR-O Status Scheme"@en ;
-                   rdfs:comment "The controlled vocabulary of DecisionRecord lifecycle statuses defined by ADR-O core. Domain profiles may extend the scheme with additional statuses (e.g. \"Tentative\", \"Challenged\") as long as new members declare skos:inScheme adr-o:statusScheme."@en ;
+                   rdfs:comment "Controlled vocabulary of DecisionRecord lifecycle statuses."@en ;
                    skos:hasTopConcept adr-o:Accepted ,
                                       adr-o:Deprecated ,
                                       adr-o:Proposed ,
                                       adr-o:Rejected ,
                                       adr-o:Superseded ;
                    adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
-
-
-#################################################################
-#    Annotations
-#################################################################
-
-dcterms:date skos:scopeNote "In ADR-O: the canonical date predicate for a DecisionRecord (xsd:date). Preferred over dcterms:issued and prov:generatedAtTime."@en .
-
-
-dcterms:identifier skos:scopeNote "In ADR-O: the string identifier of a DecisionRecord (e.g. \"ADR-0042\"). For sortable chronological ordering use adr-o:index instead, which is xsd:integer."@en .
-
-
-dcterms:modified skos:scopeNote "In ADR-O: optional record-modification timestamp for the record lifecycle."@en .
-
-
-dcterms:references skos:scopeNote "In ADR-O: recommended for the \"References\" section of a DecisionRecord — external artefacts such as papers, specifications, URLs, or related non-ADR IRIs."@en .
-
-
-prov:wasAttributedTo skos:scopeNote "In ADR-O: permitted for authorship attribution to a prov:Agent, but dcterms:creator is canonical. Use when PROV-O provenance tooling is already in play."@en .
 
 
 #################################################################
@@ -742,17 +615,17 @@ prov:wasAttributedTo skos:scopeNote "In ADR-O: permitted for authorship attribut
                         adr-o:Rejected
                         adr-o:Superseded
                       ) ;
-  rdfs:comment "Asserts that the five core status individuals denote distinct resources. Required so that adr-o:hasStatus being owl:FunctionalProperty catches duplicate-status misannotations as OWL-level inconsistencies (without this, a reasoner would silently entail e.g. adr-o:Proposed owl:sameAs adr-o:Accepted under OWA rather than flagging the error). Domain profiles that add new status individuals should extend this declaration or add their own owl:differentFrom assertions."@en
+  rdfs:comment "Ensures status individuals are distinct so that adr-o:hasStatus (functional) catches duplicate-status misannotations as inconsistencies."@en
 ] .
 
 
 [ rdf:type owl:AllDifferent ;
-  owl:distinctMembers ( adr-o:AcceptedCost
-                        adr-o:Benefit
-                        adr-o:FollowUp
-                        adr-o:Risk
+  owl:distinctMembers ( adr-o:ExpectedCost
+                        adr-o:ExpectedGain
+                        adr-o:ExpectedDependency
+                        adr-o:ExpectedRisk
                       ) ;
-  rdfs:comment "Asserts that the four core outcome valences denote distinct resources, so that adr-o:outcomeValence being functional catches duplicate-valence misannotations as OWL-level inconsistencies."@en
+  rdfs:comment "Ensures expected outcome valences are distinct so that adr-o:outcomeValence (functional) catches duplicate-valence misannotations."@en
 ] .
 
 
@@ -761,8 +634,5 @@ prov:wasAttributedTo skos:scopeNote "In ADR-O: permitted for authorship attribut
                         adr-o:Neutral
                         adr-o:Supports
                       ) ;
-  rdfs:comment "Asserts that the three core deliberation valences denote distinct resources, so that adr-o:deliberationValence being functional catches duplicate-valence misannotations as OWL-level inconsistencies. The same caveat about lightweight OWL 2 RL reasoners that do not implement eq-diff2 / eq-diff3 applies here as for the status AllDifferent: under such reasoners the duplicate check degrades silently."@en
+  rdfs:comment "Ensures deliberation valences are distinct so that adr-o:deliberationValence (functional) catches duplicate-valence misannotations."@en
 ] .
-
-
-###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

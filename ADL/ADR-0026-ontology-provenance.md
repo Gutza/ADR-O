@@ -6,6 +6,8 @@ date: 2026-04-22
 author:
   name: Bogdan Stăncescu
   email: bogdan@moongate.ro
+amendedBy:
+  - ADR-0028
 ---
 
 # ADR-0026 — Ontology Provenance: The `adr-odr` Namespace

@@ -1,0 +1,167 @@
+- Source: IEEE 42010 (v2.2)
+  ID: Unique Identifier
+  Outcome: Statement of the decision
+  Requirements_trace: Correspondence or linkage to concerns
+  Accountability: Owner of the decision
+  SA_viewpoint_trace: Correspondence or linkage to element
+  Why_answers: Rationale
+  Decision_drivers: Forces, constraints
+  Assumptions: Assumptions
+  Options: Considered alternatives
+  Problem: null
+  Decision_dependencies: "(not in template, but in standard)"
+  Categorisation_classification: null
+  Name: Name
+  State_of_AD: "(not in template, but in standard)"
+  Impact: "(not in template, but in standard)"
+  Other_entries: Timestamps, Citations
+  Element_count: 9
+  Size: null
+  Publication_year: 2011
+
+- Source: IBM UMF AD Table
+  ID: ID
+  Outcome: Decision
+  Requirements_trace: "(derived requirements)"
+  Accountability: null
+  SA_viewpoint_trace: null
+  Why_answers: Justification
+  Decision_drivers: null
+  Assumptions: Assumptions
+  Options: Alternatives
+  Problem: Issues or problem
+  Decision_dependencies: Related decisions
+  Categorisation_classification: "Subject area, topic"
+  Name: Name
+  State_of_AD: null
+  Impact: Implications
+  Other_entries: Motivation
+  Element_count: 13
+  Size: not published
+  Publication_year: 1998
+
+- Source: Tyree/Akerman
+  ID: "(in header)"
+  Outcome: Decision
+  Requirements_trace: Related requirements
+  Accountability: null
+  SA_viewpoint_trace: Related artifacts
+  Why_answers: Argument
+  Decision_drivers: "(Constraints)"
+  Assumptions: Assumptions
+  Options: Positions
+  Problem: Issue
+  Decision_dependencies: Related decisions
+  Categorisation_classification: Grouping(ing)
+  Name: "(in header)"
+  State_of_AD: Status
+  Impact: Implications
+  Other_entries: "Notes, Related principles"
+  Element_count: 14
+  Size: "(example is half a page)"
+  Publication_year: 2005
+
+- Source: Bredemeyer Key Decisions
+  ID: null
+  Outcome: Approach
+  Requirements_trace: "Business drivers, technical drivers"
+  Accountability: null
+  SA_viewpoint_trace: null
+  Why_answers: Conclusion
+  Decision_drivers: "Benefits, drawback"
+  Assumptions: null
+  Options: null
+  Problem: null
+  Decision_dependencies: null
+  Categorisation_classification: null
+  Name: "<<key decision>>"
+  State_of_AD: null
+  Impact: "Issues/Considerations"
+  Other_entries: "Notes, Drivers realised"
+  Element_count: "9 (plus 1-2 in header)"
+  Size: null
+  Publication_year: 2005
+
+- Source: Nygard ADRs
+  ID: "(part of name)"
+  Outcome: Decision
+  Requirements_trace: null
+  Accountability: null
+  SA_viewpoint_trace: null
+  Why_answers: null
+  Decision_drivers: Context
+  Assumptions: null
+  Options: null
+  Problem: null
+  Decision_dependencies: null
+  Categorisation_classification: null
+  Name: Title
+  State_of_AD: Status
+  Impact: Consequences
+  Other_entries: null
+  Element_count: 5
+  Size: 1-2 pages
+  Publication_year: 2011
+
+- Source: arc42 Hrushka/Starke
+  ID: "(section #)"
+  Outcome: Decision
+  Requirements_trace: null
+  Accountability: null
+  SA_viewpoint_trace: null
+  Why_answers: "(question under decision)"
+  Decision_drivers: Constraints
+  Assumptions: Assumptions
+  Options: Considered alternatives
+  Problem: Problem
+  Decision_dependencies: null
+  Categorisation_classification: "(Decision topic)"
+  Name: "(section heading)"
+  State_of_AD: null
+  Impact: null
+  Other_entries: null
+  Element_count: "5 (with 14 questions)"
+  Size: "to be ordered by importance"
+  Publication_year: 2012
+
+- Source: Y-Statements
+  ID: "(id)"
+  Outcome: we decided for
+  Requirements_trace: null
+  Accountability: null
+  SA_viewpoint_trace: "in the context of"
+  Why_answers: "(optional \"because\" half sentence)"
+  Decision_drivers: facing
+  Assumptions: null
+  Options: and not
+  Problem: null
+  Decision_dependencies: null
+  Categorisation_classification: null
+  Name: null
+  State_of_AD: null
+  Impact: "to achieve, accepting drawbacks"
+  Other_entries: null
+  Element_count: 6
+  Size: "(1 long) sentence"
+  Publication_year: 2012
+
+- Source: RCDA Record of Decision
+  ID: "(in header)"
+  Outcome: Decision
+  Requirements_trace: Architectural concerns
+  Accountability: Participants
+  SA_viewpoint_trace: Related Information
+  Why_answers: Rationale
+  Decision_drivers: Constraints
+  Assumptions: null
+  Options: Alternatives
+  Problem: Overview
+  Decision_dependencies: Pre-requisites
+  Categorisation_classification: null
+  Name: "(in header)"
+  State_of_AD: Status
+  Impact: Expected outcome
+  Other_entries: "Strategy, Process, Participants, Actions & follow-up"
+  Element_count: 14
+  Size: 1-2 pages
+  Publication_year: 2014

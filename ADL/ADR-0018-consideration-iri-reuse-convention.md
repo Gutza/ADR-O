@@ -1,11 +1,13 @@
 ---
 id: 18
 type: Core vocabulary
-status: Accepted
+status: Superseded
 date: 2026-04-19
 author:
   name: Bogdan Stăncescu
   email: bogdan@moongate.ro
+supersededBy:
+  - ADR-0028
 ---
 
 # ADR-0018 — Editorial Convention for `Consideration` IRI Reuse

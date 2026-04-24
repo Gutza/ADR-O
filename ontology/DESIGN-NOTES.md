@@ -149,7 +149,6 @@ The 0.2.3 → 0.2.4 bump is non-destructive and additive: one annotation propert
 </div>
 
 </div>
-</div>
 
 <div data-dn-section="softer">
 <div data-dn-passage="softer-defaults-010" data-dn-record="meta">
@@ -180,7 +179,6 @@ These are picks made under the heuristic the user reaffirmed when asking for the
 
 **Version annotations: `owl:versionIRI <https://w3id.org/adr-o/0.1.0>` and `owl:versionInfo "0.1.0-draft"`.** A conservative first-public-draft versioning. The `-draft` suffix is a signal that breaking changes are expected before 0.1.0 is tagged as released. *(→ [ADR-0014](/ADL/ADR-0014-ontology-document-shape.md))*
 
-</div>
 </div>
 
 <div data-dn-section="deferrals">
@@ -233,7 +231,7 @@ This iteration is a destructive shape change: Nygard prose-on-record is replaced
 
 ### Architecture in one paragraph
 
-A `DecisionRecord` carries an option pool (`hasAlternative`), an explicit chosen alternative (`chosenAlternative`), and three ordered `rdf:List`s of reified facts (`hasContext`, `hasDeliberation`, `hasOutcome`). Each fact (`ContextFact`, `DeliberationFact`, `OutcomeFact`) places exactly one reusable `Consideration` into a role; deliberation and outcome facts also carry a valence drawn from a small per-class enum. The same `Consideration` IRI may be placed in arbitrarily many facts across arbitrarily many records — that reuse, the YADR-style argument-identity property, is the central design property of this iteration and is achieved without RDF-star and without quads. *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md), [ADR-0012](/ADL/ADR-0012-alternatives-and-chosen-option.md), [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md))*
+A `DecisionRecord` carries an option pool (`hasAlternative`), an explicit chosen alternative (`chosenAlternative`), and three ordered `rdf:List`s of reified facts (`hasContext`, `hasDeliberation`, `hasOutcome`). Each fact (`ContextFact`, `DeliberationFact`, `OutcomeFact`) places exactly one reusable `Consideration` into a role; deliberation and outcome facts also carry a valence drawn from a small per-class enum. The same `Consideration` IRI may be placed in arbitrarily many facts across arbitrarily many records — that reuse, with stable IRI identity, is the central design property of this iteration and is achieved without RDF-star and without quads. *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md), [ADR-0012](/ADL/ADR-0012-alternatives-and-chosen-option.md), [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md))*
 
 ### Design assumption: the KG lives under tooling
 
@@ -262,11 +260,11 @@ Caveat: this assumption fails for users who consume ADR-O graphs raw, with no to
 
 These are the load-bearing architectural commitments of 0.2.0-draft. Each was reached after a structured comparison against the alternatives in IDEAS and the principles in ADR-0000.
 
-**Atom-level reification, not section-level (no Nygard divs).** The two reasonable shapes for first-class structure in an ADR graph are: section-level (treat each Nygard body slot as its own resource) and atom-level (introduce reusable claim atoms placed into roles). Section-level reification was rejected as "reinventing HTML divs" — it provides containers without identity, and identity is what the YADR anchor/alias mechanism shows is the genuinely valuable structural property. Atom-level reification, by contrast, captures the claim that the argument made for Option A during evaluation is *the same thing* as the positive consequence noted afterward, not a copy of it. A first-class atom class is the only way to encode that identity in RDF without resorting to text similarity. *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
+**Atom-level reification, not section-level (no Nygard divs).** The two reasonable shapes for first-class structure in an ADR graph are: section-level (treat each Nygard body slot as its own resource) and atom-level (introduce reusable claim atoms placed into roles). Section-level reification was rejected as "reinventing HTML divs" — it provides containers without identity, and identity is the genuinely valuable structural property. Atom-level reification captures the claim that the argument made for Option A during evaluation is *the same thing* as the positive consequence noted afterward, not a copy of it. A first-class atom class is the only way to encode that identity in RDF without resorting to text similarity. *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
 
 **Atom class named `Consideration`.** Rejected names included `Force` (overloaded with Nygard-style "forces" prose and physically connoted), `Argument` (implies contestation, fits poorly when the atom is genuinely neutral), and `Claim` (less idiomatic in the ADR literature). `Consideration` reads well across positive, negative, and neutral cases and matches how reviewers naturally describe the third bucket — "a consideration we noted but that didn't push the choice." *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
 
-**Strict graph: no Nygard body literals.** The four datatype properties `context`, `decision`, `consequences`, and `rationale` are removed. Tooling materialises Markdown for human readers from the graph; the ontology authoritatively represents structure, not prose. This forces the question "what was actually said?" to resolve to a `Consideration` IRI rather than a search inside a literal, which is what makes the YADR identity property usable. *(→ [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md))*
+**Strict graph: no Nygard body literals.** The four datatype properties `context`, `decision`, `consequences`, and `rationale` are removed. Tooling materialises Markdown for human readers from the graph; the ontology authoritatively represents structure, not prose. This forces the question "what was actually said?" to resolve to a `Consideration` IRI rather than a search inside a literal, which is what makes stable intra-record IRI identity usable. *(→ [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md))*
 
 **Reified facts via classes, not RDF-star.** Binary edges between `DecisionRecord` and `Consideration` are insufficient: the same atom can occupy multiple roles in one record (framing vs deliberation vs outcome) and can carry orthogonal annotations (valence, ordering, eventually provenance). Two implementations achieve this: per-statement annotation (RDF-star or named graphs / quads) or reification via dedicated link classes. Reified link classes were chosen because they keep the spec inside plain RDF / OWL 2 — no RDF-star toolchain dependency, no quad assumption — and because they place the role information on a node that can itself be queried, ordered, and constrained. *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
 
@@ -312,7 +310,7 @@ These are picks made under the same simplicity-first heuristic that 0.1.0 used. 
 
 ### IRI convention for `Consideration` reuse
 
-Reusing the same `Consideration` IRI across multiple records is the YADR-style identity property and the central design payoff of atom-first reification. The ontology imposes no axiom about where these IRIs live; the convention below is editorial, not normative. Tools (renderers, MCP servers, validation layers) are expected to treat both patterns uniformly. *(→ [ADR-0018](/ADL/ADR-0018-consideration-iri-reuse-convention.md))*
+Reusing the same `Consideration` IRI across multiple records was the central design payoff of atom-first reification in this iteration. The ontology imposes no axiom about where these IRIs live; the convention below is editorial, not normative. Tools (renderers, MCP servers, validation layers) are expected to treat both patterns uniformly. *(→ [ADR-0018](/ADL/ADR-0018-consideration-iri-reuse-convention.md))*
 
 - **Record-local default.** An atom that emerges in a single decision lives as a fragment under that record, e.g. `<https://example.org/adl/ADR-0042#cons-ecosystem-maturity>`. Easy to author, no governance overhead, works for atoms that may never be reused.
 - **Org-shared promotion.** An atom deliberately reused across records, or one underpinning a future GADR-style decision template, lives under a separate organisational namespace, e.g. `<https://example.org/considerations/ecosystem-maturity>`. Cross-record queries about this atom no longer have to traverse a record-specific IRI.
@@ -330,7 +328,7 @@ The convention does not add ontology axioms. Future work may formalise the scope
 
 These are items considered during this iteration and deliberately punted. Listing them is the antidote to silent forgetting.
 
-**Goals / `to-achieve` (the YADR slot).** No first-class home for the "intended outcomes the choice is meant to produce" notion. Two upgrade paths are noted: a `Goal` subclass of `Consideration` with `intendsToAchieve` semantics, used in `ContextFact` or `DeliberationFact`; or a dedicated predicate `intendsToAchieve` from `DecisionRecord` directly to a `Goal` node. Authors who need this slot in 0.2.0-draft are recommended to express it as `ContextFact`s ("we want low p99 latency") or as positive-valence `DeliberationFact`s on the chosen option, accepting that the goal/observation distinction is currently lost.
+**Goals / `to-achieve` (the Y-statement clause).** No first-class home for the "intended outcomes the choice is meant to produce" notion. Two upgrade paths are noted: a `Goal` subclass of `Consideration` with `intendsToAchieve` semantics, used in `ContextFact` or `DeliberationFact`; or a dedicated predicate `intendsToAchieve` from `DecisionRecord` directly to a `Goal` node. Authors who need this slot in 0.2.0-draft are recommended to express it as `ContextFact`s ("we want low p99 latency") or as positive-valence `DeliberationFact`s on the chosen option, accepting that the goal/observation distinction is currently lost.
 
 **SHACL shapes graph for validation.** Promoted from "deferred without commitment" (0.1.0) to "deferred at technical-preview status" (0.2.0). The new architecture relies more heavily on SHACL than the 0.1.0 design did — list-element typing, chosen-alternative integrity, per-fact-class field shapes, valence-enum membership per fact class. None of these are shipped. A future iteration is expected to publish a shapes graph alongside the OWL.
 
@@ -389,7 +387,7 @@ This iteration changes the body shape of `DecisionRecord`, but a substantial por
 
 - **The four Nygard datatype properties (`context`, `decision`, `consequences`, `rationale`) are removed outright.** The 0.1.0 reasoning was "without them, instances cannot represent even a textbook ADR"; the 0.2.0 architecture replaces "represent prose on the record" with "represent structure on the record and let tooling materialise prose," so the original justification no longer applies. *(→ [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md))*
 - **`wasRejectedBecause` as a datatype property is removed.** Its function is now served by a `DeliberationFact` on the rejected `Alternative` with `Against` valence, which also gives the rejection rationale a reusable IRI rather than an opaque literal. *(→ [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md))*
-- **`consequences` as a single property** (the deferred-split decision in 0.1.0) is moot: there is no `consequences` property at all in 0.2.0. Its role is replaced by `OutcomeFact` with the four-valued outcome valence enum, which subsumes both the positive/negative split that MADR documents and the YADR-style `accepting-that` distinction (now `AcceptedCost`). *(→ [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md), [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md))*
+- **`consequences` as a single property** (the deferred-split decision in 0.1.0) is moot: there is no `consequences` property at all in 0.2.0. Its role is replaced by `OutcomeFact` with the four-valued outcome valence enum, which subsumes both the positive/negative split that MADR documents and the Y-statement `accepting-that` clause (now `AcceptedCost`). *(→ [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md), [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md))*
 - **The deferral of "first-class `Force` / `Constraint` / `Rationale` / `Consequence` classes" is resolved (in part).** A single `Consideration` class together with three `*Fact` link classes covers the practical need that motivated all four candidate classes; the four-class proliferation is no longer the upgrade path. *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
 
 </div>
@@ -940,6 +938,128 @@ The 0.2.6 -> 0.3.0 bump is intentionally breaking: one object-property IRI is re
 </div>
 
 </div>
+</div>
+
+<div data-dn-version="0.4.0-draft" data-dn-record="meta" id="adro-0-4-0-draft">
+
+## ADR-O 0.4.0-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-040" data-dn-record="adl" data-dn-adl-refs="0028,0029">
+
+This iteration is a breaking DTP-alignment release. The **Decision Transaction Principle** (established in the project's Y-statement round-trip thought experiment) holds that a `DecisionRecord` is an epistemic transaction closed at $t_0$: the boundary between what was decided and what later became true must be impermeable. Several predicates, class names, and valence individuals in 0.3.0-draft were found to violate or blur this boundary. This release resolves every identified tension. It removes predicates that allowed forward projection from a decision into the world, introduces referential reuse for cross-record Consideration sharing, and renames the outcome vocabulary to signal t₀ prediction rather than tₙ observation.
+
+Within the same 0.4.0 working line, ADR-0029 is also integrated as a provenance correction pass over the associated documentation: false attributions of intra-record `Consideration` identity to YADR or Y-statement formats are corrected, and the property is recorded as an ADR-O contribution derived from first principles. This ADR-0029 integration is documentation-only and does not change ontology terms or axioms. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md); → [ADR-0029](/ADL/ADR-0029-provenance-correction-consideration-identity.md))*
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="dtp-provenance-unidirectional-040" data-dn-record="adl" data-dn-adl-refs="0028,0006,0025">
+
+**Project-scope provenance is now strictly unidirectional: Resource → Decision.** A `DecisionRecord` is a statement of intent at $t_0$; it cannot know its own effects in the world at that moment. Two predicates that allowed the reverse direction are therefore removed:
+
+- **`adr-o:affects`** (introduced in ADR-0006) — deleted.
+- **`adr-o:materializes`** (introduced in ADR-0025) — deleted.
+
+The only valid Project-scope bridge is `adr-o:justifiedBy` (from resource to decision). "What does this decision affect?" is now answered by a graph query — a traversal of `adr-o:justifiedBy` edges inbound to the decision — not by a property of the decision itself. `adr-o:addresses` is updated accordingly: its comment no longer references the removed `adr-o:affects`, and its `rdfs:seeAlso` link to that predicate is withdrawn. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §4)*
+
+</div>
+
+<div data-dn-passage="referential-consideration-reuse-040" data-dn-record="adl" data-dn-adl-refs="0028,0018">
+
+**Cross-record `Consideration` reuse changed from identity reuse to reference reuse.** ADR-0018's convention of reusing the same `Consideration` IRI across records created a transaction-boundary vulnerability: editing a shared atom would silently mutate all decisions that manifest it, enabling retrospective rewrite of premises without a new `DecisionRecord`. This is reversed in favour of **reference reuse**:
+
+- Every `DecisionRecord` manifests its own set of `Consideration` individuals (one IRI per record, per claim).
+- When a consideration is carried over from a prior record, the new record mints a **distinct IRI** with the same or slightly adapted content.
+- The relationship to the originating consideration is captured via two new predicates: **`adr-o:derivedFrom`** (with inverse **`adr-o:derives`**), both declared with domain and range `adr-o:Consideration`.
+
+**Identity reuse within a single `DecisionRecord` remains permitted and encouraged.** The same `Consideration` IRI can simultaneously appear in a `ContextFact` (as a need) and in an `ExpectedOutcome` (as an expected gain), structurally asserting: "this decision satisfies the exact need it was triggered by." That intra-record identity — an ADR-O design property — enables machine-verifiable decision coherence; collapsing it would destroy the structural proof. ADR-0018 is superseded by ADR-0028 on the cross-record axis only. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §6–7)*
+
+</div>
+
+<div data-dn-passage="expected-outcome-rename-040" data-dn-record="adl" data-dn-adl-refs="0028,0010,0009">
+
+**`adr-o:OutcomeFact` renamed to `adr-o:ExpectedOutcome`; all outcome vocabulary rebalanced to an explicit t₀ voice.** The original `OutcomeFact` name encouraged t_n interpretations — as if the class recorded what actually happened after the decision. Under the DTP, the class records $t_0$ predictions: what the chosen alternative is *expected* to produce. The full rename chain is:
+
+| Old name | New name |
+|---|---|
+| `adr-o:OutcomeFact` | `adr-o:ExpectedOutcome` |
+| `adr-o:hasOutcome` | `adr-o:hasExpectedOutcome` |
+| `adr-o:OutcomeValence` | `adr-o:ExpectedOutcomeValence` |
+| `adr-o:outcomeValenceScheme` | `adr-o:expectedOutcomeValenceScheme` |
+| `adr-o:Benefit` | `adr-o:ExpectedGain` |
+| `adr-o:AcceptedCost` | `adr-o:ExpectedCost` |
+| `adr-o:Risk` | `adr-o:ExpectedRisk` |
+| `adr-o:FollowUp` | `adr-o:ExpectedDependency` |
+
+All renamed valence individuals retain the same SKOS scheme wiring pattern and `owl:AllDifferent` block as their predecessors. The `adr-o:outcomeValence` predicate name is **not** changed (it is already a verb-phrase); only its domain (`ExpectedOutcome`) and range (`ExpectedOutcomeValence`) are updated. The ADL-scope causal-topology predicates (`constrainedBy`, `prohibitedBy`, `recommends`, `discourages`, `enabledBy`) have their ranges updated from `OutcomeFact` to `ExpectedOutcome` accordingly. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §8; base model [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md), [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md))*
+
+</div>
+
+<div data-dn-passage="dcterms-version-tier-restriction-040" data-dn-record="adl" data-dn-adl-refs="0028,0016">
+
+**`dcterms:version` scope note tightened to Tier 2 (Presentation Layer) changes only.** Version bumps may only be used for typos, grammar, formatting, and title clarifications. Any change to the Tier 1 (Epistemic Core) — decisions, premises, alternatives, or outcome commitments — must be recorded as a new `DecisionRecord` that `adr-o:amends` the original. This restriction is now stated explicitly in the `dcterms:version` scope note. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §1; original predicate declaration [ADR-0016](/ADL/ADR-0016-dcterms-version-in-record.md))*
+
+</div>
+
+<div data-dn-passage="provenance-correction-0029-040" data-dn-record="adl" data-dn-adl-refs="0029">
+
+**ADR-0029 provenance correction is integrated into the 0.4.0 working version.** Documentation language that previously naturalized the intra-record `Consideration` identity loop as inherited from YADR or Y-statements is corrected in favor of the ADR-0029 position: YADR anchor/alias is clerical deduplication, Y-statements are a prose format, and the machine-verifiable identity loop is an ADR-O contribution. This is a documentation correction only and introduces no ontology-term or axiom changes.
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.3.0-draft decisions are reversed
+
+<div data-dn-passage="reversed-affects-materializes-040" data-dn-record="adl" data-dn-adl-refs="0028,0006,0025">
+
+- **`adr-o:affects`** (from 0.1.0-draft via ADR-0006): removed. The "manifestation side of a decision" framing is a DTP violation; the graph query over `justifiedBy` is the honest replacement. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §4)*
+- **`adr-o:materializes`** (from 0.2.5-draft via ADR-0025): removed for the same reason. Project-scope provenance is unidirectional. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §4)*
+- **The identity-reuse convention of ADR-0018** (cross-record): the convention is replaced by reference reuse (`derivedFrom`/`derives`). Intra-record identity reuse is explicitly preserved. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §6)*
+- **The `OutcomeFact` / `OutcomeValence` / `outcomeValenceScheme` / `Benefit` / `AcceptedCost` / `Risk` / `FollowUp` naming** (from 0.2.0-draft via ADR-0009/ADR-0010): all replaced by their `Expected*` counterparts. This is a breaking data change for any existing instances. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) §8)*
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.3.0-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-040" data-dn-record="meta">
+
+All 0.3.0-draft structural commitments are preserved unless explicitly reversed above:
+
+- `adr-o:manifests` as the Fact → Consideration placement predicate (`ContextFact`, `DeliberationFact`, `ExpectedOutcome`). *(→ [ADR-0027](/ADL/ADR-0027-facts-manifest-considerations.md))*
+- Atom-first reification, three reified link classes, strict graph (no Nygard literals). *(→ [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md), [ADR-0011](/ADL/ADR-0011-strict-graph-no-nygard-body.md))*
+- `chosenAlternative` as `owl:FunctionalProperty`; `rdf:List` ordering at the record level. *(→ [ADR-0012](/ADL/ADR-0012-alternatives-and-chosen-option.md), [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md))*
+- `adr-o:deliberationValenceScheme` and its three members (`Supports`, `Against`, `Neutral`). *(→ [ADR-0009](/ADL/ADR-0009-deliberation-and-outcome-valence.md))*
+- Status scheme, five status individuals, `owl:AllDifferent` block. *(→ [ADR-0008](/ADL/ADR-0008-status-skos-and-integrity.md))*
+- Amendment topology (`amends`/`amendedBy`), social-role predicates, `hasType`, `justifiedBy`, causal-topology predicates. *(→ [ADR-0020](/ADL/ADR-0020-amendments.md), [ADR-0021](/ADL/ADR-0021-social-role-predicates.md), [ADR-0023](/ADL/ADR-0023-add-hastype-annotation-property.md), [ADR-0026](/ADL/ADR-0026-ontology-provenance.md), [ADR-0025](/ADL/ADR-0025-causal-network.md))*
+- "KG lives under tooling" stance; SHACL still deferred. *(→ [ADR-0004](/ADL/ADR-0004-kg-under-tooling.md))*
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-040" data-dn-record="adl" data-dn-adl-refs="0028,0029">
+
+The 0.3.0 → 0.4.0 working line remains intentionally breaking on the ADR-0028 axes: two object properties are removed (`affects`, `materializes`), eight IRIs are renamed (one class, one property, one class for valences, one scheme, and four valence individuals), two new object properties are introduced (`derivedFrom`, `derives`), and a restriction is added to an existing scope note (`dcterms:version`). In addition, ADR-0029 contributes documentation-only provenance corrections (no ontology-term or axiom deltas). Any existing graph or SPARQL query that uses the removed or renamed terms requires migration. Because ADR-O remains pre-1.0 and ADR-0028 explicitly accepts these breaks in the service of transaction-boundary integrity, `0.4.0-draft` remains the compatibility signal for this working version. *(→ [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md); → [ADR-0029](/ADL/ADR-0029-provenance-correction-consideration-identity.md))*
+
+</div>
+</div>
+
 </div>
 
 <div data-dn-section="strong">

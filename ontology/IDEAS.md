@@ -214,9 +214,11 @@ For GADR, please look at local file `Archive/GADR/GADR-capturing-the-essence-of-
 
 **The argument reuse problem**
 
-YADR is the most structurally revealing of the three formats. The YAML anchor/alias mechanism (`&argument-a` → `*argument-a`) encodes a genuinely important semantic claim: the argument you made in favour of Option 1 during evaluation *is the same argument* that appears as a positive consequence in the decision outcome. Not a copy of it — the same thing. MADR handles this with copy-paste, which means the "Pros" section and the "Consequences" section can silently drift. YADR makes the identity explicit within the document.
+YADR is the most structurally revealing of the three formats from a serialization standpoint. The YAML anchor/alias mechanism (`&argument-a` → `*argument-a`) is a *clerical deduplication* tool: it prevents copy-paste drift by ensuring the same text string appears verbatim in multiple sections of the same document. When a pro argument is anchored and then referenced in the consequences section, YADR ensures they are literally the same string — a useful editorial property that MADR loses entirely by relying on copy-paste.
 
-ADR-O could solve this *properly* — with IRI identity across the graph — but only if arguments or forces are first-class nodes. Right now they're buried in prose (`context`, `rationale`, `consequences`). This is one of the deferred items in DESIGN-NOTES, and I think YADR makes the strongest possible case for promoting it. A first-class `Force` or `Argument` class is the thing that lets you say in SPARQL: "show me all decisions where the same force appeared as a pro for the chosen option and as a con for a rejected one."
+What YADR's anchors do *not* encode is a semantic claim. They assert string identity within one document, not argument identity across roles or records. The anchor mechanism cannot express that the concern you were *facing* in the context is the same thing as the benefit you expected *to achieve* — those are structurally different sections, and an alias from one to the other would be editorial coincidence, not architectural intent.
+
+ADR-O's first-class `Consideration` nodes solve a harder and distinct problem: IRI identity across roles. A `Consideration` can simultaneously be a `ContextFact` (framing a need) and an `ExpectedOutcome` (asserting that need is met), and the graph can be queried to verify the connection. A first-class atom class is the thing that lets you say in SPARQL: "show me all decisions where the same consideration appeared as a pro for the chosen option and as a con for a rejected one — or where the expected gain matches the stated need."
 
 **The "accepting-that" gap**
 
