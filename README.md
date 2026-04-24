@@ -2,11 +2,11 @@
 
 ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing decision — in any domain — worth preserving with its context, rationale, and alternatives as a machine-traversable graph. The goal is to represent decisions as a linked graph rather than isolated files, so both humans and tools can recover not just what was decided, but why — including how decisions relate to one another.
 
-> The acronym explicitly traces its roots back to software architecture, where ADR = Architecture Decision Record, and it was preserved in this project's name specifically for its rich heritage. See [ADR-0002](/ADL/ADR-0002-scope.md) for more on this.
+> The acronym explicitly traces its roots back to software architecture, where ADR = Architecture Decision Record, and it was preserved in this project's name specifically for its rich heritage. See [ADR-0002](/ADL/ADR-0002-ontology-scope.md) for more on this.
 
 ## Status
 
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.4.0-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.4.0`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
+The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.4.1-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.4.1`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
 
 A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships. See [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) for the per-version rationale.
 
@@ -34,11 +34,11 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 |--|--|
 | [`MANIFESTO.md`](/MANIFESTO.md) | Motivation and north star. |
 | [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
-| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft, 0.2.2-draft, 0.2.3-draft, 0.2.4-draft, 0.2.5-draft, 0.2.6-draft, 0.3.0-draft, 0.4.0-draft). |
+| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration (0.1.0-draft, 0.2.0-draft, 0.2.1-draft, 0.2.2-draft, 0.2.3-draft, 0.2.4-draft, 0.2.5-draft, 0.2.6-draft, 0.3.0-draft, 0.4.0-draft, 0.4.1-draft). |
 | [`ontology/IDEAS.md`](/ontology/IDEAS.md) | Design exploration and backlog-style ideas. |
 | [ADR-0000](/ADL/ADR-0000-inception.md) | Inception and survey of prior art. |
 | [ADR-0001](/ADL/ADR-0001-license.md) | License (CC BY 4.0). |
-| [ADR-0002](/ADL/ADR-0002-scope.md) | ADR = Any Decision Record; domain-agnostic core and extension pattern. |
+| [ADR-0002](/ADL/ADR-0002-ontology-scope.md) | ADR = Any Decision Record; domain-agnostic core and extension pattern. |
 | [ADR-0003](/ADL/ADR-0003-prose-literals-markdown.md) | Markdown as the format for prose-carrying literals. |
 | [ADR-0004](/ADL/ADR-0004-kg-under-tooling.md) | KG as substrate: tooling mediates all user interaction. |
 | [ADR-0005](/ADL/ADR-0005-log-all-decisions.md) | No entry gate beyond domain relevance; real-time and post-factum ADRs are first-class. |
@@ -65,7 +65,8 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 | [ADR-0026](/ADL/ADR-0026-ontology-provenance.md) | Ontology provenance via `adr-odr` namespace and `adr-o:justifiedBy` citations. |
 | [ADR-0027](/ADL/ADR-0027-facts-manifest-considerations.md) | `adr-o:manifests` replaces `adr-o:consideration` for Fact → Consideration placement. |
 | [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md) | Decision Transaction Principle: removes `affects`/`materializes`, adds `derivedFrom`/`derives`, renames `OutcomeFact` → `ExpectedOutcome` and rebalances outcome valences. |
-| [ADR-xxxx](/ADL/ADR-xxxx-success-criterion.md) | Proposed success criterion for v0.3.0 as a practical adoption checkpoint. |
+| [ADR-0029](/ADL/ADR-0029-provenance-correction-consideration-identity.md) | Corrects provenance attribution for intra-record Consideration identity as an ADR-O contribution and sets corrected documentation policy. |
+| [ADR-0030](/ADL/ADR-0030-observations.md) | Adds `Observation` with `verifies` and `hasVerdict` as the t_n validation bridge back to t_0 `ExpectedOutcome` commitments. |
 | [`Archive/index.md`](/Archive/index.md) | Archived references and outreach materials. |
 
 ## Intended outcomes

@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.4.0> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.4.1> ;
                           dcterms:created "2026-04-24"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.4.0-draft" ;
+                          owl:versionInfo "0.4.1-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Considerations. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -225,6 +225,15 @@ adr-o:hasExpectedOutcome rdf:type owl:ObjectProperty ,
                                             adr-odr:ADR-0010-consideration-and-reified-facts .
 
 
+adr-o:hasVerdict rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain adr-o:Observation ;
+                 rdfs:range adr-o:ObservationVerdict ;
+                 rdfs:comment "The epistemic conclusion of an Observation. Functional: exactly one verdict per observation."@en ;
+                 rdfs:label "has verdict"@en ;
+                 adr-o:justifiedBy adr-odr:ADR-0030-observations .
+
+
 adr-o:hasStatus rdf:type owl:ObjectProperty ,
                          owl:FunctionalProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
@@ -341,6 +350,14 @@ adr-o:derives rdf:type owl:ObjectProperty ;
               adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
 
+adr-o:verifies rdf:type owl:ObjectProperty ;
+               rdfs:domain adr-o:Observation ;
+               rdfs:range adr-o:ExpectedOutcome ;
+               rdfs:comment "Links an Observation to the ExpectedOutcome it evaluates. A single observation may verify multiple outcomes."@en ;
+               rdfs:label "verifies"@en ;
+               adr-o:justifiedBy adr-odr:ADR-0030-observations .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -432,6 +449,31 @@ adr-o:ExpectedOutcomeValence rdf:type owl:Class ;
                              rdfs:label "Expected Outcome Valence"@en ;
                              adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
                                                 adr-odr:ADR-0009-deliberation-and-outcome-valence .
+
+
+adr-o:Observation rdf:type owl:Class ;
+                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                    owl:onProperty adr-o:verifies ;
+                                    owl:someValuesFrom adr-o:ExpectedOutcome
+                                  ] ;
+                  rdfs:comment "A verification transaction that evaluates one or more ExpectedOutcomes. An Observation is a discrete epistemic moment (review, test run, monitoring window, or audit) that yields a verdict."@en ;
+                  rdfs:label "Observation"@en ;
+                  adr-o:justifiedBy adr-odr:ADR-0030-observations .
+
+
+adr-o:ObservationVerdict rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( skos:Concept
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty skos:inScheme ;
+                                                                    owl:hasValue adr-o:observationVerdictScheme
+                                                                  ]
+                                                                ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                         rdfs:subClassOf skos:Concept ;
+                         rdfs:comment "The verdict of an Observation."@en ;
+                         rdfs:label "Observation Verdict"@en ;
+                         adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
 adr-o:Status rdf:type owl:Class ;
@@ -548,6 +590,15 @@ adr-o:ExpectedRisk rdf:type owl:NamedIndividual ,
                                       adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
+adr-o:Inconclusive rdf:type owl:NamedIndividual ,
+                            skos:Concept ;
+                   skos:definition "The available evidence is insufficient to determine whether the expected outcome was realised."@en ;
+                   skos:inScheme adr-o:observationVerdictScheme ;
+                   skos:prefLabel "Inconclusive"@en ;
+                   skos:topConceptOf adr-o:observationVerdictScheme ;
+                   adr-o:justifiedBy adr-odr:ADR-0030-observations .
+
+
 adr-o:Superseded rdf:type owl:NamedIndividual ,
                           skos:Concept ;
                  rdfs:seeAlso adr-o:Deprecated ;
@@ -565,6 +616,24 @@ adr-o:Supports rdf:type owl:NamedIndividual ,
                skos:prefLabel "Supports"@en ;
                skos:topConceptOf adr-o:deliberationValenceScheme ;
                adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
+
+
+adr-o:Satisfied rdf:type owl:NamedIndividual ,
+                         skos:Concept ;
+                skos:definition "The expected outcome was realised according to the observation verdict."@en ;
+                skos:inScheme adr-o:observationVerdictScheme ;
+                skos:prefLabel "Satisfied"@en ;
+                skos:topConceptOf adr-o:observationVerdictScheme ;
+                adr-o:justifiedBy adr-odr:ADR-0030-observations .
+
+
+adr-o:Violated rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               skos:definition "The expected outcome was not realised according to the observation verdict."@en ;
+               skos:inScheme adr-o:observationVerdictScheme ;
+               skos:prefLabel "Violated"@en ;
+               skos:topConceptOf adr-o:observationVerdictScheme ;
+               adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
 ###  https://w3id.org/adr-o#deliberationValenceScheme
@@ -589,6 +658,17 @@ adr-o:expectedOutcomeValenceScheme rdf:type owl:NamedIndividual ,
                                                       adr-o:ExpectedRisk ;
                                    adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
                                                       adr-odr:ADR-0009-deliberation-and-outcome-valence .
+
+
+###  https://w3id.org/adr-o#observationVerdictScheme
+adr-o:observationVerdictScheme rdf:type owl:NamedIndividual ,
+                                        skos:ConceptScheme ;
+                               dcterms:title "Observation Verdict Scheme"@en ;
+                               rdfs:comment "Controlled vocabulary of Observation verdicts."@en ;
+                               skos:hasTopConcept adr-o:Inconclusive ,
+                                                  adr-o:Satisfied ,
+                                                  adr-o:Violated ;
+                               adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
 ###  https://w3id.org/adr-o#statusScheme
@@ -635,4 +715,13 @@ adr-o:statusScheme rdf:type owl:NamedIndividual ,
                         adr-o:Supports
                       ) ;
   rdfs:comment "Ensures deliberation valences are distinct so that adr-o:deliberationValence (functional) catches duplicate-valence misannotations."@en
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( adr-o:Inconclusive
+                        adr-o:Satisfied
+                        adr-o:Violated
+                      ) ;
+  rdfs:comment "Ensures observation verdicts are distinct so that adr-o:hasVerdict (functional) catches duplicate-verdict misannotations."@en
 ] .

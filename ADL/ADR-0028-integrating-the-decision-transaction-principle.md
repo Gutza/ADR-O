@@ -13,6 +13,8 @@ amends:
   - ADR-0021
   - ADR-0025
   - ADR-0026
+amendedBy:
+  - ADR-0030
 supersedes:
   - ADR-0018
 ---

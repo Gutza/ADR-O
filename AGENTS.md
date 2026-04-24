@@ -24,13 +24,16 @@
    ```
 2. Add/update entry in `ADL/ADL.yaml` with matching `index`, `title`, `filename`, `status`, `summary`.
 3. Use sequential IDs; amendments get new IDs, not suffixes (ADR-0024).
-4. Link `amends`/`amendedBy` in both frontmatter and `ADL.yaml`.
+4. Mirror relationship fields in both frontmatter and `ADL.yaml` where applicable: `amends`, `amendedBy`, `supersedes`, `supersededBy`.
 
 ## Ontology Contributions
 - **Standard:** Turtle (`.ttl`) format.
 - **Markdown literals:** Use datatype `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` for `dcterms:description`, `skos:definition`, `skos:note` (and sub-properties).
 - **Short labels:** `skos:prefLabel` is a plain string label, **not** Markdown.
 - **Prose policy:** No Nygard body literals on records (ADR-0011). Prose lives in `Consideration` nodes.
+- **Current core terms:** Use `ExpectedOutcome` (not `OutcomeFact`), `manifests` (not `consideration`), and `derivedFrom`/`derives` (identity reuse is not the cross-record model).
+- **Observation loop:** Use `Observation`, `verifies`, and `hasVerdict` for t_n validation of t_0 expected outcomes (ADR-0030).
+- **Controlled vocabularies:** Keep status and valence terms aligned with ontology schemes: status (`Accepted`, `Proposed`, `Rejected`, `Deprecated`, `Superseded`), deliberation valence (`Supports`, `Against`, `Neutral`), expected outcome valence (`ExpectedGain`, `ExpectedCost`, `ExpectedRisk`, `ExpectedDependency`), observation verdict (`Satisfied`, `Violated`, `Inconclusive`).
 - **Process:**
   - Substantive changes → new ADR in `ADL/` + `DESIGN-NOTES.md` entry.
   - Minor/tactical changes → `DESIGN-NOTES.md` entry only.
@@ -51,5 +54,5 @@ ADR-0025 establishes three canonical causal scope names. These names **must** be
 - **Manual verification:**
   - Ensure `ADL/ADL.yaml` matches `ADL/*.md` files.
   - Validate Turtle syntax with any RDF validator.
-  - Verify `owl:AllDifferent` blocks over status and valence schemes (ADR-0008, ADR-0009).
+  - Verify `owl:AllDifferent` blocks over status, valence, and observation verdict schemes (ADR-0008, ADR-0009, ADR-0030).
   - Check that `chosenAlternative` is present for `Accepted` records.
