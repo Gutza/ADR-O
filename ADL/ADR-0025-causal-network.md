@@ -31,7 +31,7 @@ The **ADR scope** is the tightest of the three, and it represents a single delib
 
 Within a single record, causality is **argumentative**. A `Consideration` is weighed against an `Alternative` to produce a decision. This scope is designed to be a machine-readable encoding of ZIO's **Y-Statement** structure:
 
-| Y-Statement Clause | ADR-O Construct |
+| Y-statement clause | ADR-O construct |
 | :--- | :--- |
 | *"In the context of..."* | `adr-o:hasContext` $\to$ `ContextFact` $\to$ `Consideration` |
 | *"Facing..."* | `adr-o:hasContext` $\to$ `ContextFact` $\to$ `Consideration` (specifically a concern) |

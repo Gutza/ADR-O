@@ -14,93 +14,93 @@
   status: "Accepted"
   summary: "Scopes ADR-O as a domain-agnostic core for Any Decision Record, using SKOS concept schemes for domain-specific extension rather than encoding software architecture into the primary class IRI."
 - index: 3
-  title: "Prose literals markdown"
+  title: "Prose Literals Markdown"
   filename: "ADR-0003-prose-literals-markdown.md"
   status: "Accepted"
   summary: "Commits all prose-carrying literals to the IANA text/markdown datatype IRI, providing renderers and validators with a stable signal while remaining OWL-compliant as an unknown custom datatype."
 - index: 4
-  title: "KG under tooling"
+  title: "KG Under Tooling"
   filename: "ADR-0004-kg-under-tooling.md"
   status: "Accepted"
   summary: "Records that ADR-O graphs are authoritative substrate mediated by tooling, and codifies the reconstructability boundary rule for deciding what belongs in the graph versus the tooling layer."
 - index: 5
-  title: "Log all decisions"
+  title: "Log All Decisions"
   filename: "ADR-0005-log-all-decisions.md"
   status: "Accepted"
   summary: "Removes the traditional significance filter from the ADL; all in-scope decisions are logged regardless of apparent magnitude, with selective surfacing delegated to the tooling layer rather than authoring-time gatekeeping."
   amendedBy: [28]
 - index: 6
-  title: "Core relational predicates"
+  title: "Core Relational Predicates"
   filename: "ADR-0006-core-relational-predicates.md"
   status: "Accepted"
   summary: "Defines the core relational predicates (addresses, affects, dependsOn, enables, conflictsWith, supersedes, supersededBy) with supersedes declared as a sub-property of prov:wasRevisionOf for PROV-O interoperability."
   amendedBy: [28]
 - index: 7
-  title: "Index vs identifier"
+  title: "Index vs Identifier"
   filename: "ADR-0007-index-vs-identifier.md"
   status: "Accepted"
   summary: "Introduces adr-o:index (xsd:integer, functional) alongside dcterms:identifier (string) so SPARQL can sort records by native integer order without parsing identifier strings."
   amendedBy: [24]
 - index: 8
-  title: "Status skos and integrity"
+  title: "Status SKOS and Integrity"
   filename: "ADR-0008-status-skos-and-integrity.md"
   status: "Accepted"
   summary: "Models lifecycle status as a SKOS concept scheme with five core individuals and a functional adr-o:hasStatus property, enforced by owl:AllDifferent for OWL DL inconsistency detection on duplicate statuses."
 - index: 9
-  title: "Deliberation and outcome valence"
+  title: "Deliberation and Outcome Valence"
   filename: "ADR-0009-deliberation-and-outcome-valence.md"
   status: "Accepted"
   summary: "Defines two disjoint SKOS valence schemes — deliberation (Supports/Against/Neutral) and outcome (Benefit/AcceptedCost/Risk/FollowUp) — as separate functional object properties on their respective fact classes, with owl:AllDifferent integrity blocks."
 - index: 10
-  title: "Consideration and reified facts"
+  title: "Consideration and Reified Facts"
   filename: "ADR-0010-consideration-and-reified-facts.md"
   status: "Accepted"
   summary: "Adopts atom-first reification via reusable Consideration nodes and three typed link classes (ContextFact, DeliberationFact, OutcomeFact) placed in rdf:List-ordered slots on DecisionRecord."
   amendedBy: [27, 29]
 - index: 11
-  title: "Strict graph no nygard body"
+  title: "Strict Graph No Nygard Body"
   filename: "ADR-0011-strict-graph-no-nygard-body.md"
   status: "Accepted"
   summary: "Bans Nygard body datatype literals on DecisionRecord; all narrative content is carried on Consideration nodes, and rejection rationale is expressed as deliberation structure rather than a separate literal escape hatch."
 - index: 12
-  title: "Alternatives and chosen option"
+  title: "Alternatives and Chosen Option"
   filename: "ADR-0012-alternatives-and-chosen-option.md"
   status: "Accepted"
   summary: "Introduces adr-o:Alternative as a first-class option class with adr-o:hasAlternative for the full option pool and a functional adr-o:chosenAlternative for the selected option; multi-winner outcomes are expressed as composite alternatives."
 - index: 13
-  title: "Addresses dual placement"
+  title: "Addresses Dual Placement"
   filename: "ADR-0013-addresses-dual-placement.md"
   status: "Accepted"
   summary: "Declares adr-o:addresses with intentionally unrestricted domain, allowing fine-grained tagging on Consideration (canonical) and coarser rollup on DecisionRecord (editorial convenience), with consideration-level use authoritative when both are present."
 - index: 14
-  title: "Ontology document shape"
+  title: "Ontology Document Shape"
   filename: "ADR-0014-ontology-document-shape.md"
   status: "Accepted"
   summary: "Fixes the ontology namespace to https://w3id.org/adr-o# with hash IRIs, a versioned owl:Ontology resource, and no owl:imports for external vocabularies (referenced by prefix only)."
 - index: 15
-  title: "Dublin core and prov usage"
+  title: "Dublin Core and PROV Usage"
   filename: "ADR-0015-dublin-core-and-prov-usage.md"
   status: "Accepted"
   summary: "Establishes canonical usage patterns for Dublin Core and PROV-O predicates on DecisionRecord via scope notes, fixing dcterms:date for decision date, dcterms:created for record authorship, and dcterms:creator for attribution."
 - index: 16
-  title: "Dcterms version in record"
+  title: "Dcterms Version in Record"
   filename: "ADR-0016-dcterms-version-in-record.md"
   status: "Accepted"
   summary: "Declares dcterms:version as an annotation property for lightweight iteration tags on a stable record IRI between supersession events, distinct from the supersession chain that changes record identity."
   amendedBy: [28]
 - index: 17
-  title: "Markdown properties as implemented"
+  title: "Markdown Properties as Implemented"
   filename: "ADR-0017-markdown-properties-as-implemented.md"
   status: "Accepted"
   summary: "Narrows ADR-0003's Markdown datatype scope to dcterms:description, skos:definition, and skos:note sub-properties; excludes skos:prefLabel (short label) and *Fact nodes (structural placements without their own prose properties)."
 - index: 18
-  title: "Consideration iri reuse convention"
+  title: "Consideration IRI Reuse Convention"
   filename: "ADR-0018-consideration-iri-reuse-convention.md"
   status: "Superseded"
   summary: "Editorial convention for Consideration IRI reuse: start record-local, promote to org-shared via owl:sameAs when reuse is real; superseded by ADR-0028's adr-o:derivedFrom/adr-o:derives model."
   supersededBy: 28
 - index: 19
-  title: "Clarifications are amendments"
+  title: "Clarifications Are Amendments"
   filename: "ADR-0019-clarifications-are-amendments.md"
   status: "Accepted"
   summary: "Collapses the planned Clarification vs Amendment distinction into a single unified Amendment concept, rejecting a separate adr-o:clarifies predicate as adding authoring complexity without improving current-state graph traversal."
@@ -111,36 +111,36 @@
   summary: "Mints adr-o:amends/adr-o:amendedBy as inverse object properties with arbitrary cardinality, and rejects an adr-o:Amended status individual as redundant with the topological amendedBy signal."
   amendedBy: [24]
 - index: 21
-  title: "Social role predicates"
+  title: "Social Role Predicates"
   filename: "ADR-0021-social-role-predicates.md"
   status: "Accepted"
   summary: "Introduces four RACI-mapped social role predicates — adr-o:authoredBy, adr-o:decidedBy, adr-o:consulted, adr-o:informed — as owl:ObjectProperty on DecisionRecord with prov:Agent as recommended range."
   amendedBy: [22, 28]
 - index: 22
-  title: "Creator authoredby coexistence"
+  title: "Creator AuthoredBy Coexistence"
   filename: "ADR-0022-creator-authoredby-coexistence.md"
   status: "Accepted"
   summary: "Establishes the tooling-mediated expansion pattern: dcterms:creator is the broad-compatibility ingress predicate; tooling promotes it to adr-o:authoredBy; when both are present adr-o:authoredBy is authoritative for social-role queries."
   amends: [21]
 - index: 23
-  title: "Add hasType annotation property"
+  title: "Add hasType Annotation Property"
   filename: "ADR-0023-add-hastype-annotation-property.md"
   status: "Accepted"
   summary: "Adds adr-o:hasType as an annotation property to classify records using extension SKOS concepts."
 - index: 24
-  title: "Sequential IDs for all decision records"
+  title: "Sequential IDs for All Decision Records"
   filename: "ADR-0024-sequential-ids-for-all-decision-records.md"
   status: "Accepted"
   summary: "Every DecisionRecord receives a unique sequential adr-o:index at creation time; amendment relationships are expressed via predicates, not ID suffixes."
   amends: [7, 20]
 - index: 25
-  title: "Causal topology: scopes, modal constraints, and materialization"
+  title: "Causal Topology: Scopes, Modal Constraints, and Materialization"
   filename: "ADR-0025-causal-network.md"
   status: "Accepted"
   summary: "Defines a three-scope causal architecture linking deliberation constraints and deliverable provenance through outcome-centered, machine-traversable relations."
   amendedBy: [28]
 - index: 26
-  title: "Ontology provenance: the adr-odr namespace"
+  title: "Ontology Provenance: The adr-odr Namespace"
   filename: "ADR-0026-ontology-provenance.md"
   status: "Accepted"
   summary: "Introduces adr-o:justifiedBy citations for ontology terms and establishes the adr-odr namespace with stable w3id-backed ADR IRIs."
@@ -159,7 +159,7 @@
   amends: [5, 6, 16, 21, 25, 26]
   supersedes: [18]
 - index: 29
-  title: "Provenance correction: Consideration identity is an ADR-O design contribution"
+  title: "Provenance Correction: Consideration Identity Is an ADR-O Design Contribution"
   filename: "ADR-0029-provenance-correction-consideration-identity.md"
   status: "Accepted"
   summary: "Corrects the false attribution of the intra-record Consideration identity property to YADR's anchor/alias mechanism or Y-statement formats; establishes it as an ADR-O original contribution and documents the corrected documentation policy."

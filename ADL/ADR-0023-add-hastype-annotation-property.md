@@ -8,7 +8,7 @@ author:
   email: bogdan@moongate.ro
 ---
 
-# ADR-0023 — Add hasType annotation property
+# ADR-0023 — Add hasType Annotation Property
 
 ## Context
 

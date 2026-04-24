@@ -13,7 +13,7 @@
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
                           owl:versionIRI <https://w3id.org/adr-o/0.4.0> ;
-                          dcterms:created "2026-04-22"^^xsd:date ;
+                          dcterms:created "2026-04-24"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
