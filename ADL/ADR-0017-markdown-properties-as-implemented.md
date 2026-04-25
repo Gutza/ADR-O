@@ -6,6 +6,8 @@ date: 2026-04-19
 author:
   name: Bogdan Stăncescu
   email: bogdan@moongate.ro
+amendedBy:
+  - ADR-0031
 ---
 
 # ADR-0017 — Markdown Prose Properties as Implemented in ADR-O 0.2.1

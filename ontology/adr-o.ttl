@@ -12,15 +12,15 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.4.1> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.4.2> ;
                           dcterms:created "2026-04-24"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
-                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Considerations placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
+                          dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.4.1-draft" ;
-                          skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Considerations. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
+                          owl:versionInfo "0.4.2-draft" ;
+                          skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
 #    Annotation properties
@@ -35,7 +35,7 @@ dcterms:creator rdf:type owl:AnnotationProperty ;
 
 
 dcterms:description rdf:type owl:AnnotationProperty ;
-                    skos:scopeNote "In ADR-O: prose-description for a DecisionRecord (summary) or Consideration (primary payload). SHOULD be typed as text/markdown."@en .
+                    skos:scopeNote "In ADR-O: prose-description for a DecisionRecord (summary) or Claim (primary payload). SHOULD be typed as text/markdown."@en .
 
 
 dcterms:license rdf:type owl:AnnotationProperty ;
@@ -51,11 +51,11 @@ dcterms:version rdf:type owl:AnnotationProperty ;
 
 
 skos:definition rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: formal definition payload on a Consideration or SKOS concept. SHOULD be typed as text/markdown."@en .
+                skos:scopeNote "In ADR-O: formal definition payload on a Claim or SKOS concept. SHOULD be typed as text/markdown."@en .
 
 
 skos:note rdf:type owl:AnnotationProperty ;
-          skos:scopeNote "In ADR-O: parent of the SKOS note family. On Considerations, sub-properties carry supplementary annotation prose. SHOULD be typed as text/markdown."@en .
+          skos:scopeNote "In ADR-O: parent of the SKOS note family. On Claims, sub-properties carry supplementary annotation prose. SHOULD be typed as text/markdown."@en .
 
 
 adr-o:hasType rdf:type owl:AnnotationProperty ;
@@ -75,7 +75,7 @@ prov:wasRevisionOf rdf:type owl:ObjectProperty ;
 
 adr-o:addresses rdf:type owl:ObjectProperty ;
                 rdfs:range adr-o:Concern ;
-                rdfs:comment "Links a subject to a Concern it resolves. Domain is unrestricted: canonical use is on Consideration; record-level use is an editorial rollup."@en ;
+                rdfs:comment "Links a subject to a Concern it resolves. Domain is unrestricted: canonical use is on Claim; record-level use is an editorial rollup."@en ;
                 rdfs:label "addresses"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0013-addresses-dual-placement ,
                                    adr-odr:ADR-0006-core-relational-predicates .
@@ -133,8 +133,8 @@ adr-o:manifests rdf:type owl:ObjectProperty ,
                                             adr-o:ExpectedOutcome
                                           )
                             ] ;
-                rdfs:range adr-o:Consideration ;
-                rdfs:comment "Links a reified fact to the Consideration it manifests. Functional: one Consideration per fact."@en ;
+                rdfs:range adr-o:Claim ;
+                rdfs:comment "Links a reified fact to the Claim it manifests. Functional: one Claim per fact."@en ;
                 rdfs:label "manifests"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0027-facts-manifest-considerations ,
                                    adr-odr:ADR-0010-consideration-and-reified-facts .
@@ -182,9 +182,9 @@ adr-o:enables rdf:type owl:ObjectProperty ;
 
 
 adr-o:enabledBy rdf:type owl:ObjectProperty ;
-                rdfs:domain adr-o:Consideration ;
+                rdfs:domain adr-o:Claim ;
                 rdfs:range adr-o:ExpectedOutcome ;
-                rdfs:comment "ADL scope: a Consideration is enabled by a prior decision's ExpectedOutcome. Modal strength: MAY."@en ;
+                rdfs:comment "ADL scope: a Claim is enabled by a prior decision's ExpectedOutcome. Modal strength: MAY."@en ;
                 rdfs:label "enabled by"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
@@ -293,33 +293,33 @@ adr-o:supersedes rdf:type owl:ObjectProperty ;
 
 
 adr-o:constrainedBy rdf:type owl:ObjectProperty ;
-                    rdfs:domain adr-o:Consideration ;
+                    rdfs:domain adr-o:Claim ;
                     rdfs:range adr-o:ExpectedOutcome ;
-                    rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that constrains it. Modal strength: MUST."@en ;
+                    rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that constrains it. Modal strength: MUST."@en ;
                     rdfs:label "constrained by"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
 adr-o:prohibitedBy rdf:type owl:ObjectProperty ;
-                   rdfs:domain adr-o:Consideration ;
+                   rdfs:domain adr-o:Claim ;
                    rdfs:range adr-o:ExpectedOutcome ;
-                   rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that prohibits it. Modal strength: MUST NOT."@en ;
+                   rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that prohibits it. Modal strength: MUST NOT."@en ;
                    rdfs:label "prohibited by"@en ;
                    adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
 adr-o:recommends rdf:type owl:ObjectProperty ;
-                rdfs:domain adr-o:Consideration ;
+                rdfs:domain adr-o:Claim ;
                 rdfs:range adr-o:ExpectedOutcome ;
-                rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that recommends it. Modal strength: SHOULD."@en ;
+                rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that recommends it. Modal strength: SHOULD."@en ;
                 rdfs:label "recommends"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
 adr-o:discourages rdf:type owl:ObjectProperty ;
-                  rdfs:domain adr-o:Consideration ;
+                  rdfs:domain adr-o:Claim ;
                   rdfs:range adr-o:ExpectedOutcome ;
-                  rdfs:comment "ADL scope: links a Consideration to a prior decision's ExpectedOutcome that discourages it. Modal strength: SHOULD NOT."@en ;
+                  rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that discourages it. Modal strength: SHOULD NOT."@en ;
                   rdfs:label "discourages"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
@@ -335,17 +335,17 @@ adr-o:justifiedBy rdf:type owl:ObjectProperty ;
 
 adr-o:derivedFrom rdf:type owl:ObjectProperty ;
                   owl:inverseOf adr-o:derives ;
-                  rdfs:domain adr-o:Consideration ;
-                  rdfs:range adr-o:Consideration ;
-                  rdfs:comment "A Consideration is derived from another. Preserves semantic connectivity across records without identity reuse."@en ;
+                  rdfs:domain adr-o:Claim ;
+                  rdfs:range adr-o:Claim ;
+                  rdfs:comment "A Claim is derived from another. Preserves semantic connectivity across records without identity reuse."@en ;
                   rdfs:label "derived from"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
 
 adr-o:derives rdf:type owl:ObjectProperty ;
-              rdfs:domain adr-o:Consideration ;
-              rdfs:range adr-o:Consideration ;
-              rdfs:comment "A Consideration serves as the source from which another is derived."@en ;
+              rdfs:domain adr-o:Claim ;
+              rdfs:range adr-o:Claim ;
+              rdfs:comment "A Claim serves as the source from which another is derived."@en ;
               rdfs:label "derives"@en ;
               adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
@@ -387,15 +387,16 @@ adr-o:Concern rdf:type owl:Class ;
               adr-o:justifiedBy adr-odr:ADR-0002-scope .
 
 
-adr-o:Consideration rdf:type owl:Class ;
-                    rdfs:comment "A reusable atomic claim or observation placed into roles via reified facts. Intra-record identity enables coherence checks (e.g. need = expected gain). Cross-record reuse is reference-based via adr-o:derivedFrom."@en ;
-                    rdfs:label "Consideration"@en ;
+adr-o:Claim rdf:type owl:Class ;
+                    rdfs:comment "A reusable atomic proposition that can be asserted in one or more fact roles within a DecisionRecord. A Claim is verifiable and carries truth value under observation."@en ;
+                    rdfs:label "Claim"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
-                                       adr-odr:ADR-0010-consideration-and-reified-facts .
+                                       adr-odr:ADR-0010-consideration-and-reified-facts ,
+                                       adr-odr:ADR-0031-rename-consideration-claim .
 
 
 adr-o:ContextFact rdf:type owl:Class ;
-                  rdfs:comment "Reified link placing a Consideration into framing: situational facts, constraints, and prior assumptions."@en ;
+                  rdfs:comment "Reified link placing a Claim into framing: situational facts, constraints, and prior assumptions."@en ;
                   rdfs:label "Context Fact"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
 
@@ -408,7 +409,7 @@ adr-o:DecisionRecord rdf:type owl:Class ;
 
 
 adr-o:DeliberationFact rdf:type owl:Class ;
-                       rdfs:comment "Reified link placing a Consideration into deliberation against an Alternative with a valence."@en ;
+                       rdfs:comment "Reified link placing a Claim into deliberation against an Alternative with a valence."@en ;
                        rdfs:label "Deliberation Fact"@en ;
                        adr-o:justifiedBy adr-odr:ADR-0010-consideration-and-reified-facts .
 
@@ -506,7 +507,7 @@ adr-o:Accepted rdf:type owl:NamedIndividual ,
 
 adr-o:ExpectedCost rdf:type owl:NamedIndividual ,
                             skos:Concept ;
-                   skos:definition "The Consideration is a cost voluntarily accepted at t₀ — the \"accepting-that\" commitment."@en ;
+                   skos:definition "The Claim is a cost voluntarily accepted at t₀ — the \"accepting-that\" commitment."@en ;
                    skos:inScheme adr-o:expectedOutcomeValenceScheme ;
                    skos:prefLabel "Expected Cost"@en ;
                    skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
@@ -516,7 +517,7 @@ adr-o:ExpectedCost rdf:type owl:NamedIndividual ,
 
 adr-o:Against rdf:type owl:NamedIndividual ,
                        skos:Concept ;
-              skos:definition "The Consideration weighs against the Alternative."@en ;
+              skos:definition "The Claim weighs against the Alternative."@en ;
               skos:inScheme adr-o:deliberationValenceScheme ;
               skos:prefLabel "Against"@en ;
               skos:topConceptOf adr-o:deliberationValenceScheme ;
@@ -525,7 +526,7 @@ adr-o:Against rdf:type owl:NamedIndividual ,
 
 adr-o:ExpectedGain rdf:type owl:NamedIndividual ,
                             skos:Concept ;
-                   skos:definition "The Consideration is a positive outcome expected at t₀."@en ;
+                   skos:definition "The Claim is a positive outcome expected at t₀."@en ;
                    skos:inScheme adr-o:expectedOutcomeValenceScheme ;
                    skos:prefLabel "Expected Gain"@en ;
                    skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
@@ -545,7 +546,7 @@ adr-o:Deprecated rdf:type owl:NamedIndividual ,
 
 adr-o:ExpectedDependency rdf:type owl:NamedIndividual ,
                                   skos:Concept ;
-                         skos:definition "The Consideration represents work or further deliberation triggered at t₀."@en ;
+                         skos:definition "The Claim represents work or further deliberation triggered at t₀."@en ;
                          skos:inScheme adr-o:expectedOutcomeValenceScheme ;
                          skos:prefLabel "Expected Dependency"@en ;
                          skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
@@ -555,7 +556,7 @@ adr-o:ExpectedDependency rdf:type owl:NamedIndividual ,
 
 adr-o:Neutral rdf:type owl:NamedIndividual ,
                        skos:Concept ;
-              skos:definition "The Consideration is in scope but does not weigh either way."@en ;
+              skos:definition "The Claim is in scope but does not weigh either way."@en ;
               skos:inScheme adr-o:deliberationValenceScheme ;
               skos:prefLabel "Neutral"@en ;
               skos:topConceptOf adr-o:deliberationValenceScheme ;
@@ -611,7 +612,7 @@ adr-o:Superseded rdf:type owl:NamedIndividual ,
 
 adr-o:Supports rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The Consideration weighs in favour of the Alternative."@en ;
+               skos:definition "The Claim weighs in favour of the Alternative."@en ;
                skos:inScheme adr-o:deliberationValenceScheme ;
                skos:prefLabel "Supports"@en ;
                skos:topConceptOf adr-o:deliberationValenceScheme ;

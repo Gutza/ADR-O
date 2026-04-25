@@ -8,6 +8,8 @@ author:
   email: bogdan@moongate.ro
 amends:
   - ADR-0010
+amendedBy:
+  - ADR-0031
 ---
 
 # ADR-0027 — Rename `adr-o:consideration` to `adr-o:manifests`

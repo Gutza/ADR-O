@@ -78,6 +78,10 @@ A reasoner caveat worth recording: some lightweight OWL 2 RL implementations —
 
 </div>
 
+</div>
+
+</div>
+
 <div data-dn-version="0.2.4-draft" data-dn-record="meta" id="adro-0-2-4-draft">
 
 ## ADR-O 0.2.4-draft
@@ -774,6 +778,8 @@ The 0.2.2 → 0.2.3 bump is non-destructive and additive: four object properties
 </div>
 </div>
 
+</div>
+
 <div data-dn-version="0.2.4-draft" data-dn-record="meta" id="adro-0-2-4-draft">
 
 ## ADR-O 0.2.4-draft
@@ -1091,6 +1097,78 @@ None.
 <div data-dn-passage="versioning-note-026" data-dn-record="meta">
 
 The 0.2.5 -> 0.2.6 bump is purely editorial: fifteen `rdfs:comment` literals are updated (eleven `Intra-ADL scope:` → `ADL scope:`, two `Intra-ADR scope:` → `ADR scope:`, two `Project-level scope:` → `Project scope:`), and ontology version metadata advances to `0.2.6-draft`. No `adr-o:` terms are added, removed, or semantically changed. Patch-level increment is the correct signal.
+
+</div>
+</div>
+
+</div>
+
+<div data-dn-version="0.4.2-draft" data-dn-record="meta" id="adro-0-4-2-draft">
+
+## ADR-O 0.4.2-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-041" data-dn-record="adl" data-dn-adl-refs="0031">
+
+This iteration is a focused breaking terminology correction that aligns the core atom with the Decision Transaction Principle and the observation-verification loop: `adr-o:Consideration` is renamed to `adr-o:Claim`. The structural model is preserved (same atom-first architecture, same reified fact placements, same expected-outcome and observation topology), but the atom class IRI and all direct references to it are migrated to remove epistemic ambiguity around what can be verified at $t_n$. *(→ [ADR-0031](/ADL/ADR-0031-rename-consideration-claim.md))*
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="claim-rename-041" data-dn-record="adl" data-dn-adl-refs="0031,0010,0028,0030">
+
+**`adr-o:Consideration` is replaced by `adr-o:Claim` as the canonical atom class.** The rename is intentionally breaking at IRI level: all domains/ranges, comments, scope notes, and class labels in the ontology are updated to the new term, with no compatibility alias (`owl:equivalentClass`) in this pass. The semantic intent is explicit: the atom manifested by facts is a proposition that can be evaluated and later verified in the `Observation -> ExpectedOutcome -> Claim` chain. *(→ [ADR-0031](/ADL/ADR-0031-rename-consideration-claim.md); background [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md), [ADR-0028](/ADL/ADR-0028-integrating-the-decision-transaction-principle.md), [ADR-0030](/ADL/ADR-0030-observations.md))*
+
+</div>
+
+<div data-dn-passage="claim-affected-terms-041" data-dn-record="meta">
+
+**Affected core term wiring remains structurally unchanged apart from the atom rename.** `adr-o:manifests` still links reified facts (`ContextFact`, `DeliberationFact`, `ExpectedOutcome`) to one atom, now with range `adr-o:Claim`. Cross-record reference reuse still uses `adr-o:derivedFrom` / `adr-o:derives`, now with `adr-o:Claim` domain/range. Causal-topology predicates that previously targeted `adr-o:Consideration` (`enabledBy`, `constrainedBy`, `prohibitedBy`, `recommends`, `discourages`) now target `adr-o:Claim`.
+
+</div>
+</div>
+
+<div data-dn-section="reversed">
+
+### What 0.4.0-draft decisions are reversed
+
+<div data-dn-passage="reversed-consideration-name-041" data-dn-record="adl" data-dn-adl-refs="0031">
+
+- **The atom naming decision to keep `Consideration` as canonical is reversed.** The term is replaced by `Claim` to match verification semantics and transaction-boundary clarity.
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.4.0-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-041" data-dn-record="meta">
+
+All structural commitments from 0.4.0-draft remain in force unless explicitly renamed above:
+
+- DTP alignment: removal of `affects` / `materializes`, unidirectional project-scope provenance via `justifiedBy`.
+- `ExpectedOutcome` vocabulary and expected-outcome valence scheme.
+- `Observation`, `verifies`, and `hasVerdict` for post-decision validation.
+- Reference reuse across records (`derivedFrom` / `derives`) and atom-first reification model.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-042" data-dn-record="adl" data-dn-adl-refs="0031">
+
+The 0.4.1 -> 0.4.2 bump materializes the current working-copy state after the ADR-0031 vocabulary migration (`adr-o:Consideration` -> `adr-o:Claim`) and related synchronization across ontology and ADL artifacts. No compatibility alias is provided in this iteration. Existing graphs and SPARQL queries that still bind the old class IRI must migrate to `adr-o:Claim`. Because ADR-O remains pre-1.0 and ADR-0031 explicitly accepts this break for epistemic coherence, `0.4.2-draft` is used as the compatibility signal for this workspace iteration.
 
 </div>
 </div>

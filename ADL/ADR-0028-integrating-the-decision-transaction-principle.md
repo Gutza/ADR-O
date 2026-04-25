@@ -15,6 +15,7 @@ amends:
   - ADR-0026
 amendedBy:
   - ADR-0030
+  - ADR-0031
 supersedes:
   - ADR-0018
 ---

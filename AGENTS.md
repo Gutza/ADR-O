@@ -30,7 +30,7 @@
 - **Standard:** Turtle (`.ttl`) format.
 - **Markdown literals:** Use datatype `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` for `dcterms:description`, `skos:definition`, `skos:note` (and sub-properties).
 - **Short labels:** `skos:prefLabel` is a plain string label, **not** Markdown.
-- **Prose policy:** No Nygard body literals on records (ADR-0011). Prose lives in `Consideration` nodes.
+- **Prose policy:** No Nygard body literals on records (ADR-0011). Prose lives in `Claim` nodes.
 - **Current core terms:** Use `ExpectedOutcome` (not `OutcomeFact`), `manifests` (not `consideration`), and `derivedFrom`/`derives` (identity reuse is not the cross-record model).
 - **Observation loop:** Use `Observation`, `verifies`, and `hasVerdict` for t_n validation of t_0 expected outcomes (ADR-0030).
 - **Controlled vocabularies:** Keep status and valence terms aligned with ontology schemes: status (`Accepted`, `Proposed`, `Rejected`, `Deprecated`, `Superseded`), deliberation valence (`Supports`, `Against`, `Neutral`), expected outcome valence (`ExpectedGain`, `ExpectedCost`, `ExpectedRisk`, `ExpectedDependency`), observation verdict (`Satisfied`, `Violated`, `Inconclusive`).

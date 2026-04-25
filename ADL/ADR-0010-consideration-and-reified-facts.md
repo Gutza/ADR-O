@@ -9,6 +9,7 @@ author:
 amendedBy:
   - ADR-0027
   - ADR-0029
+  - ADR-0031
 ---
 
 # ADR-0010 — Atom-First Reification: `Consideration` and `*Fact` Link Classes

@@ -56,7 +56,7 @@
   filename: "ADR-0010-consideration-and-reified-facts.md"
   status: "Accepted"
   summary: "Adopts atom-first reification via reusable Consideration nodes and three typed link classes (ContextFact, DeliberationFact, OutcomeFact) placed in rdf:List-ordered slots on DecisionRecord."
-  amendedBy: [27, 29]
+  amendedBy: [27, 29, 31]
 - index: 11
   title: "Strict Graph No Nygard Body"
   filename: "ADR-0011-strict-graph-no-nygard-body.md"
@@ -93,6 +93,7 @@
   filename: "ADR-0017-markdown-properties-as-implemented.md"
   status: "Accepted"
   summary: "Narrows ADR-0003's Markdown datatype scope to dcterms:description, skos:definition, and skos:note sub-properties; excludes skos:prefLabel (short label) and *Fact nodes (structural placements without their own prose properties)."
+  amendedBy: [31]
 - index: 18
   title: "Consideration IRI Reuse Convention"
   filename: "ADR-0018-consideration-iri-reuse-convention.md"
@@ -151,13 +152,14 @@
   status: "Accepted"
   summary: "Renames the fact-to-consideration predicate from adr-o:consideration to adr-o:manifests for clearer role-manifestation semantics."
   amends: [10]
+  amendedBy: [31]
 - index: 28
   title: "Integrating the Decision Transaction Principle"
   filename: "ADR-0028-integrating-the-decision-transaction-principle.md"
   status: "Accepted"
   summary: "Aligns the ontology with the Decision Transaction Principle: removes affects/materializes, adds derivedFrom/derives for referential Consideration reuse, renames OutcomeFact to ExpectedOutcome and rebalances outcome valences, and restricts dcterms:version to Tier 2 (Presentation Layer) changes only."
   amends: [5, 6, 16, 21, 25, 26]
-  amendedBy: [30]
+  amendedBy: [30, 31]
   supersedes: [18]
 - index: 29
   title: "Provenance Correction: Consideration Identity Is an ADR-O Design Contribution"
@@ -171,3 +173,9 @@
   status: "Accepted"
   summary: "Introduces adr-o:Observation (with adr-o:verifies and adr-o:hasVerdict) as the slim verdict-bearing bridge from tn back to t0 ExpectedOutcomes, deferring observation date to dcterms:date and evidence provenance to prov:wasDerivedFrom/dcterms:references, with a Telemetry Tom guardrail to keep ADL focused on epistemic judgments rather than raw telemetry."
   amends: [28]
+- index: 31
+  title: "Rename Consideration to Claim"
+  filename: "ADR-0031-rename-consideration-claim.md"
+  status: "Accepted"
+  summary: "Renames adr-o:Consideration to adr-o:Claim to align ADR-O with the decision-transaction and observation-verification model, making the Observation -> ExpectedOutcome -> Claim chain epistemically coherent."
+  amends: [10, 17, 27, 28]
