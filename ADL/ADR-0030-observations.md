@@ -157,7 +157,7 @@ Observations are **new transactions at tₙ**. They do not modify `DecisionRecor
 |-------------|-------------------|
 | **No observations in ADL** | Leaves the learning loop open; supersessions have no explicit trigger. |
 | **Add outcome-realized status to `DecisionRecord`** | Retrospective smearing; violates DTP. |
-| ** observations as `Consideration` nodes** | Conflates a prediction with a verification; destroys the $t_0/t_n$ distinction. |
+| ** observations as `Consideration` nodes** | Conflates a prediction with a verification; destroys the t₀/tₙ distinction. |
 | ** observations as generic `prov:Entity`** | Lacks the specific semantics of verification and verdict. |
 
 ## Consequences

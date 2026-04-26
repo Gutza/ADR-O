@@ -990,7 +990,7 @@ The only valid Project-scope bridge is `adr-o:justifiedBy` (from resource to dec
 
 <div data-dn-passage="expected-outcome-rename-040" data-dn-record="adl" data-dn-adl-refs="0028,0010,0009">
 
-**`adr-o:OutcomeFact` renamed to `adr-o:ExpectedOutcome`; all outcome vocabulary rebalanced to an explicit t₀ voice.** The original `OutcomeFact` name encouraged t_n interpretations — as if the class recorded what actually happened after the decision. Under the DTP, the class records t₀ predictions: what the chosen alternative is *expected* to produce. The full rename chain is:
+**`adr-o:OutcomeFact` renamed to `adr-o:ExpectedOutcome`; all outcome vocabulary rebalanced to an explicit t₀ voice.** The original `OutcomeFact` name encouraged tₙ interpretations — as if the class recorded what actually happened after the decision. Under the DTP, the class records t₀ predictions: what the chosen alternative is *expected* to produce. The full rename chain is:
 
 | Old name | New name |
 |---|---|
@@ -1195,7 +1195,7 @@ The 0.4.1 -> 0.4.2 bump materializes the current working-copy state after the AD
 
 <div data-dn-passage="iteration-character-overview-043" data-dn-record="adl" data-dn-adl-refs="0030">
 
-This iteration materializes ADR-0030 in the canonical ontology by introducing post-decision validation as a first-class pattern. The model adds a dedicated observation fact type and explicit verification wiring so expected outcomes can be checked at t_n without mutating t_0 commitments. *(→ [ADR-0030](/ADL/ADR-0030-observations.md))*
+This iteration materializes ADR-0030 in the canonical ontology by introducing post-decision validation as a first-class pattern. The model adds a dedicated observation fact type and explicit verification wiring so expected outcomes can be checked at tₙ without mutating t₀ commitments. *(→ [ADR-0030](/ADL/ADR-0030-observations.md))*
 
 </div>
 </div>
@@ -1206,7 +1206,7 @@ This iteration materializes ADR-0030 in the canonical ontology by introducing po
 
 <div data-dn-passage="observation-loop-043" data-dn-record="adl" data-dn-adl-refs="0030">
 
-**Observation-loop semantics are established as a core extension to DTP.** The ontology introduces `ObservedOutcome` verification mechanics via `verifies` and `hasVerdict`, with a controlled verdict scheme (`Satisfied`, `Violated`, `Inconclusive`). This creates a disciplined t_0 -> t_n learning loop where commitments are evaluated rather than rewritten.
+**Observation-loop semantics are established as a core extension to DTP.** The ontology introduces `ObservedOutcome` verification mechanics via `verifies` and `hasVerdict`, with a controlled verdict scheme (`Satisfied`, `Violated`, `Inconclusive`). This creates a disciplined t₀→tₙ learning loop where commitments are evaluated rather than rewritten.
 
 </div>
 </div>
@@ -1264,7 +1264,7 @@ This iteration consolidates naming and causal voice across ADL scope predicates 
 
 All 0.4.3-draft observation-loop commitments remain in force:
 
-- t_0 commitments remain immutable within each `DecisionRecord`.
+- t₀ commitments remain immutable within each `DecisionRecord`.
 - Post-decision evaluation is expressed through explicit observation structures.
 - Verdict semantics stay controlled by the existing observation verdict scheme.
 
@@ -1278,6 +1278,73 @@ All 0.4.3-draft observation-loop commitments remain in force:
 <div data-dn-passage="versioning-note-044" data-dn-record="adl" data-dn-adl-refs="0032,0033">
 
 The 0.4.3 -> 0.4.4 bump captures two accepted ADR materializations in one iteration window: ADR-0032 (causal-family naming normalization) and ADR-0033 (ObservedOutcome discovery model). The combined patch keeps structural continuity while expanding expressiveness for ADL-scope causality and learning artifacts.
+
+</div>
+</div>
+
+</div>
+
+
+<div data-dn-version="0.5.0-draft" data-dn-record="meta" id="adro-0-5-0-draft">
+
+## ADR-O 0.5.0-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-050" data-dn-record="adl" data-dn-adl-refs="0034,0035">
+
+This iteration hardens ADR-O's temporal and provenance semantics on both sides of the learning loop. ADR-0034 makes DecisionRecord time semantics explicit by separating artifact lifecycle timestamps from commitment time; ADR-0035 aligns `ObservedOutcome` with PROV-O as a first-class provenance entity with explicit observer, evidence, and tₙ timestamp anchors. *(→ [ADR-0034](/ADL/ADR-0034-timestamp-decisionrecord.md); [ADR-0035](/ADL/ADR-0035-observedoutcome-prov-entity.md))*
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="decisionrecord-timestamps-050" data-dn-record="adl" data-dn-adl-refs="0034">
+
+**Decision commitment time is now first-class and queryable.** `adr-o:decidedAt` is added as an explicit DecisionRecord annotation so tooling can anchor expected outcomes to t₀ without overloading Dublin Core date fields.
+
+</div>
+
+<div data-dn-passage="record-lifecycle-timestamps-050" data-dn-record="adl" data-dn-adl-refs="0034">
+
+**Record lifecycle timestamps are normalized under DC Terms with ADR-O semantics.** `dcterms:created` captures artifact creation and `dcterms:modified` captures editorial ADR-scope updates; amendment and supersession remain modeled as new DecisionRecords, preserving DTP identity boundaries.
+
+</div>
+
+<div data-dn-passage="observedoutcome-prov-alignment-050" data-dn-record="adl" data-dn-adl-refs="0035">
+
+**`ObservedOutcome` is now explicitly modeled as a provenance entity at tₙ.** ADR-0035 asserts `adr-o:ObservedOutcome rdfs:subClassOf prov:Entity` and materializes the minimal attribution package (`observedBy`, `evidence`, `observedAt`) so realized outcomes are attributable, evidence-grounded, and temporally distinct from t₀ commitment artifacts. This preserves DTP boundaries while making post-decision learning PROV-readable. *(→ [ADR-0035](/ADL/ADR-0035-observedoutcome-prov-entity.md))*
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.4.4-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-050" data-dn-record="meta">
+
+All 0.4.4-draft commitments remain in force, now with explicit PROV alignment for `ObservedOutcome`:
+
+- ADL-scope causal naming continues to use the normalized passive, source-grounded family.
+- `ObservedOutcome` remains the first-class realized fact model with optional verification linkage, now with explicit PROV-O entity semantics and attribution anchors.
+- Decision Transaction Principle boundaries still govern amendment and supersession topology.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-050" data-dn-record="adl" data-dn-adl-refs="0034,0035">
+
+The 0.4.4 -> 0.5.0 bump captures two coordinated materializations: ADR-0034 introduces explicit t₀ DecisionRecord timing semantics, and ADR-0035 introduces explicit tₙ provenance semantics for `ObservedOutcome` through PROV-O subclassing plus observer/evidence/timestamp anchors.
 
 </div>
 </div>

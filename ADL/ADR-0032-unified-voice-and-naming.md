@@ -48,7 +48,7 @@ Unify the ADL-scope causal family under a consistent passive voice, all with `Cl
 
 ### Why this direction (Passive, not Active)
 
-We could have flipped the direction (`Outcome` $\rightarrow$ `Claim`) and used active voice (e.g., `adr-o:discourages`). This would be logically equivalent but would violate the **Decision Transaction Principle (DTP)**.
+We could have flipped the direction (`Outcome` → `Claim`) and used active voice (e.g., `adr-o:discourages`). This would be logically equivalent but would violate the **Decision Transaction Principle (DTP)**.
 
 Under DTP, a `DecisionRecord` is a frozen transaction at t₀. If we used `ExpectedOutcome` as the subject, we would be adding edges *from* past outcomes *to* future claims. This requires mutating old records to add new outgoing edges whenever a later decision recognizes a constraint.
 
@@ -59,7 +59,7 @@ By making the `Claim` the subject and the predicate passive (`discouragedBy`), t
 | Alternative | Reason not chosen |
 |-------------|-------------------|
 | `adr-o:allows` / `adr-o:allowedBy` | `permittedBy` more precisely captures the "MAY" modal strength (permissible vs. enabled). |
-| Flip direction (`Outcome` $\rightarrow$ `Claim`) | Violates DTP; requires mutating past records. |
+| Flip direction (`Outcome` → `Claim`) | Violates DTP; requires mutating past records. |
 | Keep `enabledBy` but fix voice | Still collides with `adr-o:enables` (Record→Record). |
 
 ## Consequences
@@ -67,7 +67,7 @@ By making the `Claim` the subject and the predicate passive (`discouragedBy`), t
 **Positive.**
 - Voice is consistent across the entire modal family.
 - The `adr-o:enables` / `adr-o:permittedBy` collision is resolved.
-- The graph direction aligns with the epistemic direction of recognition (present $\rightarrow$ past).
+- The graph direction aligns with the epistemic direction of recognition (present → past).
 - SPARQL queries for "what constrains this claim" now use a consistent `*By` pattern.
 
 **Negative / risks.**

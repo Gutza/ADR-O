@@ -17,6 +17,12 @@ This folder is an archive of useful resources online, some of which have been do
 - O. Zimmermann, L. Wegmann, H. Koziolek and T. Goldschmidt, "[Architectural Decision Guidance Across Projects - Problem Space Modeling, Decision Backlog Management and Cloud Computing Knowledge](https://ieeexplore.ieee.org/document/7158507)," 2015 12th Working IEEE/IFIP Conference on Software Architecture, Montreal, QC, Canada, 2015, pp. 85-94, doi: 10.1109/WICSA.2015.29, also available from [ozimmer.ch](https://ozimmer.ch/assets/admentor-wicsa2015ubmissionv11nc.pdf), and mirrored [locally](./Olaf%20Zimmermann/admentor-wicsa2015ubmissionv11nc.pdf)
 - Roel de Gouw, [Capturing Software Architecture Design Rationale Through Decision Stories](https://studenttheses.uu.nl/handle/20.500.12932/34920), Master Thesis, Utrecht University, December 2019, mirrored [locally](./Roel%20de%20Gouw/Thesis%20Roel%20de%20Gouw.pdf)
 
+## Local Reference Documents
+- [ADR-O Methodology From First Principles](./ADR-O%20Methodology%20From%20First%20Principles.md)
+- [Consideration Reification - A Design Choice](./Consideration%20Reification%20-%20A%20Design%20Choice.md)
+- [The Decision Transaction Principle](./The%20Decision%20Transaction%20Principle.md)
+- [Y-Statements](./Y-Statements.md)
+
 ## Available Tools
 - [ADR Manager VS Code Extension](https://github.com/adr/vscode-adr-manager) – GitHub repo, last commit from Sep 14, 2022
 - [dotnet adr](https://github.com/endjin/dotnet-adr), a cross platform .NET Global Tool for creating and managing Architectural Decision Records (ADR) in the command line.

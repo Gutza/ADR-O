@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.4.4> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.5.0> ;
                           dcterms:created "2026-04-26"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.4.4-draft" ;
+                          owl:versionInfo "0.5.0-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -27,7 +27,20 @@
 #################################################################
 
 dcterms:created rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: optional record-creation timestamp. Distinct from dcterms:date when the log distinguishes decision date from record authorship (e.g. post-factum ADRs)."@en .
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range xsd:date ;
+                rdfs:comment "In ADR-O: the date the record artifact was created. For post-factum ADRs this may be later than the decision date."@en ;
+                skos:scopeNote "Optional record-creation timestamp. Distinct from adr-o:decidedAt when the log distinguishes decision date from record authorship."@en ;
+                adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
+
+
+adr-o:decidedAt rdf:type owl:AnnotationProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range xsd:date ;
+                rdfs:comment "The date the decision was actually made (t₀). This is the moment of commitment, which may precede or follow record creation."@en ;
+                rdfs:label "decided at"@en ;
+                skos:scopeNote "Tier 1 (epistemic core) timestamp for DecisionRecord commitment at t₀. Range is nominally xsd:date; xsd:dateTime is acceptable for automated tooling."@en ;
+                adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
 
 
 dcterms:creator rdf:type owl:AnnotationProperty ;
@@ -40,6 +53,15 @@ dcterms:description rdf:type owl:AnnotationProperty ;
 
 dcterms:license rdf:type owl:AnnotationProperty ;
                 skos:scopeNote "In ADR-O: per-record license override if different from the log."@en .
+
+
+dcterms:modified rdf:type owl:AnnotationProperty ;
+                 rdfs:domain adr-o:DecisionRecord ;
+                 rdfs:range xsd:date ;
+                 rdfs:comment "The date of the last editorial modification in ADR scope. Amendment and supersession events are recorded as new DecisionRecords instead."@en ;
+                 rdfs:label "modified"@en ;
+                 skos:scopeNote "Pairs with dcterms:version for non-semantic artifact evolution under the Decision Transaction Principle."@en ;
+                 adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
 
 
 dcterms:title rdf:type owl:AnnotationProperty ;
@@ -183,7 +205,7 @@ adr-o:discoveryType rdf:type owl:ObjectProperty ,
                              owl:FunctionalProperty ;
                     rdfs:domain adr-o:ObservedOutcome ;
                     rdfs:range adr-o:DiscoveryType ;
-                    rdfs:comment "Classifies whether an ObservedOutcome is Expected, Deducible, or Emergent relative to the t0 decision context."@en ;
+                    rdfs:comment "Classifies whether an ObservedOutcome is Expected, Deducible, or Emergent relative to the t₀ decision context."@en ;
                     rdfs:label "discovery type"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
 
@@ -432,7 +454,8 @@ adr-o:Claim rdf:type owl:Class ;
                     rdfs:label "Claim"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
                                        adr-odr:ADR-0010-consideration-and-reified-facts ,
-                                       adr-odr:ADR-0031-rename-consideration-claim .
+                                       adr-odr:ADR-0031-rename-consideration-claim,
+                                       adr-odr:ADR-0033-observation-discovery .
 
 
 adr-o:ContextFact rdf:type owl:Class ;
@@ -479,7 +502,7 @@ adr-o:DiscoveryType rdf:type owl:Class ;
                                           rdf:type owl:Class
                                         ] ;
                     rdfs:subClassOf skos:Concept ;
-                    rdfs:comment "Classification of an ObservedOutcome relative to t0 expectations: Expected, Deducible, or Emergent."@en ;
+                    rdfs:comment "Classification of an ObservedOutcome relative to t₀ expectations: Expected, Deducible, or Emergent."@en ;
                     rdfs:label "Discovery Type"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
 
@@ -523,7 +546,7 @@ adr-o:ObservedOutcome rdf:type owl:Class ;
                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass adr-o:DiscoveryType
                                   ] ;
-                  rdfs:comment "A first-class t_n fact that captures a realized effect linked to a source DecisionRecord. ObservedOutcome may optionally verify an ExpectedOutcome and carry a verdict."@en ;
+                  rdfs:comment "A first-class tₙ fact that captures a realized effect linked to a source DecisionRecord. ObservedOutcome may optionally verify an ExpectedOutcome and carry a verdict."@en ;
                   rdfs:label "ObservedOutcome"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
                                      adr-odr:ADR-0030-observations .
@@ -598,7 +621,7 @@ adr-o:ExpectedCost rdf:type owl:NamedIndividual ,
 
 adr-o:Deducible rdf:type owl:NamedIndividual ,
                          skos:Concept ;
-                skos:definition "The outcome was a logical consequence of the decision, but not explicitly predicted at t0."@en ;
+                skos:definition "The outcome was a logical consequence of the decision, but not explicitly predicted at t₀."@en ;
                 skos:inScheme adr-o:discoveryTypeScheme ;
                 skos:prefLabel "Deducible"@en ;
                 skos:topConceptOf adr-o:discoveryTypeScheme ;
@@ -607,7 +630,7 @@ adr-o:Deducible rdf:type owl:NamedIndividual ,
 
 adr-o:Emergent rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The outcome arose through interaction with the environment and was not predictable at t0."@en ;
+               skos:definition "The outcome arose through interaction with the environment and was not predictable at t₀."@en ;
                skos:inScheme adr-o:discoveryTypeScheme ;
                skos:prefLabel "Emergent"@en ;
                skos:topConceptOf adr-o:discoveryTypeScheme ;
@@ -616,7 +639,7 @@ adr-o:Emergent rdf:type owl:NamedIndividual ,
 
 adr-o:Expected rdf:type owl:NamedIndividual ,
                         skos:Concept ;
-               skos:definition "The outcome was explicitly predicted at t0."@en ;
+               skos:definition "The outcome was explicitly predicted at t₀."@en ;
                skos:inScheme adr-o:discoveryTypeScheme ;
                skos:prefLabel "Expected"@en ;
                skos:topConceptOf adr-o:discoveryTypeScheme ;
@@ -758,7 +781,7 @@ adr-o:deliberationValenceScheme rdf:type owl:NamedIndividual ,
 adr-o:discoveryTypeScheme rdf:type owl:NamedIndividual ,
                                    skos:ConceptScheme ;
                           dcterms:title "ObservedOutcome Discovery Type Scheme"@en ;
-                          rdfs:comment "Controlled vocabulary classifying how an observed effect relates to t0 expectations."@en ;
+                          rdfs:comment "Controlled vocabulary classifying how an observed effect relates to t₀ expectations."@en ;
                           skos:hasTopConcept adr-o:Deducible ,
                                              adr-o:Emergent ,
                                              adr-o:Expected ;

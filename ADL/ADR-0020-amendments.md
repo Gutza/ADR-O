@@ -28,7 +28,7 @@ The following predicates are minted in the `https://w3id.org/adr-o#` namespace:
 - **`adr-o:amends`** — domain `adr-o:DecisionRecord`, range `adr-o:DecisionRecord`.
 - **`adr-o:amendedBy`** — the `owl:inverseOf` of `adr-o:amends`.
 
-**Cardinality is arbitrary ($0..N$).** A single decision record can be amended by zero, one, or many other records. This allows the original record to remain the authoritative hub while accumulating a series of "patches" over time.
+**Cardinality is arbitrary (0..N).** A single decision record can be amended by zero, one, or many other records. This allows the original record to remain the authoritative hub while accumulating a series of "patches" over time.
 
 ### 2. Rejection of the `Amended` Status
 Despite the common pattern of updating a record's status to reflect its state, **no `adr-o:Amended` status will be added to the status scheme.** 

@@ -5,12 +5,13 @@ A `DecisionRecord` is an **epistemic transaction**: it represents *the closed st
 
 > **A decision record is a transaction that commits to a path based on the information, constraints, and values available at the moment of decision.**
 
-Every `DecisionRecord` has a temporal horizon defined by its `dcterms:date` (t₀).
+Every `DecisionRecord` has a temporal horizon defined by `adr-o:decidedAt` (t₀).
+The record artifact itself carries separate editorial timestamps: `dcterms:created` (artifact birth) and `dcterms:modified` (most recent Tier 2 edit).
 
-- **Inside the Horizon ($t \le t_0$):** All information used to justify the decision. This includes context, concerns, alternatives, and the expected effects of the chosen path.
-- **Outside the Horizon ($t > t_0$):** All consequences, realizations, and subsequent learnings.
+- **Inside the Horizon (t < t₀):** All information used to justify the decision. This includes context, concerns, alternatives, and the expected effects of the chosen path.
+- **Outside the Horizon (t > t₀):** All consequences, realizations, and subsequent learnings, typically captured as `ObservedOutcome` artifacts.
 
-**The boundary is impermeable.** Information from $t > t_0$ may never enter the `DecisionRecord`.
+**The boundary is impermeable.** Information from t > t₀ may never enter the `DecisionRecord`.
 
 A `DecisionRecord` is **prescriptive**, never descriptive. It documents:
 - What we decided we **will** do.
@@ -39,7 +40,7 @@ A `DecisionRecord` is mutable during its drafting and analysis phase. It becomes
 **Self-references do not freeze.** A record referencing itself (e.g., in a internal cross-reference or a self-amendment loop if permitted) does not meet the threshold for immutability. Only references from **another** `DecisionRecord` create the referential dependency that locks the original.
 
 ### ADL Scope References: Freeze
-A `DecisionRecord` ($R$) is frozen the moment any other `DecisionRecord` ($R'$) asserts a relationship to $R$: `amendedBy`, `amends`, `conflictsWith`, `dependsOn`, `enables`, `supersededBy`, or `supersedes`.
+A `DecisionRecord` is frozen the moment any other `DecisionRecord` asserts a relationship to R: `amendedBy`, `amends`, `conflictsWith`, `dependsOn`, `enables`, `supersededBy`, or `supersedes`.
 
 ### Project Scope Reference: Freeze
 This extends to the **Project scope**: a `DecisionRecord` is also frozen when it is linked to a system artifact: `affects`, `justifiedBy`, or `materializes`.
@@ -53,7 +54,7 @@ Once a record is frozen, changes are restricted by tier.
 ### Tier 1: The Epistemic Core (Strictly Immutable)
 These elements constitute the decision itself. Any change requires a **new `DecisionRecord`** that `amends` or `supersedes` the original.
 
-- `dcterms:date` (the t₀ of the decision)
+- `adr-o:decidedAt` (the t₀ of the decision)
 - `chosenAlternative`
 - `hasContext` / `hasDeliberation` (the premises)
 - `intendsToAchieve` / `accepts` (the commitments)
@@ -69,23 +70,23 @@ These elements are about *how* the decision is communicated, not *what* was deci
 
 ### The Amendment Path
 A change to a Tier 1 property is not an "edit"; it is a **new decision**.
-1. Create a new `DecisionRecord` $R'$.
-2. Assert $R' \xrightarrow{\text{amends}} R$.
-3. The original $R$ remains in the ledger, unchanged, preserving the record of what was believed at t₀.
+1. Create a new `DecisionRecord`.
+2. Assert the new ADR amends the old one.
+3. The original ADR remains in the ledger, unchanged, preserving the record of what was believed at t₀.
 
 ## 5. Post-Factum Records
 
-A post-factum ADR (recorded at $t_{recorded} > t_0$) is still a transaction at t₀.
+A post-factum ADR (recorded at t > t₀) is still a transaction at t₀.
 
-The author must **reconstruct the epistemic state at t₀**:
+It's the ADR author's explicit responsibility to **reconstruct the epistemic state at t₀**:
 - *"At the time of the decision, we knew X, Y, Z..."*
 - *"We believed A would happen..."*
 
-The fact that the author now knows tₙ is metadata (`dcterms:created` vs `dcterms:date`), not a license to inject future knowledge into the decision logic. The reconstructed t₀ record is then frozen upon publication or reference, just like any other transaction.
+The fact that the author now knows tₙ is metadata (`dcterms:created` vs `adr-o:decidedAt`, plus later `dcterms:modified` if Tier 2 edits occur), not a license to inject future knowledge into the decision logic. The reconstructed t₀ record is then frozen upon publication or reference, just like any other transaction.
 
 ## 6. The Learning Delta
 
-The gap between what was **intended** in a `DecisionRecord` (at t₀) and what **materialized** in the system (at tₙ) is the most valuable information in the ADL.
+The gap between what was **intended** in a `DecisionRecord` (at t₀ via `adr-o:decidedAt`) and what was **observed** in the system (at tₙ via `ObservedOutcome` / `adr-o:observedAt`) is some of the most valuable information in the ADL.
 
 By enforcing the transaction principle, ADR-O preserves this delta. When a later ADR supersedes an earlier one because a cost was higher than accepted, the graph explicitly contains:
 1. The original commitment (what we accepted)

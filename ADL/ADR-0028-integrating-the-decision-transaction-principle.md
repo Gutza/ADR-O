@@ -136,7 +136,7 @@ adr-o:derives rdf:type owl:ObjectProperty ;
 ```ttl
 ###  https://w3id.org/adr-o#ExpectedOutcome
 adr-o:ExpectedOutcome rdf:type owl:Class ;
-                     rdfs:comment "A reified link placing a Consideration into the expected results of a DecisionRecord. An ExpectedOutcome represents a claim made at the moment of decision about what the chosen alternative is intended to produce (ExpectedGain), what costs are knowingly accepted (ExpectedCost), what risks are acknowledged (ExpectedRisk), or what subsequent work is triggered (ExpectedDependency). Within a DecisionRecord's hasExpectedOutcome list, an ExpectedOutcome represents a t0 commitment, not a tn observation."@en ;
+                     rdfs:comment "A reified link placing a Consideration into the expected results of a DecisionRecord. An ExpectedOutcome represents a claim made at the moment of decision about what the chosen alternative is intended to produce (ExpectedGain), what costs are knowingly accepted (ExpectedCost), what risks are acknowledged (ExpectedRisk), or what subsequent work is triggered (ExpectedDependency). Within a DecisionRecord's hasExpectedOutcome list, an ExpectedOutcome represents a t₀ commitment, not a tₙ observation."@en ;
                      rdfs:label "Expected Outcome"@en ;
                      adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
@@ -156,7 +156,7 @@ adr-o:outcomeValence rdf:type owl:ObjectProperty ,
                       owl:FunctionalProperty ;
                  rdfs:domain adr-o:ExpectedOutcome ;
                  rdfs:range adr-o:ExpectedOutcomeValence ;
-                 rdfs:comment "The intended valence of an ExpectedOutcome: ExpectedGain, ExpectedCost, ExpectedRisk, or ExpectedDependency. This is a t0 classification of the commitment, not a tn classification of a result."@en ;
+                 rdfs:comment "The intended valence of an ExpectedOutcome: ExpectedGain, ExpectedCost, ExpectedRisk, or ExpectedDependency. This is a t₀ classification of the commitment, not a tₙ classification of a result."@en ;
                  rdfs:label "outcome valence"@en ;
                  adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
@@ -172,7 +172,7 @@ adr-o:ExpectedOutcomeValence rdf:type owl:Class ;
                                               rdf:type owl:Class
                                             ] ;
                            rdfs:subClassOf skos:Concept ;
-                           rdfs:comment "A valence for an ExpectedOutcome, capturing the nature of the t0 commitment."@en ;
+                           rdfs:comment "A valence for an ExpectedOutcome, capturing the nature of the t₀ commitment."@en ;
                            rdfs:label "Expected Outcome Valence"@en ;
                            adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
@@ -181,7 +181,7 @@ adr-o:ExpectedOutcomeValence rdf:type owl:Class ;
 adr-o:expectedOutcomeValenceScheme rdf:type owl:NamedIndividual ,
                                                  skos:ConceptScheme ;
                                   dcterms:title "Expected Outcome Valence Scheme"@en ;
-                                  rdfs:comment "The controlled vocabulary of expected outcomes at t0. All valences are claims about what the decision is expected to produce; none are guarantees."@en ;
+                                  rdfs:comment "The controlled vocabulary of expected outcomes at t₀. All valences are claims about what the decision is expected to produce; none are guarantees."@en ;
                                   skos:hasTopConcept adr-o:ExpectedGain ,
                                                      adr-o:ExpectedCost ,
                                                      adr-o:ExpectedRisk ,
@@ -232,7 +232,7 @@ The near-miss serves as a reminder: the ontology's indirection is there to make 
 - Provenance chains remain honest rather than being "cleaned" retrospectively.
 - Semantic connectivity between related considerations is preserved via `adr-o:derivedFrom`/`adr-o:derives`.
 - The ontology removes predicates (`affects`, `materializes`) that encouraged DTP violations, forcing "what is affected" to be a query over the graph rather than a property of the decision.
-- **Outcome vocabulary is epistemically honest:** by renaming `OutcomeFact` to `ExpectedOutcome` and rebalancing the valences, the ontology explicitly models commitments rather than results, closing the $t_0/t_n$ smear.
+- **Outcome vocabulary is epistemically honest:** by renaming `OutcomeFact` to `ExpectedOutcome` and rebalancing the valences, the ontology explicitly models commitments rather than results, closing the t₀/tₙ smear.
 - **Consistency of voice:** all four expected outcome valences now share a predictive modality, making the graph's claims uniform.
 
 **Negative / risks.**

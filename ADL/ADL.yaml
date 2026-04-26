@@ -171,7 +171,7 @@
   title: "Observations: Closing the Learning Loop"
   filename: "ADR-0030-observations.md"
   status: "Accepted"
-  summary: "Introduces adr-o:Observation (with adr-o:verifies and adr-o:hasVerdict) as the slim verdict-bearing bridge from tn back to t0 ExpectedOutcomes, deferring observation date to dcterms:date and evidence provenance to prov:wasDerivedFrom/dcterms:references, with a Telemetry Tom guardrail to keep ADL focused on epistemic judgments rather than raw telemetry."
+  summary: "Introduces adr-o:Observation (with adr-o:verifies and adr-o:hasVerdict) as the slim verdict-bearing bridge from tₙ back to t₀ ExpectedOutcomes, deferring observation date to dcterms:date and evidence provenance to prov:wasDerivedFrom/dcterms:references, with a Telemetry Tom guardrail to keep ADL focused on epistemic judgments rather than raw telemetry."
   amends: [28]
   amendedBy: [33]
 - index: 31
@@ -190,5 +190,16 @@
   title: "Observed Outcomes as First-Class Facts with Discovery Types"
   filename: "ADR-0033-observation-discovery.md"
   status: "Accepted"
-  summary: "Reframes adr-o:Observation as adr-o:ObservedOutcome, makes verification optional, and introduces discovery typing (Expected, Deducible, Emergent) so ADL-scope claims can cite realized outcomes without retroactively mutating t0 records."
+  summary: "Reframes adr-o:Observation as adr-o:ObservedOutcome, makes verification optional, and introduces discovery typing (Expected, Deducible, Emergent) so ADL-scope claims can cite realized outcomes without retroactively mutating t₀ records."
   amends: [30]
+- index: 34
+  title: "Timestamping DecisionRecord: Creation, Decision, and Modification"
+  filename: "ADR-0034-timestamp-decisionrecord.md"
+  status: "Accepted"
+  summary: "Introduces explicit DecisionRecord timestamp semantics by adding adr-o:decidedAt for t₀ commitment time while standardizing dcterms:created and dcterms:modified for artifact lifecycle tracking."
+
+- index: 35
+  title: "`ObservedOutcome` as a First-Class Provenance Entity"
+  filename: "ADR-0035-observedoutcome-prov-entity.md"
+  status: "Accepted"
+  summary: "Aligns adr-o:ObservedOutcome with PROV-O by subclassing prov:Entity and adding observedBy, evidence, and observedAt so observations are attributable, evidence-grounded, and explicitly timestamped at tₙ."

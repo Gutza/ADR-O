@@ -34,12 +34,12 @@ Within a single record, causality is **argumentative**. A `Consideration` is wei
 
 | Y-statement clause | ADR-O construct |
 | :--- | :--- |
-| *"In the context of..."* | `adr-o:hasContext` $\to$ `ContextFact` $\to$ `Consideration` |
-| *"Facing..."* | `adr-o:hasContext` $\to$ `ContextFact` $\to$ `Consideration` (specifically a concern) |
+| *"In the context of..."* | `adr-o:hasContext` → `ContextFact` → `Consideration` |
+| *"Facing..."* | `adr-o:hasContext` → `ContextFact` → `Consideration` (specifically a concern) |
 | *"We decided for..."* | `adr-o:chosenAlternative` |
 | *"And neglected..."* | `adr-o:hasAlternative` (those not chosen) |
-| *"To achieve..."* | `adr-o:hasOutcome` $\to$ `OutcomeFact` with `adr-o:Benefit` |
-| *"Accepting that..."* | `adr-o:hasOutcome` $\to$ `OutcomeFact` with `adr-o:AcceptedCost` |
+| *"To achieve..."* | `adr-o:hasOutcome` → `OutcomeFact` with `adr-o:Benefit` |
+| *"Accepting that..."* | `adr-o:hasOutcome` → `OutcomeFact` with `adr-o:AcceptedCost` |
 
 The `adr-o:outcomeValence` predicate is the structural encoding of the Y-Statement's payoff/cost distinction. It transforms a prose "acceptance" into a queryable fact.
 
@@ -55,14 +55,14 @@ Between decisions, causality is **retrospective**. A later decision recognizes t
     - `adr-o:recommends` (RFC 2119: **SHOULD**)
     - `adr-o:discourages` (RFC 2119: **SHOULD NOT**)
     - `adr-o:enabledBy` (RFC 2119: **MAY**)
-- **Causal direction:** `Consideration` (in later ADR) $\rightarrow$ `OutcomeFact` (from prior ADR).
+- **Causal direction:** `Consideration` (in later ADR) → `OutcomeFact` (from prior ADR).
 - **Nature:** A claim made by the later decision about its own constraints. The prior decision does not "push" constraints forward; the later decision "pulls" them back.
 
 #### Project Scope
 The **Project scope** breaks out of the ADL, and contains both the ADL and the deliverable artifact documented by it; at this scope we're concerned with connections between the ADL and the system artifacts it describes.
 - **Predicates:**
-    - `adr-o:materializes` (`DecisionRecord` $\to$ `rdfs:Resource`)
-    - `adr-o:justifiedBy` (`rdfs:Resource` $\to$ `DecisionRecord`)
+    - `adr-o:materializes` (`DecisionRecord` → `rdfs:Resource`)
+    - `adr-o:justifiedBy` (`rdfs:Resource` → `DecisionRecord`)
 - **Causal direction:** The deliverable points back to its justification.
 - **Nature:** Provenance. The deliverable is a materialized effect of a decision.
 

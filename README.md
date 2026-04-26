@@ -6,7 +6,7 @@ ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing d
 
 ## Status
 
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.4.4-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.4.4`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
+The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.5.0-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.5.0`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
 
 A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships. See [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) for the per-version rationale.
 

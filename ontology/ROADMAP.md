@@ -7,7 +7,7 @@ The single most important finding from that exercise is the one that reframes th
 ## 1. SWOT Analysis
 
 ### STRENGTHS (What We Do Well)
-- **Atom-First Identity:** `Consideration` nodes with stable IRI identity enable machine-verifiable intra-record coherence; cross-record connectivity uses reference reuse via `adr-o:derivedFrom`/`adr-o:derives` (ADR-0028).
+- **Atom-First Identity:** `Claim` nodes with stable IRI identity enable machine-verifiable intra-record coherence; cross-record connectivity uses reference reuse via `adr-o:derivedFrom`/`adr-o:derives` (ADR-0028).
 - **Social Graph (RACI):** `authoredBy`, `decidedBy`, `consulted`, and `informed` provide a first-class RACI mapping; `dcterms:creator` coexists as a DC-compatibility layer per ADR-0022. Social-role queries are now answerable without reading prose.
 - **Option Pool Integrity:** `hasAlternative` + `chosenAlternative` + valenced `DeliberationFact`s give machine-traversable decision outcomes without text parsing.
 - **Domain Agnostic:** Portable across any professional domain (`ADR-0002`).
@@ -16,7 +16,7 @@ The single most important finding from that exercise is the one that reframes th
 
 ### WEAKNESSES** (Known Gaps)
 - **Criteria Blindness:** No model for structured comparative evaluation. Comparison tables (ADR-0001's license matrix) must be collapsed into prose claims, destroying the Feature-Graph.
-- **Epistemic Narrowness:** Models problems (`Concern`) but not positive targets (`Goal`). The Y-statement's *"to achieve"* clause has no first-class landing place: `OutcomeFact`+`Benefit` is retrospective (what was realised), whereas *"to achieve"* is teleological (what was intended). The ontology cannot currently distinguish them.
+- **Epistemic Narrowness:** Models problems (`Concern`) but not positive targets (`Goal`). The Y-statement's *"to achieve"* clause has no first-class landing place: `ExpectedOutcome`+`ExpectedGain` captures an intended effect claim, but not a standalone teleological target object. The ontology cannot currently distinguish those layers.
 - **Partial Argumentative Flatness:** **ADL scope** "Therefore" links shipped with ADR-0025 and were renamed by ADR-0032 (`constrainedBy` / `prohibitedBy` / `recommendedBy` / `discouragedBy` / `permittedBy`, RFC 2119 modal strength). What remains invisible to SPARQL is the *ADR scope* dimension: presupposition or entailment relationships between `Claim` nodes *within one record's deliberation* — the Y-statement's `Facing → Decided` bridge — have no inference-edge representation.
 - **Temporally Static:** No mechanism for "Revisit" triggers or decay conditions. Zombie Decisions — records that stay `Accepted` long after their assumptions expired — are undetectable.
 
@@ -64,12 +64,12 @@ The current roundtrip status after 0.2.5-draft / ADR-0025:
 
 | Y-Statement Clause | ADR-O Construct | Roundtrip Status |
 | :--- | :--- | :--- |
-| *"In the context of..."* | `hasContext` → `ContextFact` → `Consideration` (type: `Concern` or situational) | ✅ Lossless |
-| *"Facing..."* | `hasContext` → `ContextFact` → `Consideration` (`addresses` a `Concern`) | ✅ Lossless (structural) |
+| *"In the context of..."* | `hasContext` → `ContextFact` → `Claim` (type: `Concern` or situational) | ✅ Lossless |
+| *"Facing..."* | `hasContext` → `ContextFact` → `Claim` (`addresses` a `Concern`) | ✅ Lossless (structural) |
 | *"We decided for..."* | `chosenAlternative` → `Alternative` | ✅ Lossless |
 | *"And neglected..."* | `hasAlternative` ∖ `chosenAlternative` | ⚠️ Lossy — options are named, but *why* the chosen option was preferred over each neglected one requires `Criterion`; without it, comparative rationale collapses into prose `DeliberationFact`s |
-| *"To achieve..."* | `hasOutcome` → `OutcomeFact` (valence: `Benefit`) | ⚠️ Lossy — `Benefit` is retrospective (what was realised); *"to achieve"* is teleological (what was intended). No `Goal` class exists to hold the intent. |
-| *"Accepting that..."* | `hasOutcome` → `OutcomeFact` (valence: `AcceptedCost`) | ✅ Lossless |
+| *"To achieve..."* | `hasExpectedOutcome` → `ExpectedOutcome` (valence: `ExpectedGain`) | ⚠️ Lossy — `ExpectedOutcome` captures an intended effect claim, but *"to achieve"* is teleological and still has no dedicated `Goal` class. |
+| *"Accepting that..."* | `hasExpectedOutcome` → `ExpectedOutcome` (valence: `ExpectedCost`) | ✅ Lossless |
 | *[implicit: Facing → Decided link]* | — | ❌ Missing — premises (`ContextFact`s) and conclusion (`chosenAlternative`) are co-located but have no inference edge within a record; ADR scope syllogistic structure is invisible to SPARQL |
 
 The three lossy/missing entries are the three items Horizons 2 and 3 are now organised around.
@@ -84,7 +84,7 @@ The three lossy/missing entries are the three items Horizons 2 and 3 are now org
 
 - **[x] Markdown Datatype Rollout:** Applied `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` to `dcterms:description`, `skos:definition`, and `skos:note` (newly declared). `skos:prefLabel` and `*Fact`-level prose properties excluded — see DESIGN-NOTES 0.2.1-draft for the vim-vignette-grounded rationale. Ontology header `dcterms:description` retyped.
 - **[x] DESIGN-NOTES Deferral Tracking:** The 0.2.1 DESIGN-NOTES section records the ADR-0003 deferral application and its two scope-narrowing re-readings as an immutable historical record.
-- **[x] Semantic Documentation Polish:** `dcterms:created` scope note updated to explicitly name post-factum ADRs. `DecisionRecord` `rdfs:comment` left as-is per DESIGN-NOTES recommendation. `adr-o:Consideration` `rdfs:comment` corrected to remove the erroneous `skos:prefLabel` as a prose-carrier.
+- **[x] Semantic Documentation Polish:** `dcterms:created` scope note updated to explicitly name post-factum ADRs. `DecisionRecord` `rdfs:comment` left as-is per DESIGN-NOTES recommendation. `adr-o:Claim` `rdfs:comment` corrected to remove the erroneous `skos:prefLabel` as a prose-carrier.
 - **[x] Basic Metadata Expansion:** `dcterms:version` declared as `owl:AnnotationProperty` for tracking per-record iteration separately from the supersession chain.
 
 ### Horizon 2: Professional-Grade Record — *Next*
@@ -102,7 +102,7 @@ The dogfood report gave Organizational Context the single ❌ in the final verdi
 
 #### 2.2 Criteria and Evaluation — *Priority: high*
 
-This is the dogfood report's most structurally novel finding, and it was entirely absent from the original roadmap. The license comparison table in ADR-0001 — four alternatives evaluated against four binary criteria — could not be modeled as structured data. During the dogfood experiment it was collapsed into prose `Consideration` nodes, destroying the Feature-Graph. The current model is a Claim-Graph; this item would add a Feature-Graph layer alongside it. In Y-statement terms, this is the *"because [Criterion X]"* bridge implicit in *"We decided for A and neglected B"*: without `Criterion`, the roundtrip table row for *"And neglected..."* stays ⚠️ lossy.
+This is the dogfood report's most structurally novel finding, and it was entirely absent from the original roadmap. The license comparison table in ADR-0001 — four alternatives evaluated against four binary criteria — could not be modeled as structured data. During the dogfood experiment it was collapsed into prose `Claim` nodes, destroying the Feature-Graph. The current model is a Claim-Graph; this item would add a Feature-Graph layer alongside it. In Y-statement terms, this is the *"because [Criterion X]"* bridge implicit in *"We decided for A and neglected B"*: without `Criterion`, the roundtrip table row for *"And neglected..."* stays ⚠️ lossy.
 
 - Introduce `adr-o:Criterion` as a new class (parallel to `adr-o:Concern` — an abstract anchor class with no core concept scheme, extensible via SKOS profiles).
 - Introduce `adr-o:EvaluationFact` as a new reified link class, parallel to `DeliberationFact`, placing a `Criterion` evaluation onto an `Alternative`. The fact carries the criterion, the alternative, and a result (initially a boolean or a short literal; a richer value type is deferred). This is the shape that makes "show me all alternatives evaluated against criterion X" answerable in SPARQL.
@@ -110,9 +110,9 @@ This is the dogfood report's most structurally novel finding, and it was entirel
 
 #### 2.3 Teleological Intent: Goals — *Priority: highest*
 
-The original roadmap listed this as "Epistemic Expansion (Goals & Trade-offs)" at `medium` priority. The Y-statement roundtrip analysis upgrades it: *"to achieve"* is the clause where the current model is most misleading, not merely incomplete. `OutcomeFact`+`Benefit` and a `Goal` are both positive-valence nodes, but they are epistemically different kinds of claim — the first records what happened after the decision, the second records what the author *intended* to happen before it. Conflating them destroys the hypothesis-vs-fact distinction that is the backbone of any reasoning about whether a decision achieved its purpose.
+The original roadmap listed this as "Epistemic Expansion (Goals & Trade-offs)" at `medium` priority. The Y-statement roundtrip analysis upgrades it: *"to achieve"* is the clause where the current model is most misleading, not merely incomplete. `ExpectedOutcome`+`ExpectedGain` and a `Goal` are both positive-intent constructs, but they are not equivalent: the first is a concrete expected-effect commitment, while the second is an explicit teleological target. Without `Goal`, intent cannot be represented as a first-class object.
 
-The trade-off half of the original item (`accepting-that` / `AcceptedCost`) was already closed in 0.2.0-draft. What remains is the intent half.
+The trade-off half of the original item (`accepting-that` / `ExpectedCost`) was already closed in 0.2.0-draft. What remains is the intent half.
 
 - Introduce `adr-o:Goal` as a new class (abstract anchor, no core concept scheme — same extension pattern as `adr-o:Concern`). An `adr-o:intendsToAchieve` predicate from `DecisionRecord` to `Goal` is the minimal addition; a richer design may allow `Goal` nodes to be shared across records, enabling "show me all decisions that contributed to goal X" as a SPARQL query rather than a prose search.
 - The design boundary to decide before shipping: whether `Goal` is a subclass of `Concern` (goals and concerns as two poles of the same concern space), a sibling class, or entirely separate. The minimal ship is sibling + `intendsToAchieve`; the richer option would allow `Concern` and `Goal` to be linked (e.g., a `Goal` is the resolution of a `Concern`), which is a later extension not required for the first version.
@@ -142,15 +142,15 @@ The governing test for this horizon applies both tests from the [Governing Tests
 
 #### 3.1 Evidence Anchoring — *narrowed from prior "Argumentative Topology" item*
 
-The original roadmap listed "Argumentative Topology" as a single item covering two things: logical-dependency links between `Consideration` nodes, and evidence anchoring from `Consideration` to external artefacts. That item has since been split:
+The original roadmap listed "Argumentative Topology" as a single item covering two things: logical-dependency links between `Claim` nodes, and evidence anchoring from `Claim` to external artefacts. That item has since been split:
 
 - **The logical-dependency (ADR scope) half** has moved up to **Horizon 2.4**, because the Y-statement roundtrip table shows it as a named ❌ gap, and the ADL scope half already shipped with ADR-0025. ADR scope presupposition/entailment edges belong in Horizon 2, not here.
 - **The evidence-anchoring half** remains here as a standalone Horizon 3 item.
 
-The evidence-anchoring gap: `Consideration` nodes carry their rationale as prose literals (`dcterms:description`, `skos:definition`). There is currently no structural link from a `Consideration` to an external artefact that *grounds* the claim — a benchmark result, a specification, a test report, a paper. Without such a link, rationale is asserted but not evidenced; the graph is a Claim-Graph, not a Fact-Graph.
+The evidence-anchoring gap: `Claim` nodes carry their rationale as prose literals (`dcterms:description`, `skos:definition`). There is currently no structural link from a `Claim` to an external artefact that *grounds* the claim — a benchmark result, a specification, a test report, a paper. Without such a link, rationale is asserted but not evidenced; the graph is a Claim-Graph, not a Fact-Graph.
 
-- Introduce an `adr-o:Evidence` class (or align to an existing provenance class such as `prov:Entity`) as the target of a `Consideration → Evidence` link.
-- Introduce a property (tentatively `adr-o:groundedIn` or `adr-o:supportedBy`) from `Consideration` to `Evidence`.
+- Introduce an `adr-o:Evidence` class (or align to an existing provenance class such as `prov:Entity`) as the target of a `Claim → Evidence` link.
+- Introduce a property (tentatively `adr-o:groundedIn` or `adr-o:supportedBy`) from `Claim` to `Evidence`.
 - This is a research-grade addition: the shape of `Evidence` (IRI-only? typed? with provenance metadata?) requires a dedicated design sketch and an ADL entry before any `.ttl` change.
 
 #### 3.2 Fine-Grained Evolution (Amendments) — *Direction fixed by ADR-0019/ADR-0020*
@@ -168,11 +168,11 @@ Remaining roadmap work here is implementation and tooling hardening, not vocabul
 
 #### 3.3 Pattern-Based Design (GADR / `DecisionTemplate`)
 
-A `DecisionTemplate` is a record-shaped node that carries `hasAlternative` and `DeliberationFact`s but no `chosenAlternative`, no `OutcomeFact`s, no `dcterms:date`, and no RACI predicates. It is a cross-project archetype — a standing problem context with a known option space, not yet instantiated into any particular decision. The JabRef / Eclipse Winery example from the GADR paper (two projects using the same Java build-tool template but reaching opposite decisions) demonstrates why this is genuinely useful and why modeling it as a `Proposed` record doesn't work: a `Proposed` record is project-specific and is expected to resolve; a template is deliberately left open.
+A `DecisionTemplate` is a record-shaped node that carries `hasAlternative` and `DeliberationFact`s but no `chosenAlternative`, no `ExpectedOutcome`s, no `dcterms:date`, and no RACI predicates. It is a cross-project archetype — a standing problem context with a known option space, not yet instantiated into any particular decision. The JabRef / Eclipse Winery example from the GADR paper (two projects using the same Java build-tool template but reaching opposite decisions) demonstrates why this is genuinely useful and why modeling it as a `Proposed` record doesn't work: a `Proposed` record is project-specific and is expected to resolve; a template is deliberately left open.
 
 - Introduce `adr-o:DecisionTemplate` as a new class.
 - Introduce `adr-o:instantiates` as a property from `DecisionRecord` to `DecisionTemplate`, providing both discovery ("which records were derived from shared organizational patterns?") and provenance (which instantiations drifted from the template over time).
-- The 0.2.1 architecture is already shape-compatible with this — `addresses` allows dual-home on both `DecisionRecord` and `Consideration`, preserving room for a template superclass without breaking either existing use.
+- The 0.2.1 architecture is already shape-compatible with this — `addresses` allows dual-home on both `DecisionRecord` and `Claim`, preserving room for a template superclass without breaking either existing use.
 
 #### 3.4 Integrity Layer (SHACL)
 
