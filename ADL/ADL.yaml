@@ -203,3 +203,8 @@
   filename: "ADR-0035-observedoutcome-prov-entity.md"
   status: "Accepted"
   summary: "Aligns adr-o:ObservedOutcome with PROV-O by subclassing prov:Entity and adding observedBy, evidence, and observedAt so observations are attributable, evidence-grounded, and explicitly timestamped at tₙ."
+- index: 36
+  title: "The `satisfies` Predicate for Intra-Record Syllogism"
+  filename: "ADR-0036-the-satisfies-predicate.md"
+  status: "Accepted"
+  summary: "Introduces adr-o:satisfies (Alternative → Claim) as the intra-record syllogism bridge, closing the Y-statement roundtrip by making the implicit 'Therefore' between a facing concern and the chosen alternative machine-traversable."

@@ -1350,3 +1350,69 @@ The 0.4.4 -> 0.5.0 bump captures two coordinated materializations: ADR-0034 intr
 </div>
 
 </div>
+
+<div data-dn-version="0.5.1-draft" data-dn-record="meta" id="adro-0-5-1-draft">
+
+## ADR-O 0.5.1-draft
+
+<div data-dn-section="iteration-character">
+
+### Iteration character
+
+<div data-dn-passage="iteration-character-overview-052" data-dn-record="adl" data-dn-adl-refs="0006,0034,0035">
+
+This iteration is a consistency-and-materialization alignment pass over accepted ADRs. It closes the remaining ADR-0035 ontology gaps (`ObservedOutcome` PROV alignment and attribution/evidence/timestamp anchors), clarifies timestamp interoperability around ADR-0034 semantics, and adds explicit axiom-level provenance for the `conflictsWith` symmetry commitment from ADR-0006.
+
+</div>
+</div>
+
+<div data-dn-section="strong">
+
+### Strong, well-articulated decisions
+
+<div data-dn-passage="observedoutcome-materialized-052" data-dn-record="adl" data-dn-adl-refs="0035">
+
+**ADR-0035 is now fully materialized in the ontology.** `adr-o:ObservedOutcome` is explicitly a subclass of `prov:Entity`, and the attribution package (`adr-o:observedBy`, `adr-o:evidence`, `adr-o:observedAt`) is present with explicit `adr-o:justifiedBy` links.
+
+</div>
+
+<div data-dn-passage="timestamp-interoperability-052" data-dn-record="adl" data-dn-adl-refs="0034">
+
+**Timestamp semantics are now explicit at interoperability level.** `dcterms:date` is declared with scope guidance that keeps `adr-o:decidedAt` as t0 commitment time and `adr-o:observedAt` as tn observation time, reducing ambiguity while preserving Dublin Core compatibility.
+
+</div>
+
+<div data-dn-passage="axiom-provenance-052" data-dn-record="adl" data-dn-adl-refs="0006,0026">
+
+**Axiom-level provenance has been added for symmetry.** The `adr-o:conflictsWith rdf:type owl:SymmetricProperty` axiom now carries an explicit `adr-o:justifiedBy` citation, complementing existing property-level provenance.
+
+</div>
+</div>
+
+<div data-dn-section="still-holds">
+
+### What 0.5.0-draft decisions still hold
+
+<div data-dn-passage="still-holds-list-052" data-dn-record="meta">
+
+All 0.5.0-draft commitments remain in force:
+
+- DecisionRecord temporal semantics continue to center on explicit t0 commitment (`adr-o:decidedAt`) plus lifecycle timestamps.
+- `ObservedOutcome` remains the tₙ learning artifact with optional verification linkage to expected outcomes.
+- Decision Transaction Principle boundaries remain unchanged for amendment and supersession topology.
+
+</div>
+</div>
+
+<div data-dn-section="versioning-note">
+
+### Versioning note
+
+<div data-dn-passage="versioning-note-051" data-dn-record="adl" data-dn-adl-refs="0006,0034,0035">
+
+The 0.5.0 -> 0.5.1 bump records accepted-ADR materialization alignment in the canonical ontology: complete ADR-0035 implementation, ADR-0034-compatible timestamp interoperability notes, and explicit axiom-level provenance for ADR-0006 symmetry.
+
+</div>
+</div>
+
+</div>

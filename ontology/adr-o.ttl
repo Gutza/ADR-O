@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.5.0> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.5.1> ;
                           dcterms:created "2026-04-26"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.5.0-draft" ;
+                          owl:versionInfo "0.5.1-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -34,6 +34,13 @@ dcterms:created rdf:type owl:AnnotationProperty ;
                 adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
 
 
+dcterms:date rdf:type owl:AnnotationProperty ;
+             rdfs:range xsd:date ;
+             rdfs:comment "In ADR-O, use adr-o:decidedAt for t₀ DecisionRecord commitment time and adr-o:observedAt for tn observation time when those semantics are intended."@en ;
+             skos:scopeNote "Interoperability timestamp predicate. Keep t₀ and tn semantics explicit via adr-o:decidedAt and adr-o:observedAt."@en ;
+             adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
+
+
 adr-o:decidedAt rdf:type owl:AnnotationProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range xsd:date ;
@@ -41,6 +48,15 @@ adr-o:decidedAt rdf:type owl:AnnotationProperty ;
                 rdfs:label "decided at"@en ;
                 skos:scopeNote "Tier 1 (epistemic core) timestamp for DecisionRecord commitment at t₀. Range is nominally xsd:date; xsd:dateTime is acceptable for automated tooling."@en ;
                 adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
+
+
+adr-o:observedAt rdf:type owl:AnnotationProperty ;
+                 rdfs:domain adr-o:ObservedOutcome ;
+                 rdfs:range xsd:date ;
+                 rdfs:comment "The date the observation was made (tₙ)."@en ;
+                 rdfs:label "observed at"@en ;
+                 skos:scopeNote "Observation-time anchor for realized outcomes. Keep distinct from adr-o:decidedAt (t0 commitment)."@en ;
+                 adr-o:justifiedBy adr-odr:ADR-0035-observedoutcome-prov-entity .
 
 
 dcterms:creator rdf:type owl:AnnotationProperty ;
@@ -201,6 +217,14 @@ adr-o:enables rdf:type owl:ObjectProperty ;
               adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
+adr-o:evidence rdf:type owl:ObjectProperty ;
+               rdfs:domain adr-o:ObservedOutcome ;
+               rdfs:range rdfs:Resource ;
+               rdfs:comment "External evidence supporting an observation (for example logs, reports, or metrics)."@en ;
+               rdfs:label "evidence"@en ;
+               adr-o:justifiedBy adr-odr:ADR-0035-observedoutcome-prov-entity .
+
+
 adr-o:discoveryType rdf:type owl:ObjectProperty ,
                              owl:FunctionalProperty ;
                     rdfs:domain adr-o:ObservedOutcome ;
@@ -217,6 +241,14 @@ adr-o:realizedFrom rdf:type owl:ObjectProperty ,
                    rdfs:comment "Links an ObservedOutcome to the specific DecisionRecord whose effects were realized and observed."@en ;
                    rdfs:label "realized from"@en ;
                    adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
+adr-o:observedBy rdf:type owl:ObjectProperty ;
+                 rdfs:domain adr-o:ObservedOutcome ;
+                 rdfs:range prov:Agent ;
+                 rdfs:comment "The agent who performed the observation."@en ;
+                 rdfs:label "observed by"@en ;
+                 adr-o:justifiedBy adr-odr:ADR-0035-observedoutcome-prov-entity .
 
 
 adr-o:permittedBy rdf:type owl:ObjectProperty ;
@@ -410,6 +442,14 @@ adr-o:derives rdf:type owl:ObjectProperty ;
               adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
 
+adr-o:satisfies rdf:type owl:ObjectProperty ;
+                rdfs:domain adr-o:Alternative ;
+                rdfs:range adr-o:Claim ;
+                rdfs:comment "ADR scope: indicates that an Alternative satisfies a Claim (typically the Claim manifested in a ContextFact that expresses the record's primary facing concern)."@en ;
+                rdfs:label "satisfies"@en ;
+                adr-o:justifiedBy adr-odr:ADR-0036-the-satisfies-predicate .
+
+
 adr-o:verifies rdf:type owl:ObjectProperty ,
                         owl:FunctionalProperty ;
                rdfs:domain adr-o:ObservedOutcome ;
@@ -531,7 +571,8 @@ adr-o:ExpectedOutcomeValence rdf:type owl:Class ;
 
 
 adr-o:ObservedOutcome rdf:type owl:Class ;
-                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                  rdfs:subClassOf prov:Entity ,
+                                  [ rdf:type owl:Restriction ;
                                     owl:onProperty adr-o:manifests ;
                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                     owl:onClass adr-o:Claim
@@ -548,8 +589,9 @@ adr-o:ObservedOutcome rdf:type owl:Class ;
                                   ] ;
                   rdfs:comment "A first-class tₙ fact that captures a realized effect linked to a source DecisionRecord. ObservedOutcome may optionally verify an ExpectedOutcome and carry a verdict."@en ;
                   rdfs:label "ObservedOutcome"@en ;
-                  adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
-                                     adr-odr:ADR-0030-observations .
+                  adr-o:justifiedBy adr-odr:ADR-0030-observations ,
+                                     adr-odr:ADR-0033-observation-discovery ,
+                                     adr-odr:ADR-0035-observedoutcome-prov-entity .
 
 
 adr-o:ObservedOutcomeVerdict rdf:type owl:Class ;
