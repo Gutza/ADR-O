@@ -42,7 +42,7 @@ If you can't structurally link the "Facing" clause to the "To achieve" clause, y
 
 ADR-0028 also taught us that identity is a liability across record boundaries.
 
-If we use the same `Consideration` IRI across two different `DecisionRecords`, an edit to that atom silently mutates the premises of both decisions. This violates the Decision Transaction Principle: a record is a snapshot at $t_0$.
+If we use the same `Consideration` IRI across two different `DecisionRecords`, an edit to that atom silently mutates the premises of both decisions. This violates the Decision Transaction Principle: a record is a snapshot at t₀.
 
 The solution—`derivedFrom`/`derives`—preserves the *semantic* link (this claim is the same as that claim) without the *identity* link that would allow silent mutation.
 

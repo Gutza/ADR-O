@@ -24,7 +24,7 @@ supersedes:
 
 ## Context
 
-The **Decision Transaction Principle** establishes that a `DecisionRecord` is an epistemic transaction: it represents the closed state of deliberation at the moment of commitment ($t_0$). The boundary between $t_0$ (what was decided) and $t_n$ (what later became true) must be impermeable.
+The **Decision Transaction Principle** establishes that a `DecisionRecord` is an epistemic transaction: it represents the closed state of deliberation at the moment of commitment (t₀). The boundary between t₀ (what was decided) and tₙ (what later became true) must be impermeable.
 
 An analysis of the current ADL and ontology revealed several points where this boundary was potentially porous or where the ontology risked encouraging retrospective "smearing" of information. This record resolves those tensions.
 
@@ -49,7 +49,7 @@ The ambiguity of whether retrospective changes to `adr-o:hasType` or `adr-o:hasS
 
 ### 4. Project-scope provenance is unidirectional: Resource → Decision
 
-A `DecisionRecord` is a statement of intent, not an agent of change. It cannot know its own effects in the world at $t_0$. Therefore:
+A `DecisionRecord` is a statement of intent, not an agent of change. It cannot know its own effects in the world at t₀. Therefore:
 
 - **Delete `adr-o:affects`** (introduced in ADR-0006)
 - **Delete `adr-o:materializes`** (introduced in ADR-0025)
@@ -93,7 +93,7 @@ This is why `Consideration` remains a first-class class. The indirection is wher
 
 ### 8. `OutcomeFact` becomes `ExpectedOutcome`
 
-A deep dive into `adr-o:OutcomeFact` revealed an epistemic smear: the class combined $t_0$ predictions with $t_n$ realizations, violating the DTP.
+A deep dive into `adr-o:OutcomeFact` revealed an epistemic smear: the class combined t₀ predictions with tₙ realizations, violating the DTP.
 
 **We resolve this by:**
 
@@ -105,7 +105,7 @@ A deep dive into `adr-o:OutcomeFact` revealed an epistemic smear: the class comb
   - `adr-o:Risk` → `adr-o:ExpectedRisk`
   - `adr-o:FollowUp` → `adr-o:ExpectedDependency`
 
-All expected outcomes are now $t_0$ claims about predicted effects. Realized outcomes are explicitly out of scope for the ontology.
+All expected outcomes are now t₀ claims about predicted effects. Realized outcomes are explicitly out of scope for the ontology.
 
 ## Ontology Materialisation
 
@@ -209,7 +209,7 @@ adr-o:hasOutcome    # Renamed to hasExpectedOutcome
 | **Collapse `Consideration` into `*Fact` nodes** | Destroys intra-record coherence. Without a shared atom, you cannot structurally assert that a benefit satisfies a specific need. You're left with two prose strings and a hope they mean the same thing. |
 | Keep `affects` / `materializes` as forward links | Directly violates the DTP; decisions cannot speak about effects in the world. |
 | Use `justifies` as inverse of `justifiedBy` | Still risks authors using it as a "what happens" link; the query-layer solution is the only honest one. |
-| Retain `OutcomeFact` name | The "Outcome" name encourages $t_n$ interpretations; the DTP requires an explicit $t_0$ commitment. |
+| Retain `OutcomeFact` name | The "Outcome" name encourages tₙ interpretations; the DTP requires an explicit t₀ commitment. |
 | Create separate `RealizedOutcome` | Out of scope; the ADL records deliberations, not measurements. |
 | Keep `FollowUp` as a separate predicate | `FollowUp` is an expected outcome of the decision; separating it creates an inconsistent voice. |
 | Use `expectedOutcomeValence` as predicate | Redundant; the domain `ExpectedOutcome` already conveys the modality. |

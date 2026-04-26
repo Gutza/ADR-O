@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.4.3> ;
-                          dcterms:created "2026-04-24"^^xsd:date ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.4.4> ;
+                          dcterms:created "2026-04-26"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.4.3-draft" ;
+                          owl:versionInfo "0.4.4-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -47,7 +47,7 @@ dcterms:title rdf:type owl:AnnotationProperty ;
 
 
 dcterms:version rdf:type owl:AnnotationProperty ;
-                skos:scopeNote "In ADR-O: optional version tag for a DecisionRecord. Restricted to Tier 2 (Presentation) changes; Tier 1 changes require a new record via adr-o:amends."@en .
+                skos:scopeNote "In ADR-O: optional version tag for a DecisionRecord. Use only for non-semantic editorial updates in ADR scope (presentation, wording, metadata polish). Semantic change remains ADL scope and requires a new record linked via adr-o:amends."@en .
 
 
 skos:definition rdf:type owl:AnnotationProperty ;
@@ -71,8 +71,9 @@ adr-o:hasType rdf:type owl:AnnotationProperty ;
 
 adr-o:addresses rdf:type owl:ObjectProperty ;
                 rdfs:range adr-o:Concern ;
-                rdfs:comment "Links a subject to a Concern it resolves. Domain is unrestricted: canonical use is on Claim; record-level use is an editorial rollup."@en ;
+                rdfs:comment "Links a subject to a Concern it resolves. Domain is unrestricted: canonical use is on Claim; DecisionRecord is allowed as an editorial rollup."@en ;
                 rdfs:label "addresses"@en ;
+                skos:scopeNote "ADR scope relation from a subject (typically Claim) to a Concern it addresses. This predicate is concern-oriented only and is intentionally separate from any inter-record causal topology in ADL scope."@en ;
                 adr-o:justifiedBy adr-odr:ADR-0013-addresses-dual-placement ,
                                    adr-odr:ADR-0006-core-relational-predicates .
 
@@ -127,10 +128,11 @@ adr-o:manifests rdf:type owl:ObjectProperty ,
                               owl:unionOf ( adr-o:ContextFact
                                             adr-o:DeliberationFact
                                             adr-o:ExpectedOutcome
+                                            adr-o:ObservedOutcome
                                           )
                             ] ;
                 rdfs:range adr-o:Claim ;
-                rdfs:comment "Links a reified fact to the Claim it manifests. Functional: one Claim per fact."@en ;
+                rdfs:comment "Indicates which specific Claim is manifested by a given Fact. Functional: one Claim per Fact."@en ;
                 rdfs:label "manifests"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0027-facts-manifest-considerations ,
                                    adr-odr:ADR-0010-consideration-and-reified-facts .
@@ -139,7 +141,7 @@ adr-o:manifests rdf:type owl:ObjectProperty ,
 adr-o:consulted rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range prov:Agent ;
-                rdfs:comment "Agents consulted during the decision process (RACI: Consulted)."@en ;
+                rdfs:comment "The agents consulted during the decision process (RACI: Consulted)."@en ;
                 rdfs:label "consulted"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0021-social-role-predicates .
 
@@ -147,7 +149,7 @@ adr-o:consulted rdf:type owl:ObjectProperty ;
 adr-o:decidedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range prov:Agent ;
-                rdfs:comment "Agent with decision authority (RACI: Accountable)."@en ;
+                rdfs:comment "The agent responsible for making the decision (RACI: Accountable)."@en ;
                 rdfs:label "decided by"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0021-social-role-predicates .
 
@@ -156,7 +158,7 @@ adr-o:deliberationValence rdf:type owl:ObjectProperty ,
                                    owl:FunctionalProperty ;
                           rdfs:domain adr-o:DeliberationFact ;
                           rdfs:range adr-o:DeliberationValence ;
-                          rdfs:comment "ADR scope: whether a DeliberationFact Supports, opposes (Against), or is Neutral toward its Alternative."@en ;
+                          rdfs:comment "ADR scope: the valence of a DeliberationFact's manifested Claim towards the linked Alternative: does the Fact Support, is it Neutral, or Against the Alternative?"@en ;
                           rdfs:label "deliberation valence"@en ;
                           adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
@@ -164,7 +166,7 @@ adr-o:deliberationValence rdf:type owl:ObjectProperty ,
 adr-o:dependsOn rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range adr-o:DecisionRecord ;
-                rdfs:comment "ADL scope: a DecisionRecord relies on another; the referenced decision must hold for coherence."@en ;
+                rdfs:comment "ADL scope: indicates that a DecisionRecord relies on another."@en ;
                 rdfs:label "depends on"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
@@ -177,10 +179,32 @@ adr-o:enables rdf:type owl:ObjectProperty ;
               adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
+adr-o:discoveryType rdf:type owl:ObjectProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain adr-o:ObservedOutcome ;
+                    rdfs:range adr-o:DiscoveryType ;
+                    rdfs:comment "Classifies whether an ObservedOutcome is Expected, Deducible, or Emergent relative to the t0 decision context."@en ;
+                    rdfs:label "discovery type"@en ;
+                    adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
+adr-o:realizedFrom rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain adr-o:ObservedOutcome ;
+                   rdfs:range adr-o:DecisionRecord ;
+                   rdfs:comment "Links an ObservedOutcome to the specific DecisionRecord whose effects were realized and observed."@en ;
+                   rdfs:label "realized from"@en ;
+                   adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
 adr-o:permittedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:Claim ;
-                rdfs:range adr-o:ExpectedOutcome ;
-                  rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that permits it. Modal strength: MAY."@en ;
+                rdfs:range [ rdf:type owl:Class ;
+                             owl:unionOf ( adr-o:ExpectedOutcome
+                                           adr-o:ObservedOutcome
+                                         )
+                           ] ;
+                  rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome or ObservedOutcome that permits it. Modal strength: MAY."@en ;
                   rdfs:label "permitted by"@en ;
                   adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
@@ -223,11 +247,12 @@ adr-o:hasExpectedOutcome rdf:type owl:ObjectProperty ,
 
 adr-o:hasVerdict rdf:type owl:ObjectProperty ,
                           owl:FunctionalProperty ;
-                 rdfs:domain adr-o:Observation ;
-                 rdfs:range adr-o:ObservationVerdict ;
-                 rdfs:comment "The epistemic conclusion of an Observation. Functional: exactly one verdict per observation."@en ;
+                 rdfs:domain adr-o:ObservedOutcome ;
+                 rdfs:range adr-o:ObservedOutcomeVerdict ;
+                 rdfs:comment "The epistemic conclusion of an ObservedOutcome when it plays a verification role. Functional: at most one verdict per observation."@en ;
                  rdfs:label "has verdict"@en ;
-                 adr-o:justifiedBy adr-odr:ADR-0030-observations .
+                 adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
+                                    adr-odr:ADR-0030-observations .
 
 
 adr-o:hasStatus rdf:type owl:ObjectProperty ,
@@ -289,32 +314,50 @@ adr-o:supersedes rdf:type owl:ObjectProperty ;
 
 adr-o:constrainedBy rdf:type owl:ObjectProperty ;
                     rdfs:domain adr-o:Claim ;
-                    rdfs:range adr-o:ExpectedOutcome ;
-                    rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that constrains it. Modal strength: MUST."@en ;
+                    rdfs:range [ rdf:type owl:Class ;
+                                 owl:unionOf ( adr-o:ExpectedOutcome
+                                               adr-o:ObservedOutcome
+                                             )
+                               ] ;
+                    rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome or ObservedOutcome that constrains it. Modal strength: MUST."@en ;
                     rdfs:label "constrained by"@en ;
-                    adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
+                    adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
+                                       adr-odr:ADR-0025-causal-network .
 
 
 adr-o:prohibitedBy rdf:type owl:ObjectProperty ;
                    rdfs:domain adr-o:Claim ;
-                   rdfs:range adr-o:ExpectedOutcome ;
-                   rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that prohibits it. Modal strength: MUST NOT."@en ;
+                   rdfs:range [ rdf:type owl:Class ;
+                                owl:unionOf ( adr-o:ExpectedOutcome
+                                              adr-o:ObservedOutcome
+                                            )
+                              ] ;
+                   rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome or ObservedOutcome that prohibits it. Modal strength: MUST NOT."@en ;
                    rdfs:label "prohibited by"@en ;
-                   adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
+                   adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
+                                      adr-odr:ADR-0025-causal-network .
 
 
 adr-o:recommendedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:Claim ;
-                rdfs:range adr-o:ExpectedOutcome ;
-                rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that recommends it. Modal strength: SHOULD."@en ;
+                rdfs:range [ rdf:type owl:Class ;
+                             owl:unionOf ( adr-o:ExpectedOutcome
+                                           adr-o:ObservedOutcome
+                                         )
+                           ] ;
+                rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome or ObservedOutcome that recommends it. Modal strength: SHOULD."@en ;
                     rdfs:label "recommended by"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
 
 adr-o:discouragedBy rdf:type owl:ObjectProperty ;
                   rdfs:domain adr-o:Claim ;
-                  rdfs:range adr-o:ExpectedOutcome ;
-                  rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that discourages it. Modal strength: SHOULD NOT."@en ;
+                  rdfs:range [ rdf:type owl:Class ;
+                               owl:unionOf ( adr-o:ExpectedOutcome
+                                             adr-o:ObservedOutcome
+                                           )
+                             ] ;
+                  rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome or ObservedOutcome that discourages it. Modal strength: SHOULD NOT."@en ;
                     rdfs:label "discouraged by"@en ;
                     adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
@@ -345,12 +388,14 @@ adr-o:derives rdf:type owl:ObjectProperty ;
               adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle .
 
 
-adr-o:verifies rdf:type owl:ObjectProperty ;
-               rdfs:domain adr-o:Observation ;
+adr-o:verifies rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain adr-o:ObservedOutcome ;
                rdfs:range adr-o:ExpectedOutcome ;
-               rdfs:comment "Links an Observation to the ExpectedOutcome it evaluates. A single observation may verify multiple outcomes."@en ;
+               rdfs:comment "Links an ObservedOutcome to the ExpectedOutcome it evaluates when the observation is used for verification."@en ;
                rdfs:label "verifies"@en ;
-               adr-o:justifiedBy adr-odr:ADR-0030-observations .
+               adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
+                                  adr-odr:ADR-0030-observations .
 
 
 #################################################################
@@ -424,6 +469,21 @@ adr-o:DeliberationValence rdf:type owl:Class ;
                           adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
+adr-o:DiscoveryType rdf:type owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( skos:Concept
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty skos:inScheme ;
+                                                                 owl:hasValue adr-o:discoveryTypeScheme
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf skos:Concept ;
+                    rdfs:comment "Classification of an ObservedOutcome relative to t0 expectations: Expected, Deducible, or Emergent."@en ;
+                    rdfs:label "Discovery Type"@en ;
+                    adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
 adr-o:ExpectedOutcome rdf:type owl:Class ;
                       rdfs:comment "A t₀ commitment about what the chosen alternative is intended to produce. Not a tₙ observation."@en ;
                       rdfs:label "Expected Outcome"@en ;
@@ -447,29 +507,55 @@ adr-o:ExpectedOutcomeValence rdf:type owl:Class ;
                                                 adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-adr-o:Observation rdf:type owl:Class ;
+adr-o:ObservedOutcome rdf:type owl:Class ;
                   rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                    owl:onProperty adr-o:verifies ;
-                                    owl:someValuesFrom adr-o:ExpectedOutcome
+                                    owl:onProperty adr-o:manifests ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass adr-o:Claim
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty adr-o:realizedFrom ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass adr-o:DecisionRecord
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty adr-o:discoveryType ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onClass adr-o:DiscoveryType
                                   ] ;
-                  rdfs:comment "A verification transaction that evaluates one or more ExpectedOutcomes. An Observation is a discrete epistemic moment (review, test run, monitoring window, or audit) that yields a verdict."@en ;
-                  rdfs:label "Observation"@en ;
-                  adr-o:justifiedBy adr-odr:ADR-0030-observations .
+                  rdfs:comment "A first-class t_n fact that captures a realized effect linked to a source DecisionRecord. ObservedOutcome may optionally verify an ExpectedOutcome and carry a verdict."@en ;
+                  rdfs:label "ObservedOutcome"@en ;
+                  adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery ,
+                                     adr-odr:ADR-0030-observations .
 
 
-adr-o:ObservationVerdict rdf:type owl:Class ;
+adr-o:ObservedOutcomeVerdict rdf:type owl:Class ;
                          owl:equivalentClass [ owl:intersectionOf ( skos:Concept
                                                                   [ rdf:type owl:Restriction ;
                                                                     owl:onProperty skos:inScheme ;
-                                                                    owl:hasValue adr-o:observationVerdictScheme
+                                                                    owl:hasValue adr-o:ObservedOutcomeVerdictScheme
                                                                   ]
                                                                 ) ;
                                               rdf:type owl:Class
                                             ] ;
                          rdfs:subClassOf skos:Concept ;
-                         rdfs:comment "The verdict of an Observation."@en ;
-                         rdfs:label "Observation Verdict"@en ;
+                         rdfs:comment "The verdict of an ObservedOutcome."@en ;
+                         rdfs:label "ObservedOutcome Verdict"@en ;
                          adr-o:justifiedBy adr-odr:ADR-0030-observations .
+
+
+[ rdf:type owl:Class ;
+  owl:intersectionOf ( adr-o:ObservedOutcome
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty adr-o:hasVerdict ;
+                         owl:someValuesFrom adr-o:ObservedOutcomeVerdict
+                       ]
+                     ) ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty adr-o:verifies ;
+                    owl:someValuesFrom adr-o:ExpectedOutcome
+                  ]
+] .
 
 
 adr-o:Status rdf:type owl:Class ;
@@ -508,6 +594,33 @@ adr-o:ExpectedCost rdf:type owl:NamedIndividual ,
                    skos:topConceptOf adr-o:expectedOutcomeValenceScheme ;
                    adr-o:justifiedBy adr-odr:ADR-0028-integrating-the-decision-transaction-principle ,
                                       adr-odr:ADR-0009-deliberation-and-outcome-valence .
+
+
+adr-o:Deducible rdf:type owl:NamedIndividual ,
+                         skos:Concept ;
+                skos:definition "The outcome was a logical consequence of the decision, but not explicitly predicted at t0."@en ;
+                skos:inScheme adr-o:discoveryTypeScheme ;
+                skos:prefLabel "Deducible"@en ;
+                skos:topConceptOf adr-o:discoveryTypeScheme ;
+                adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
+adr-o:Emergent rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               skos:definition "The outcome arose through interaction with the environment and was not predictable at t0."@en ;
+               skos:inScheme adr-o:discoveryTypeScheme ;
+               skos:prefLabel "Emergent"@en ;
+               skos:topConceptOf adr-o:discoveryTypeScheme ;
+               adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
+adr-o:Expected rdf:type owl:NamedIndividual ,
+                        skos:Concept ;
+               skos:definition "The outcome was explicitly predicted at t0."@en ;
+               skos:inScheme adr-o:discoveryTypeScheme ;
+               skos:prefLabel "Expected"@en ;
+               skos:topConceptOf adr-o:discoveryTypeScheme ;
+               adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
 
 
 adr-o:Against rdf:type owl:NamedIndividual ,
@@ -589,9 +702,9 @@ adr-o:ExpectedRisk rdf:type owl:NamedIndividual ,
 adr-o:Inconclusive rdf:type owl:NamedIndividual ,
                             skos:Concept ;
                    skos:definition "The available evidence is insufficient to determine whether the expected outcome was realised."@en ;
-                   skos:inScheme adr-o:observationVerdictScheme ;
+                   skos:inScheme adr-o:ObservedOutcomeVerdictScheme ;
                    skos:prefLabel "Inconclusive"@en ;
-                   skos:topConceptOf adr-o:observationVerdictScheme ;
+                   skos:topConceptOf adr-o:ObservedOutcomeVerdictScheme ;
                    adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
@@ -617,22 +730,21 @@ adr-o:Supports rdf:type owl:NamedIndividual ,
 adr-o:Satisfied rdf:type owl:NamedIndividual ,
                          skos:Concept ;
                 skos:definition "The expected outcome was realised according to the observation verdict."@en ;
-                skos:inScheme adr-o:observationVerdictScheme ;
+                skos:inScheme adr-o:ObservedOutcomeVerdictScheme ;
                 skos:prefLabel "Satisfied"@en ;
-                skos:topConceptOf adr-o:observationVerdictScheme ;
+                skos:topConceptOf adr-o:ObservedOutcomeVerdictScheme ;
                 adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
 adr-o:Violated rdf:type owl:NamedIndividual ,
                         skos:Concept ;
                skos:definition "The expected outcome was not realised according to the observation verdict."@en ;
-               skos:inScheme adr-o:observationVerdictScheme ;
+               skos:inScheme adr-o:ObservedOutcomeVerdictScheme ;
                skos:prefLabel "Violated"@en ;
-               skos:topConceptOf adr-o:observationVerdictScheme ;
+               skos:topConceptOf adr-o:ObservedOutcomeVerdictScheme ;
                adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
-###  https://w3id.org/adr-o#deliberationValenceScheme
 adr-o:deliberationValenceScheme rdf:type owl:NamedIndividual ,
                                          skos:ConceptScheme ;
                                 dcterms:title "ADR-O Deliberation Valence Scheme"@en ;
@@ -643,7 +755,16 @@ adr-o:deliberationValenceScheme rdf:type owl:NamedIndividual ,
                                 adr-o:justifiedBy adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#expectedOutcomeValenceScheme
+adr-o:discoveryTypeScheme rdf:type owl:NamedIndividual ,
+                                   skos:ConceptScheme ;
+                          dcterms:title "ObservedOutcome Discovery Type Scheme"@en ;
+                          rdfs:comment "Controlled vocabulary classifying how an observed effect relates to t0 expectations."@en ;
+                          skos:hasTopConcept adr-o:Deducible ,
+                                             adr-o:Emergent ,
+                                             adr-o:Expected ;
+                          adr-o:justifiedBy adr-odr:ADR-0033-observation-discovery .
+
+
 adr-o:expectedOutcomeValenceScheme rdf:type owl:NamedIndividual ,
                                             skos:ConceptScheme ;
                                    dcterms:title "Expected Outcome Valence Scheme"@en ;
@@ -656,18 +777,16 @@ adr-o:expectedOutcomeValenceScheme rdf:type owl:NamedIndividual ,
                                                       adr-odr:ADR-0009-deliberation-and-outcome-valence .
 
 
-###  https://w3id.org/adr-o#observationVerdictScheme
-adr-o:observationVerdictScheme rdf:type owl:NamedIndividual ,
+adr-o:ObservedOutcomeVerdictScheme rdf:type owl:NamedIndividual ,
                                         skos:ConceptScheme ;
-                               dcterms:title "Observation Verdict Scheme"@en ;
-                               rdfs:comment "Controlled vocabulary of Observation verdicts."@en ;
+                               dcterms:title "ObservedOutcome Verdict Scheme"@en ;
+                               rdfs:comment "Controlled vocabulary of ObservedOutcome verdicts."@en ;
                                skos:hasTopConcept adr-o:Inconclusive ,
                                                   adr-o:Satisfied ,
                                                   adr-o:Violated ;
                                adr-o:justifiedBy adr-odr:ADR-0030-observations .
 
 
-###  https://w3id.org/adr-o#statusScheme
 adr-o:statusScheme rdf:type owl:NamedIndividual ,
                             skos:ConceptScheme ;
                    dcterms:title "ADR-O Status Scheme"@en ;
@@ -720,4 +839,13 @@ adr-o:statusScheme rdf:type owl:NamedIndividual ,
                         adr-o:Violated
                       ) ;
   rdfs:comment "Ensures observation verdicts are distinct so that adr-o:hasVerdict (functional) catches duplicate-verdict misannotations."@en
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( adr-o:Deducible
+                        adr-o:Emergent
+                        adr-o:Expected
+                      ) ;
+  rdfs:comment "Ensures discovery types are distinct so that adr-o:discoveryType (functional) catches duplicate-type misannotations."@en
 ] .

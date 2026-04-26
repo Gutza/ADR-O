@@ -17,11 +17,11 @@ The latter is a falsifiable claim. It can be satisfied, it can be measured, and 
 
 A decision is not a Word document, it is an **[epistemic transaction](./The%20Decision%20Transaction%20Principle.md)**.
 
-At a specific moment in time ($t_0$), a set of actors with a specific information set reached a commitment to a path. That moment is the transaction. Everything that happens after ($t_n$) is **verification** or **consequence**, not part of the decision.
+At a specific moment in time (t₀), a set of actors with a specific information set reached a commitment to a path. That moment is the transaction. Everything that happens after (tₙ) is **verification** or **consequence**, not part of the decision.
 
 A common temptation (and frequent failure mode) in ADR practice is *retrospective smearing*: updating a decision record with what we later learned. When we change "we expect 100ms latency" to "we achieved 38ms latency," we are not correcting or improving the accuracy of a record; we are destroying information regarding a past transaction.
 
-The gap between what was expected at $t_0$ and what was realized at $t_n$ is where organizational learning lives; when you erase the gap, you erase the learning.
+The gap between what was expected at t₀ and what was realized at tₙ is where organizational learning lives; when you erase the gap, you erase the learning.
 
 ## The Y-Statement as the Irreducible Unit
 

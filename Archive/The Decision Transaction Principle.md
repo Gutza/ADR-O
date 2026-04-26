@@ -5,7 +5,7 @@ A `DecisionRecord` is an **epistemic transaction**: it represents *the closed st
 
 > **A decision record is a transaction that commits to a path based on the information, constraints, and values available at the moment of decision.**
 
-Every `DecisionRecord` has a temporal horizon defined by its `dcterms:date` ($t_0$).
+Every `DecisionRecord` has a temporal horizon defined by its `dcterms:date` (t₀).
 
 - **Inside the Horizon ($t \le t_0$):** All information used to justify the decision. This includes context, concerns, alternatives, and the expected effects of the chosen path.
 - **Outside the Horizon ($t > t_0$):** All consequences, realizations, and subsequent learnings.
@@ -53,7 +53,7 @@ Once a record is frozen, changes are restricted by tier.
 ### Tier 1: The Epistemic Core (Strictly Immutable)
 These elements constitute the decision itself. Any change requires a **new `DecisionRecord`** that `amends` or `supersedes` the original.
 
-- `dcterms:date` (the $t_0$ of the decision)
+- `dcterms:date` (the t₀ of the decision)
 - `chosenAlternative`
 - `hasContext` / `hasDeliberation` (the premises)
 - `intendsToAchieve` / `accepts` (the commitments)
@@ -71,21 +71,21 @@ These elements are about *how* the decision is communicated, not *what* was deci
 A change to a Tier 1 property is not an "edit"; it is a **new decision**.
 1. Create a new `DecisionRecord` $R'$.
 2. Assert $R' \xrightarrow{\text{amends}} R$.
-3. The original $R$ remains in the ledger, unchanged, preserving the record of what was believed at $t_0$.
+3. The original $R$ remains in the ledger, unchanged, preserving the record of what was believed at t₀.
 
 ## 5. Post-Factum Records
 
-A post-factum ADR (recorded at $t_{recorded} > t_0$) is still a transaction at $t_0$.
+A post-factum ADR (recorded at $t_{recorded} > t_0$) is still a transaction at t₀.
 
-The author must **reconstruct the epistemic state at $t_0$**:
+The author must **reconstruct the epistemic state at t₀**:
 - *"At the time of the decision, we knew X, Y, Z..."*
 - *"We believed A would happen..."*
 
-The fact that the author now knows $t_n$ is metadata (`dcterms:created` vs `dcterms:date`), not a license to inject future knowledge into the decision logic. The reconstructed $t_0$ record is then frozen upon publication or reference, just like any other transaction.
+The fact that the author now knows tₙ is metadata (`dcterms:created` vs `dcterms:date`), not a license to inject future knowledge into the decision logic. The reconstructed t₀ record is then frozen upon publication or reference, just like any other transaction.
 
 ## 6. The Learning Delta
 
-The gap between what was **intended** in a `DecisionRecord` (at $t_0$) and what **materialized** in the system (at $t_n$) is the most valuable information in the ADL.
+The gap between what was **intended** in a `DecisionRecord` (at t₀) and what **materialized** in the system (at tₙ) is the most valuable information in the ADL.
 
 By enforcing the transaction principle, ADR-O preserves this delta. When a later ADR supersedes an earlier one because a cost was higher than accepted, the graph explicitly contains:
 1. The original commitment (what we accepted)

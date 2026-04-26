@@ -50,7 +50,7 @@ Unify the ADL-scope causal family under a consistent passive voice, all with `Cl
 
 We could have flipped the direction (`Outcome` $\rightarrow$ `Claim`) and used active voice (e.g., `adr-o:discourages`). This would be logically equivalent but would violate the **Decision Transaction Principle (DTP)**.
 
-Under DTP, a `DecisionRecord` is a frozen transaction at $t_0$. If we used `ExpectedOutcome` as the subject, we would be adding edges *from* past outcomes *to* future claims. This requires mutating old records to add new outgoing edges whenever a later decision recognizes a constraint.
+Under DTP, a `DecisionRecord` is a frozen transaction at t₀. If we used `ExpectedOutcome` as the subject, we would be adding edges *from* past outcomes *to* future claims. This requires mutating old records to add new outgoing edges whenever a later decision recognizes a constraint.
 
 By making the `Claim` the subject and the predicate passive (`discouragedBy`), the edge is asserted **in the current record**. The current decision recognizes it is being influenced by the past; the past record remains untouched. The graph encodes the *recognition* of the constraint, which is the honest epistemic fact.
 

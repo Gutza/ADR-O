@@ -8,13 +8,15 @@ author:
   email: bogdan@moongate.ro
 amends:
   - ADR-0028
+amendedBy:
+  - ADR-0033
 ---
 
 # ADR-0030 — Observations: Closing the Learning Loop
 
 ## Context
 
-ADR-0028 established the **Decision Transaction Principle (DTP)**: a `DecisionRecord` is an epistemic transaction frozen at $t_0$. This preserves the integrity of the record by preventing retrospective smearing. However, this creates a secondary problem: the ADL now records what was *intended* at $t_0$ (via `ExpectedOutcome`), but has no first-class mechanism to record what was *observed* at $t_n$.
+ADR-0028 established the **Decision Transaction Principle (DTP)**: a `DecisionRecord` is an epistemic transaction frozen at t₀. This preserves the integrity of the record by preventing retrospective smearing. However, this creates a secondary problem: the ADL now records what was *intended* at t₀ (via `ExpectedOutcome`), but has no first-class mechanism to record what was *observed* at tₙ.
 
 Without a way to record observations, the ADL is a ledger of commitments that can never be reconciled with reality. The "learning delta"—the gap between expectation and realization—remains trapped in prose or exists nowhere at all. This renders the ADL useful for indexing history, but useless for organizational learning.
 
@@ -47,7 +49,7 @@ The ontology surface is kept deliberately slim. Only constructs that enable trav
 | Term | Kind | Rationale |
 |------|------|-----------|
 | `adr-o:Observation` | Class | Closes the learning loop; no existing class carries the verdict/verification semantics. |
-| `adr-o:verifies` | ObjectProperty | The epistemic bridge from $t_n$ back to an `ExpectedOutcome`. |
+| `adr-o:verifies` | ObjectProperty | The epistemic bridge from tₙ back to an `ExpectedOutcome`. |
 | `adr-o:hasVerdict` | FunctionalObjectProperty | Makes the graph actionable — enables the "which outcomes are Violated?" query. |
 | `adr-o:ObservationVerdict` + `adr-o:observationVerdictScheme` | SKOS class + scheme | Controlled vocabulary required for the query above to work reliably. |
 
@@ -133,7 +135,7 @@ Telemetry emits *data*. Observations emit *verdicts*. An `Observation` is only v
 
 ### 3. DTP Alignment
 
-Observations are **new transactions at $t_n$**. They do not modify `DecisionRecords`.
+Observations are **new transactions at tₙ**. They do not modify `DecisionRecords`.
 
 ```turtle
 # The decision remains frozen
@@ -162,7 +164,7 @@ Observations are **new transactions at $t_n$**. They do not modify `DecisionReco
 
 **Positive.**
 - **Learning loop closed:** We can now query *"Which ExpectedOutcomes are violated?"* to identify when decisions need revisiting.
-- **DTP preserved:** No $t_n$ information ever enters a $t_0$ record.
+- **DTP preserved:** No tₙ information ever enters a t₀ record.
 - **Telemetry protected:** The "verdict" requirement and "Tom Test" provide a structural and social guard against ADL bloat.
 - **Supersession grounded:** A `supersedes` relationship can now be explicitly triggered by an `Observation` with `adr-o:Violated` verdict.
 - **Slim ontology surface:** By deferring observation date to `dcterms:date` and evidence provenance to `prov:wasDerivedFrom` / `dcterms:references`, ADR-O mints only what is strictly needed for verdict-based traversal. No project-specific synonyms for well-understood DC/PROV predicates.

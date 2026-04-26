@@ -21,7 +21,7 @@ ADR-O's atom-first architecture (ADR-0010) reifies the smallest units of a decis
 
 The term "consideration" was chosen in ADR-0010 to read neutrally across positive, negative, and framing uses. It worked when ADR-O was framed as a record of a deliberation process — a consideration is something you entertain during thinking.
 
-However, ADR-0028 (the Decision Transaction Principle) and ADR-0030 (Observations) fundamentally changed the ontology's epistemic posture. A `DecisionRecord` is no longer just a record of a process; it is a **transaction** — a frozen set of commitments at $t_0$.
+However, ADR-0028 (the Decision Transaction Principle) and ADR-0030 (Observations) fundamentally changed the ontology's epistemic posture. A `DecisionRecord` is no longer just a record of a process; it is a **transaction** — a frozen set of commitments at t₀.
 
 The `Observation` model in ADR-0030 exposes the linguistic mismatch. An `Observation` links to an `ExpectedOutcome`, which in turn `manifests` a `Consideration`. The `Observation` then yields a `verdict` (`Satisfied`, `Violated`, `Inconclusive`).
 
@@ -85,7 +85,7 @@ adr-o:derives rdfs:domain adr-o:Claim ;
 
 **Positive.**
 - The verification loop in ADR-0030 becomes logically coherent: an `Observation` verifies a `Claim`.
-- The terminology aligns with the Decision Transaction Principle: the ADL is a record of claims made at $t_0$.
+- The terminology aligns with the Decision Transaction Principle: the ADL is a record of claims made at t₀.
 - The "Claim" metaphor better supports the `derivedFrom`/`derives` relationship — one claim is derived from another.
 
 **Negative / risks.**

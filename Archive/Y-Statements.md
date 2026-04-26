@@ -42,7 +42,7 @@ A Y-statement is a **minimal, complete, machine-parseable decision model**. For 
 - **To achieve** → `ExpectedOutcome` nodes with `outcomeValence` = `ExpectedGain`
 - **Accepting that** → `ExpectedOutcome` nodes with `outcomeValence` = `ExpectedCost`, `ExpectedRisk`, or `ExpectedDependency`
 
-In other words, a Y-statement is essentially the **human-readable skeleton** of a `DecisionRecord` subgraph in ADR-O. Under the Decision Transaction Principle (DTP), these are $t_0$ commitments, not $t_n$ observations. An agent can parse a Y-statement and hydrate the corresponding triples, or inversely, render a `DecisionRecord` graph as a Y-statement for human consumption.
+In other words, a Y-statement is essentially the **human-readable skeleton** of a `DecisionRecord` subgraph in ADR-O. Under the Decision Transaction Principle (DTP), these are t₀ commitments, not tₙ observations. An agent can parse a Y-statement and hydrate the corresponding triples, or inversely, render a `DecisionRecord` graph as a Y-statement for human consumption.
 
 ## Key Design Philosophy
 
