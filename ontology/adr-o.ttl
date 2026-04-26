@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.4.2> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.4.3> ;
                           dcterms:created "2026-04-24"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships." ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.4.2-draft" ;
+                          owl:versionInfo "0.4.3-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -61,17 +61,13 @@ skos:note rdf:type owl:AnnotationProperty ;
 adr-o:hasType rdf:type owl:AnnotationProperty ;
               rdfs:domain adr-o:DecisionRecord ;
               rdfs:range skos:Concept ;
-              skos:scopeNote "In ADR-O: optional record-level type metadata. Profiles provide the appropriate SKOS concept schemes."@en ;
+              skos:scopeNote "Optional ADR scope metadata indicating the record's domain or category. Profiles may provide the appropriate SKOS concept schemes."@en ;
               adr-o:justifiedBy adr-odr:ADR-0023-add-hastype-annotation-property .
 
 
 #################################################################
 #    Object Properties
 #################################################################
-
-prov:wasRevisionOf rdf:type owl:ObjectProperty ;
-                   skos:scopeNote "In ADR-O: super-property of adr-o:supersedes. Supersession is a revision."@en .
-
 
 adr-o:addresses rdf:type owl:ObjectProperty ;
                 rdfs:range adr-o:Concern ;
@@ -85,7 +81,7 @@ adr-o:amendedBy rdf:type owl:ObjectProperty ;
                 owl:inverseOf adr-o:amends ;
                 rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range adr-o:DecisionRecord ;
-                rdfs:comment "ADL scope: inverse of adr-o:amends; links an anchor DecisionRecord to records that amend it."@en ;
+                rdfs:comment "ADL scope: inverse of adr-o:amends; links an anchor DecisionRecord to records that amend it. Many to many cardinality."@en ;
                 rdfs:label "amended by"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0020-amendments .
 
@@ -93,7 +89,7 @@ adr-o:amendedBy rdf:type owl:ObjectProperty ;
 adr-o:amends rdf:type owl:ObjectProperty ;
              rdfs:domain adr-o:DecisionRecord ;
              rdfs:range adr-o:DecisionRecord ;
-             rdfs:comment "ADL scope: a DecisionRecord partially modifies another without replacing it. The anchor remains in force."@en ;
+             rdfs:comment "ADL scope: a DecisionRecord partially modifies another without replacing it. The anchor remains in force. Many to many cardinality."@en ;
              rdfs:label "amends"@en ;
              adr-o:justifiedBy adr-odr:ADR-0020-amendments .
 
@@ -111,7 +107,7 @@ adr-o:chosenAlternative rdf:type owl:ObjectProperty ,
                                  owl:FunctionalProperty ;
                         rdfs:domain adr-o:DecisionRecord ;
                         rdfs:range adr-o:Alternative ;
-                        rdfs:comment "The selected Alternative. Functional: at most one per record. Multi-winner decisions use a composite Alternative."@en ;
+                        rdfs:comment "The selected Alternative after deliberation. Functional: at most one per record. Multi-winner decisions use a composite Alternative."@en ;
                         rdfs:label "chosen alternative"@en ;
                         adr-o:justifiedBy adr-odr:ADR-0012-alternatives-and-chosen-option .
 
@@ -181,12 +177,12 @@ adr-o:enables rdf:type owl:ObjectProperty ;
               adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
 
-adr-o:enabledBy rdf:type owl:ObjectProperty ;
+adr-o:permittedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:Claim ;
                 rdfs:range adr-o:ExpectedOutcome ;
-                rdfs:comment "ADL scope: a Claim is enabled by a prior decision's ExpectedOutcome. Modal strength: MAY."@en ;
-                rdfs:label "enabled by"@en ;
-                adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
+                  rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that permits it. Modal strength: MAY."@en ;
+                  rdfs:label "permitted by"@en ;
+                  adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
 
 adr-o:hasAlternative rdf:type owl:ObjectProperty ;
@@ -284,10 +280,9 @@ adr-o:supersededBy rdf:type owl:ObjectProperty ;
 
 
 adr-o:supersedes rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf prov:wasRevisionOf ;
                  rdfs:domain adr-o:DecisionRecord ;
                  rdfs:range adr-o:DecisionRecord ;
-                 rdfs:comment "ADL scope: a DecisionRecord replaces an earlier one. Subproperty of prov:wasRevisionOf."@en ;
+                 rdfs:comment "ADL scope: a DecisionRecord replaces an earlier one."@en ;
                  rdfs:label "supersedes"@en ;
                  adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
 
@@ -308,20 +303,20 @@ adr-o:prohibitedBy rdf:type owl:ObjectProperty ;
                    adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
 
 
-adr-o:recommends rdf:type owl:ObjectProperty ;
+adr-o:recommendedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain adr-o:Claim ;
                 rdfs:range adr-o:ExpectedOutcome ;
                 rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that recommends it. Modal strength: SHOULD."@en ;
-                rdfs:label "recommends"@en ;
-                adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
+                    rdfs:label "recommended by"@en ;
+                    adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
 
-adr-o:discourages rdf:type owl:ObjectProperty ;
+adr-o:discouragedBy rdf:type owl:ObjectProperty ;
                   rdfs:domain adr-o:Claim ;
                   rdfs:range adr-o:ExpectedOutcome ;
                   rdfs:comment "ADL scope: links a Claim to a prior decision's ExpectedOutcome that discourages it. Modal strength: SHOULD NOT."@en ;
-                  rdfs:label "discourages"@en ;
-                  adr-o:justifiedBy adr-odr:ADR-0025-causal-network .
+                    rdfs:label "discouraged by"@en ;
+                    adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
 
 adr-o:justifiedBy rdf:type owl:ObjectProperty ;

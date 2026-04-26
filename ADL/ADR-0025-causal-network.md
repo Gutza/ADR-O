@@ -8,6 +8,7 @@ author:
   email: bogdan@moongate.ro
 amendedBy:
   - ADR-0028
+  - ADR-0032
 ---
 
 # ADR-0025 — Causal Topology: Scopes, Modal Constraints, and Materialization

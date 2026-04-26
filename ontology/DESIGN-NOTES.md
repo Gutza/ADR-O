@@ -840,7 +840,7 @@ This iteration is a targeted consistency release that applies ADR-0024, ADR-0025
 
 <div data-dn-passage="sequential-id-discipline-025" data-dn-record="adl" data-dn-adl-refs="0024">
 
-**Sequential IDs for all records are treated as universal policy, including amendment records.** Relationship role is encoded by topology (`amends` / `amendedBy`), not identifier formatting. *(→ [ADR-0024](/ADL/ADR-0024-sequential-ids-for-all-decision-records.md))*
+**Sequential IDs for all records are treated as universal policy, including amendment records.** This 0.2.5-draft passage is explicitly lifted into ADL as ADR-0024; relationship role is encoded by topology (`amends` / `amendedBy`), not identifier formatting. *(→ [ADR-0024](/ADL/ADR-0024-sequential-ids-for-all-decision-records.md))*
 
 </div>
 
@@ -1053,6 +1053,18 @@ All 0.3.0-draft structural commitments are preserved unless explicitly reversed 
 - "KG lives under tooling" stance; SHACL still deferred. *(→ [ADR-0004](/ADL/ADR-0004-kg-under-tooling.md))*
 
 </div>
+</div>
+
+<div data-dn-section="deferrals">
+
+### Explicit deferrals — decisions to not decide right now
+
+<div data-dn-passage="success-criterion-draft-deferred-042" data-dn-record="deferral" data-dn-roadmap="4">
+
+**`adr-o:successCriterion` draft ADR exists but is not yet integrated into a numbered ontology iteration.** `ADL/ADR-xxxx-success-criterion.md` captures a proposed design-time measurability slot on `DecisionRecord`, but it is currently a floating draft (`id: TBD`) and therefore not marked as lifted in this file. Until it receives a numbered ADR and acceptance/rejection outcome, ontology materialization is explicitly deferred and tracked here to preserve trail continuity.
+
+</div>
+
 </div>
 
 <div data-dn-section="versioning-note">

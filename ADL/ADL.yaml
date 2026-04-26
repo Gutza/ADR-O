@@ -139,7 +139,7 @@
   filename: "ADR-0025-causal-network.md"
   status: "Accepted"
   summary: "Defines a three-scope causal architecture linking deliberation constraints and deliverable provenance through outcome-centered, machine-traversable relations."
-  amendedBy: [28]
+  amendedBy: [28, 32]
 - index: 26
   title: "Ontology Provenance: The adr-odr Namespace"
   filename: "ADR-0026-ontology-provenance.md"
@@ -179,3 +179,9 @@
   status: "Accepted"
   summary: "Renames adr-o:Consideration to adr-o:Claim to align ADR-O with the decision-transaction and observation-verification model, making the Observation -> ExpectedOutcome -> Claim chain epistemically coherent."
   amends: [10, 17, 27, 28]
+- index: 32
+  title: "Unified Voice and Naming for ADL-Scope Causal Predicates"
+  filename: "ADR-0032-unified-voice-and-naming.md"
+  status: "Accepted"
+  summary: "Unifies ADL-scope causal predicate naming under a passive-voice Claim -> ExpectedOutcome family (recommendedBy, discouragedBy, permittedBy), resolving enabledBy/enables collision and preserving DTP transaction boundaries."
+  amends: [25]
