@@ -6,7 +6,10 @@ This folder is an archive of useful resources online, some of which have been do
 - [ADR GitHub organization](https://adr.github.io/) homepage, featuring a rich [collection of repositories](https://github.com/orgs/adr/repositories?type=all);
 - [MADR](https://github.com/adr/madr), one of the repositories in the ADR GitHub organization, is a lightweight but mature recommendation for ADRs in Markdown format (first released in 2017, the recommendation is [currently](https://github.com/adr/madr/blob/develop/CHANGELOG.md) at release 4.0.0);
 - [YADR](https://github.com/adr/yadr), another repo in the ADR GitHub organization, is a relatively new port of MADR to YAML (and obvious JSON support);
-- [Joel Parker Henderson](https://github.com/joelparkerhenderson/architecture-decision-record)'s ADR GitHub repo: Architecture decision record (ADR) examples for software planning, IT leadership, and template documentation 
+
+### ADR Collections
+- [ADRs in the wild](https://sourcegraph.com/search?q=context%3Aglobal+ADR+count%3Aall&patternType=keyword&sm=0&__cc=1&df=%5B%22lang%22%2C%22Markdown%22%2C%22lang%3Amarkdown%22%5D&df=%5B%22type%22%2C%22Paths%22%2C%22type%3Apath%22%5D&groupBy=repo&expanded=)
+- [RuView](https://github.com/ruvnet/RuView/tree/main/docs/adr)
 
 ## Notable Articles
 - Michael Nygard's seminal [Documenting Architecture Decisions](https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions) Cognitect blog post back in 2011

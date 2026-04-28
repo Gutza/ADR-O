@@ -8,6 +8,7 @@ author:
   email: bogdan@moongate.ro
 amendedBy:
   - ADR-0031
+  - ADR-0038
 ---
 
 # ADR-0017 — Markdown Prose Properties as Implemented in ADR-O 0.2.1

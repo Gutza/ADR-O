@@ -6,6 +6,8 @@ date: 2026-04-19
 author:
   name: Bogdan Stăncescu
   email: bogdan@moongate.ro
+amendedBy:
+  - ADR-0038
 ---
 
 # ADR-0003 — Prose Literals Are Markdown

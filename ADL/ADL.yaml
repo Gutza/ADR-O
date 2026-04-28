@@ -18,6 +18,7 @@
   filename: "ADR-0003-prose-literals-markdown.md"
   status: "Accepted"
   summary: "Commits all prose-carrying literals to the IANA text/markdown datatype IRI, providing renderers and validators with a stable signal while remaining OWL-compliant as an unknown custom datatype."
+  amendedBy: [38]
 - index: 4
   title: "KG Under Tooling"
   filename: "ADR-0004-kg-under-tooling.md"
@@ -93,7 +94,7 @@
   filename: "ADR-0017-markdown-properties-as-implemented.md"
   status: "Accepted"
   summary: "Narrows ADR-0003's Markdown datatype scope to dcterms:description, skos:definition, and skos:note sub-properties; excludes skos:prefLabel (short label) and *Fact nodes (structural placements without their own prose properties)."
-  amendedBy: [31]
+  amendedBy: [31, 38]
 - index: 18
   title: "Consideration IRI Reuse Convention"
   filename: "ADR-0018-consideration-iri-reuse-convention.md"
@@ -208,3 +209,19 @@
   filename: "ADR-0036-the-satisfies-predicate.md"
   status: "Accepted"
   summary: "Introduces adr-o:satisfies (Alternative → Claim) as the intra-record syllogism bridge, closing the Y-statement roundtrip by making the implicit 'Therefore' between a facing concern and the chosen alternative machine-traversable."
+- index: 37
+  title: "`Complaint`: Modeling the Pre-Analytical Triggering Situation"
+  filename: "ADR-0037-complaint-reification.md"
+  status: "Accepted"
+  summary: "Introduces adr-o:Complaint with promptedBy and namedBy to preserve the pre-analytical triggering situation and stakeholder provenance as first-class graph structure."
+- index: 38
+  title: "Minting `adr-o:md` as an Ergonomic Markdown Datatype Alias"
+  filename: "ADR-0038-minting-markdown-datatype.md"
+  status: "Accepted"
+  summary: "Mints adr-o:md as an ergonomic alias for the IANA text/markdown datatype and applies it across ADR-O Turtle files while preserving the authoritative IANA identity via owl:equivalentClass."
+  amends: [3, 17]
+- index: 39
+  title: "Bibliographic References via `dcterms:references`"
+  filename: "ADR-0039-references.md"
+  status: "Accepted"
+  summary: "Adopts dcterms:references for DecisionRecord bibliography and standardizes cited-resource annotation via dcterms:title plus dcterms:description typed as adr-o:md, without minting new ADR-O vocabulary."
