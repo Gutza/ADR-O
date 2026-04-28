@@ -6,11 +6,11 @@ ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing d
 
 ## Status
 
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.5.2-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.5.2`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
+The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.5.3-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.5.3`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
 
 A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships.
 
-ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)** (kept in sync with the ADR markdown files); use the index as the operational source of truth.
+ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)** (kept in sync with the ADR markdown files); use the index as the operational source of truth (currently ADR-0000 through ADR-0040).
 
 **Human-facing documentation:** [https://gutza.github.io/ADR-O/](https://gutza.github.io/ADR-O/) (also linked from the ontology via `rdfs:seeAlso`).
 
@@ -19,7 +19,8 @@ ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/
 Traditional ADRs are useful for people but hard for machines to query consistently. ADR-O makes decision history explicit and durable as a graph:
 
 - **`DecisionRecord`** as the hub: metadata via Dublin Core Terms; typed links to other records (for example `supersedes`, `amends`, `amendedBy`, `dependsOn`, `enables`, `conflictsWith`, `addresses`) plus the ADL-scope causal family (`constrainedBy`, `prohibitedBy`, `recommendedBy`, `discouragedBy`, `permittedBy`); bibliographic links via `dcterms:references` to external or non-record resources; explicit snout modeling via `promptedBy` to a `Complaint` (with `namedBy` stakeholder provenance); explicit social-role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`); an option pool (`hasAlternative`) and a chosen option (`chosenAlternative`). Resource provenance flows inward only: `justifiedBy` from a resource to the decision that warranted it — never outward from the decision.
-- **Atom-first content:** reusable **`Claim`** nodes placed by reified **`ContextFact`**, **`DeliberationFact`**, and **`ExpectedOutcome`** links into framing, deliberation, and expected-outcome roles, with ordering on the record and valence schemes for deliberation and expected-outcome facts. Status and valences use SKOS concept schemes. Cross-record `Claim` reuse is reference-based via `derivedFrom`/`derives` rather than identity reuse, preserving each record's epistemic transaction boundary.
+- **Atom-first content:** reusable **`Claim`** nodes placed by reified **`ContextFact`**, **`DeliberationFact`**, and **`ExpectedOutcome`** links into framing, deliberation, and expected-outcome roles, with ordering on the record and valence schemes for deliberation and expected-outcome facts. Realized effects are represented as **`ObservedOutcome`** (with discovery typing and optional verification verdicts). Status, valences, verdicts, and discovery types use SKOS concept schemes. Cross-record `Claim` reuse is reference-based via `derivedFrom`/`derives` rather than identity reuse, preserving each record's epistemic transaction boundary.
+- **Decision closure:** each **`DecisionRecord`** can be closed by a functional **`closedBy`** link to **`Verdict`**, reifying the convergence act and carrying the "accepting that" prose payload as typed Markdown (`adr-o:md`).
 - **Design stance:** the RDF graph is the authoritative substrate. Human-readable Markdown remains a companion representation for discussion and publication, while the graph carries the canonical semantics. Where the graph does carry prose literals (primarily on `Claim`, `DecisionRecord`, and annotated referenced resources via `dcterms:description`, `skos:definition`, and `skos:note`), they are typed as `^^adr-o:md`, an ergonomic alias equivalent to `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` per ADR-0038 and ADR-0003.
 
 Together, this supports reliable graph traversal and richer analysis than keyword search over prose alone. Agents and services can consume **explicit triples** instead of re-inferring a decision graph from unstructured text every time.

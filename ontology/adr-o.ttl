@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.5.2> ;
-                          dcterms:created "2026-04-27"^^xsd:date ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.5.3> ;
+                          dcterms:created "2026-04-28"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships."^^adr-o:md ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.5.2-draft" ;
+                          owl:versionInfo "0.5.3-draft" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -452,6 +452,15 @@ adr-o:discouragedBy rdf:type owl:ObjectProperty ;
                     adr-o:justifiedBy adr-odr:ADR-0032-unified-voice-and-naming .
 
 
+adr-o:closedBy rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain adr-o:DecisionRecord ;
+               rdfs:range adr-o:Verdict ;
+               rdfs:comment "Links a DecisionRecord to the Verdict that closed its deliberation. Functional: one convergence act per decision."@en ;
+               rdfs:label "closed by"@en ;
+               adr-o:justifiedBy adr-odr:ADR-0040-verdict-reification .
+
+
 adr-o:justifiedBy rdf:type owl:ObjectProperty ;
                   rdfs:domain rdfs:Resource ;
                   rdfs:range adr-o:DecisionRecord ;
@@ -546,7 +555,7 @@ adr-o:Complaint rdf:type owl:Class ;
                 rdfs:subClassOf prov:Entity ;
                 rdfs:comment "The raw, pre-analytical triggering statement that caused a DecisionRecord to exist. Named by a stakeholder at a specific moment, in ordinary language, before any sharpening or translation into a falsifiable need."@en ;
                 rdfs:label "Complaint"@en ;
-                skos:scopeNote "A Complaint is not a Claim: it carries no truth value and is not verifiable. It is the cause of existence of the DecisionRecord, not a proposition within it. A Complaint is unconditionally immutable from the moment the DecisionRecord is first committed to the ADL — if the Complaint changes, it is a different fish. The stakeholder who names the Complaint is typically the primary pain-holder whose concern motivates the deliberation."@en ;
+                skos:scopeNote "Not a Claim: carries no truth value. Constitutive of the record's identity — a changed Complaint is a different fish, not a revised record. Distinct from adr-o:authoredBy (record author) and adr-o:decidedBy (decision-maker)."@en ;
                 adr-o:justifiedBy adr-odr:ADR-0037-complaint-reification .
 
 
@@ -673,6 +682,13 @@ adr-o:ObservedOutcomeVerdict rdf:type owl:Class ;
                     owl:someValuesFrom adr-o:ExpectedOutcome
                   ]
 ] .
+
+
+adr-o:Verdict rdf:type owl:Class ;
+              rdfs:comment "The reified convergence act of a decision: the moment deliberation closed and a commitment was made. Carries the author's account of how the balance tipped, including trade-offs consciously accepted."@en ;
+              rdfs:label "Verdict"@en ;
+              skos:scopeNote "Not a Claim: carries no truth value. Tier 1 epistemic core — mutable during drafting, frozen on external reference per the Decision Transaction Principle. The prose content (dcterms:description typed adr-o:md) is where the Y-statement 'accepting that' clause lives."@en ;
+              adr-o:justifiedBy adr-odr:ADR-0040-verdict-reification .
 
 
 adr-o:Status rdf:type owl:Class ;

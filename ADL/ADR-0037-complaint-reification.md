@@ -12,7 +12,7 @@ author:
 
 ## Context
 
-The ADR-O methodology document ([*Decisions Are Fish-Shaped*](/Archive/Decisions%20Are%20Fish-Shaped.md)) makes a structural claim about decision records: every well-formed record has a *snout* — the raw, pre-analytical triggering situation that caused deliberation to begin. It arrives in ordinary language, at ordinary resolution:
+The document ([*Decisions Are Fish-Shaped*](/Archive/Decisions%20Are%20Fish-Shaped.md)) makes a structural claim about decision records: every well-formed record has a *snout* — the raw, pre-analytical triggering situation that caused deliberation to begin. It arrives in ordinary language, at ordinary resolution:
 
 > *"Implementing MFA"*  
 > *"The report export takes too long"*  

@@ -225,3 +225,8 @@
   filename: "ADR-0039-references.md"
   status: "Accepted"
   summary: "Adopts dcterms:references for DecisionRecord bibliography and standardizes cited-resource annotation via dcterms:title plus dcterms:description typed as adr-o:md, without minting new ADR-O vocabulary."
+- index: 40
+  title: "`Verdict`: Reifying the Convergence Act"
+  filename: "ADR-0040-verdict-reification.md"
+  status: "Accepted"
+  summary: "Introduces adr-o:Verdict as the reified convergence act at the waist of the fish, linked from DecisionRecord via a functional adr-o:closedBy predicate. Verdict is Tier 1 epistemic core — mutable during drafting, frozen on external reference — and carries the Y-statement 'accepting that' clause as authored prose typed adr-o:md."
