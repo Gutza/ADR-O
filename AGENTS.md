@@ -4,7 +4,6 @@
 - **Ontology:** [`ontology/adr-o.ttl`](ontology/adr-o.ttl) — canonical OWL 2 ontology.
 - **Decision Records:** [`ADL/*.md`](ADL/) — human-readable ADRs with YAML frontmatter.
 - **ADR Registry:** [`ADL/ADL.yaml`](ADL/ADL.yaml) — **must be kept in sync** with all ADR files.
-- **Design History:** [`ontology/DESIGN-NOTES.md`](ontology/DESIGN-NOTES.md) — versioned design rationale.
 - **Namespace:** `https://w3id.org/adr-o#`
 
 ## Adding/Updating ADRs
@@ -35,8 +34,6 @@
 - **Observation loop:** Use `Observation`, `verifies`, and `hasVerdict` for tₙ validation of t₀ expected outcomes (ADR-0030).
 - **Controlled vocabularies:** Keep status and valence terms aligned with ontology schemes: status (`Accepted`, `Proposed`, `Rejected`, `Deprecated`, `Superseded`), deliberation valence (`Supports`, `Against`, `Neutral`), expected outcome valence (`ExpectedGain`, `ExpectedCost`, `ExpectedRisk`, `ExpectedDependency`), observation verdict (`Satisfied`, `Violated`, `Inconclusive`).
 - **Process:**
-  - Substantive changes → new ADR in `ADL/` + `DESIGN-NOTES.md` entry.
-  - Minor/tactical changes → `DESIGN-NOTES.md` entry only.
   - Update `owl:versionInfo` and `owl:versionIRI` in `adr-o.ttl` when advancing versions.
 
 ## Causal Scope Naming Canon

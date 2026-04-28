@@ -12,7 +12,7 @@ author:
 
 ## Context
 
-Several decisions in the ADR-O 0.2.0-draft iteration were made with reference to a shared background assumption: that ADR-O graphs are not user-facing artifacts but substrate — mediated by a tooling layer before any human author or reader encounters them. The DESIGN-NOTES for 0.2.0-draft named this assumption explicitly ("Design assumption: the KG lives under tooling") and identified several design choices that flow from it: strict graph without Nygard prose literals, SHACL complexity can be deferred to the tooling layer, `rdf:List` ordering accepted despite OWL DL awkwardness, authoring conventions documented in scope notes rather than axiomatized.
+Several decisions in the ADR-O 0.2.0-draft iteration were made with reference to a shared background assumption: that ADR-O graphs are not user-facing artifacts but substrate — mediated by a tooling layer before any human author or reader encounters them.
 
 This assumption deserves its own record because its scope is non-trivial: it is not a claim about how the tooling should be structured, or which layer enforces which constraint, but a claim about the expected operating environment of ADR-O graphs and the design trade-offs that become available in that environment.
 
@@ -52,7 +52,6 @@ One concrete corollary is already on record. ADR-0003 commits prose-carrying lit
 
 ## References
 
-- `ontology/DESIGN-NOTES.md`, section "ADR-O 0.2.0-draft: Design assumption: the KG lives under tooling" — where this assumption was first named. This ADR promotes it from a working note to a formal decision record.
 - ADR-0000 — Inception Record. Establishes the machine-traversable RDF graph as the design goal; this ADR specifies the access model under which that graph is intended to operate.
 - ADR-0002 — Scope. Establishes the domain-agnostic core; this ADR is orthogonal to scope but shares the same design posture: prefer clean, general structure over domain-baked conventions.
 - ADR-0003 — Prose Literals Are Markdown. Defines the Markdown datatype for prose-carrying literals. This ADR commits the tooling layer to rendering that datatype natively and thereby supplies the tooling-side half of ADR-0003's convention; the two ADRs should be read as a pair.

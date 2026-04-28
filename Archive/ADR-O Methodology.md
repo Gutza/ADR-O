@@ -156,7 +156,7 @@ Concretely:
 - If the source has a struct definition, include it. A future `ObservedOutcome` or downstream record may need to reference the precise shape of the chosen design.
 - If the source has a risk-mitigation table, capture both columns in every `ExpectedRisk` claim. The mitigation is not a separate concern — it is part of what was believed at t₀.
 
-When you find yourself omitting something because it "doesn't fit neatly," that is the signal to stop and ask whether the ontology has a gap, not whether the content can be dropped. The answer to an ontology gap is a note in `DESIGN-NOTES.md` and the content in prose; it is never silence.
+When you find yourself omitting something because it "doesn't fit neatly," that is the signal to stop and ask whether the ontology has a gap, not whether the content can be dropped.
 
 ## Wiring to the Graph: Practical Turtle Notes
 
@@ -272,5 +272,5 @@ The fish shape is not just a description of a well-formed record — it is a dia
 | No `ObservedOutcome` on an old record | The wake has not been captured; the learning delta is unmeasured | This is not a structural error, but it is a missed opportunity; prioritize observation for high-stakes or high-uncertainty decisions |
 | Requirements table in source, single claim in graph | Quantitative bounds have been collapsed; the tail is unverifiable | Mint one `Claim` per requirement row; each numeric target deserves its own `ContextFact` so `ObservedOutcome` nodes can verify it individually |
 | Risk present in source, mitigation absent from graph | Half the t₀ belief has been dropped; the record cannot reconstruct what was known | Include the mitigation in the `dcterms:description` of the `ExpectedRisk` claim; if the ontology gains a `mitigatedBy` predicate, migrate then |
-| Source content omitted because it "doesn't fit neatly" | An ontology gap has been resolved by silence rather than noted as a gap | Transcribe the content into prose; record the gap in `DESIGN-NOTES.md`; never drop information to make the graph look cleaner |
+| Source content omitted because it "doesn't fit neatly" | An ontology gap has been resolved by silence rather than noted as a gap | Transcribe the content into prose; never drop information to make the graph look cleaner |
 | `DecisionRecord` block appears first in the file | Every arc in the hub is a forward reference; the reader cannot follow the reasoning top-to-bottom | Reorder: Agents → Complaint → Concerns → Claims → Alternatives → DecisionRecord → Referenced resources |

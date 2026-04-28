@@ -8,7 +8,7 @@ ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing d
 
 The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.5.2-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.5.2`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
 
-A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships. See [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) for the per-version rationale.
+A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships.
 
 ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)** (kept in sync with the ADR markdown files); use the index as the operational source of truth.
 
@@ -20,7 +20,7 @@ Traditional ADRs are useful for people but hard for machines to query consistent
 
 - **`DecisionRecord`** as the hub: metadata via Dublin Core Terms; typed links to other records (for example `supersedes`, `amends`, `amendedBy`, `dependsOn`, `enables`, `conflictsWith`, `addresses`) plus the ADL-scope causal family (`constrainedBy`, `prohibitedBy`, `recommendedBy`, `discouragedBy`, `permittedBy`); bibliographic links via `dcterms:references` to external or non-record resources; explicit snout modeling via `promptedBy` to a `Complaint` (with `namedBy` stakeholder provenance); explicit social-role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`); an option pool (`hasAlternative`) and a chosen option (`chosenAlternative`). Resource provenance flows inward only: `justifiedBy` from a resource to the decision that warranted it — never outward from the decision.
 - **Atom-first content:** reusable **`Claim`** nodes placed by reified **`ContextFact`**, **`DeliberationFact`**, and **`ExpectedOutcome`** links into framing, deliberation, and expected-outcome roles, with ordering on the record and valence schemes for deliberation and expected-outcome facts. Status and valences use SKOS concept schemes. Cross-record `Claim` reuse is reference-based via `derivedFrom`/`derives` rather than identity reuse, preserving each record's epistemic transaction boundary.
-- **Design stance:** the RDF graph is the authoritative substrate. Human-readable Markdown remains a companion representation for discussion and publication, while the graph carries the canonical semantics. Where the graph does carry prose literals (primarily on `Claim`, `DecisionRecord`, and annotated referenced resources via `dcterms:description`, `skos:definition`, and `skos:note`), they are typed as `^^adr-o:md`, an ergonomic alias equivalent to `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` per ADR-0038 and ADR-0003 (see DESIGN-NOTES for the full argument).
+- **Design stance:** the RDF graph is the authoritative substrate. Human-readable Markdown remains a companion representation for discussion and publication, while the graph carries the canonical semantics. Where the graph does carry prose literals (primarily on `Claim`, `DecisionRecord`, and annotated referenced resources via `dcterms:description`, `skos:definition`, and `skos:note`), they are typed as `^^adr-o:md`, an ergonomic alias equivalent to `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` per ADR-0038 and ADR-0003.
 
 Together, this supports reliable graph traversal and richer analysis than keyword search over prose alone. Agents and services can consume **explicit triples** instead of re-inferring a decision graph from unstructured text every time.
 
@@ -36,7 +36,6 @@ The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`sup
 |--|--|
 | [`MANIFESTO.md`](/MANIFESTO.md) | Motivation and north star. |
 | [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
-| [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) | Immutable notes per ontology iteration. |
 | [`ontology/IDEAS.md`](/ontology/IDEAS.md) | Design exploration and backlog-style ideas. |
 | [`ADL/ADL.yaml`](/ADL/ADL.yaml) | The ADL Index file. |
 | [`Archive/index.md`](/Archive/index.md) | Archived references and outreach materials. |
@@ -58,6 +57,6 @@ ADR-O is intended to enable:
 
 Contributions and critique are welcome, especially on class and property naming, relationship semantics, constraints, and interoperability with linked-data and architecture-description tooling.
 
-For substantive vocabulary changes, grounding in [`ontology/DESIGN-NOTES.md`](/ontology/DESIGN-NOTES.md) and/or a new **ADL** record helps. When reporting issues, **Turtle fragments** or **SPARQL** examples that show the intended shape or query make proposals much easier to evaluate.
+For substantive vocabulary changes, a new **ADL** record helps. When reporting issues, **Turtle fragments** or **SPARQL** examples that show the intended shape or query make proposals much easier to evaluate.
 
 As pre-1.0 ontology work, expect iteration; please prefer discussions and issues with concrete use cases and examples.
