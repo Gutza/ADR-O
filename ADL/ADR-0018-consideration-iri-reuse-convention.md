@@ -23,7 +23,7 @@ Naive authoring tends to fail in two opposite directions:
 
 ## Decision
 
-**Editorial convention only** (documented in the `rdfs:comment` on `adr-o:Consideration` in [`ontology/adr-o.ttl`](/ontology/adr-o.ttl), not as additional OWL axioms):
+**Editorial convention only** (documented in the `rdfs:comment` on `adr-o:Consideration` in [`adr-o.ttl`](/adr-o.ttl), not as additional OWL axioms):
 
 - **Record-local** — fragment IRIs under the hosting `DecisionRecord` when an atom may never leave that record.
 - **Org-shared** — a stable namespace for atoms deliberately reused across records or templates.
@@ -77,6 +77,6 @@ This keeps early authoring lightweight while converging toward reusable identity
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:Consideration` `rdfs:comment`.
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:Consideration` `rdfs:comment`.
 - ADR-0010 — Atom-first reification.
 - ADR-0004 — The KG Lives Under Tooling (reconstructability boundary rule).

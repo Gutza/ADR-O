@@ -43,6 +43,6 @@ Deliberation (weighing options) and outcomes (post-decision characterisation) ne
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:deliberationValence`, `adr-o:outcomeValence`, `adr-o:DeliberationValence`, `adr-o:OutcomeValence`, schemes, individuals, `AllDifferent` blocks.
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:deliberationValence`, `adr-o:outcomeValence`, `adr-o:DeliberationValence`, `adr-o:OutcomeValence`, schemes, individuals, `AllDifferent` blocks.
 - ADR-0008 — Status scheme and integrity pattern (parallel design).
 - ADR-0004 — The KG Lives Under Tooling (SHACL companion deferred; list-member typing likewise deferred).

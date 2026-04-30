@@ -18,7 +18,7 @@ Repository layout choices (single Turtle file, additional serializations, exampl
 
 ## Decision
 
-**Namespace:** terms live under **`https://w3id.org/adr-o#`** (hash IRIs), reflected in `@base` and the `adr-o:` prefix in [`ontology/adr-o.ttl`](/ontology/adr-o.ttl).
+**Namespace:** terms live under **`https://w3id.org/adr-o#`** (hash IRIs), reflected in `@base` and the `adr-o:` prefix in [`adr-o.ttl`](/adr-o.ttl).
 
 **Ontology resource:** the ontology IRI `https://w3id.org/adr-o` is typed `owl:Ontology` and carries **`owl:versionIRI`**, **`owl:versionInfo`**, and Dublin Core metadata (`dcterms:title`, `dcterms:description`, `dcterms:license`, etc.) as in the current file.
 
@@ -39,5 +39,5 @@ Repository layout choices (single Turtle file, additional serializations, exampl
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — ontology header, `@base`, prefixes (no `owl:imports` in document).
+- [`adr-o.ttl`](/adr-o.ttl) — ontology header, `@base`, prefixes (no `owl:imports` in document).
 - ADR-0000 — Inception Record (reuse strategy at high level).

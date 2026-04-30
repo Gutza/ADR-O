@@ -18,7 +18,7 @@ Temporal authoring for post-factum records is policy in ADR-0005; the graph enco
 
 ## Decision
 
-**Canonical predicates (as declared and annotated in [`ontology/adr-o.ttl`](/ontology/adr-o.ttl)):**
+**Canonical predicates (as declared and annotated in [`adr-o.ttl`](/adr-o.ttl)):**
 
 - **`dcterms:date`** — canonical **decision date** for a `DecisionRecord` (`xsd:date`). Preferred over `dcterms:issued` and `prov:generatedAtTime` for this purpose (scope note in ontology file).
 - **`dcterms:created`** — optional **record creation** timestamp when the log distinguishes decision time from record lifecycle. Scope note names the **post-factum** pattern: decision date vs record authorship (ADR-0005).
@@ -44,6 +44,6 @@ Annotation properties used on the ontology document itself (`dcterms:title`, `dc
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `dcterms:created`, `dcterms:creator`, `dcterms:date`, `dcterms:identifier`, `dcterms:modified`, `dcterms:references`, `prov:wasAttributedTo`, `prov:wasRevisionOf` (declarations and scope notes).
+- [`adr-o.ttl`](/adr-o.ttl) — `dcterms:created`, `dcterms:creator`, `dcterms:date`, `dcterms:identifier`, `dcterms:modified`, `dcterms:references`, `prov:wasAttributedTo`, `prov:wasRevisionOf` (declarations and scope notes).
 - ADR-0005 — Log All Decisions in the ADL (post-factum and real-time authoring).
 - ADR-0007 — `adr-o:index` vs `dcterms:identifier`.

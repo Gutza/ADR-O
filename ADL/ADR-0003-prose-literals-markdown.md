@@ -92,4 +92,4 @@ A two-format approach — Markdown and Turtle as co-equal canonical serialisatio
 - W3C IANA Media Types namespace. https://www.w3.org/ns/iana/media-types/ — the artefact that makes `https://www.w3.org/ns/iana/media-types/text/markdown` a standards-grounded identifier rather than an invented one.
 - pyLODE issue #68. https://github.com/RDFLib/pyLODE/issues/68 — open community request for Markdown literal handling on `rdfs:comment`, `skos:definition` and sibling SKOS note properties, and `dcterms:description`. Cited as a signal of independent community demand for the same convention; not a claim that pyLODE already implements the IANA IRI form.
 - ADR-0002 — Ontology Scope (this ADL). Establishes that decisions like this one apply to the domain-agnostic core; domain-specific profiles inherit the convention but may further constrain it (e.g. by pinning a Markdown dialect).
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — the artefacts the convention will land in once the next ontology iteration applies it.
+- [`adr-o.ttl`](/adr-o.ttl) — the artefacts the convention will land in once the next ontology iteration applies it.

@@ -21,7 +21,7 @@ author:
 1. **Canonical:** `adr-o:Consideration` — “this atom is about concern C.”
 2. **Editorial rollup:** `adr-o:DecisionRecord` — “this record is broadly about concern C” for discovery when a finer tag is unnecessary or redundant.
 
-When **both** are present for the same concern, the **consideration-level** use is **authoritative** for precision; the record-level use is a permitted convenience. This is stated in the `rdfs:comment` on `adr-o:addresses` in [`ontology/adr-o.ttl`](/ontology/adr-o.ttl).
+When **both** are present for the same concern, the **consideration-level** use is **authoritative** for precision; the record-level use is a permitted convenience. This is stated in the `rdfs:comment` on `adr-o:addresses` in [`adr-o.ttl`](/adr-o.ttl).
 
 Under ADR-0004’s **reconstructability boundary rule**, this dual placement sits on both sides intentionally: fine-grained concern attachment belongs in-graph as first-class structure on `Consideration`, while record-level concern rollup is treated as an optional convenience signal that reasonable tooling can compute or reconcile from the atom layer.
 
@@ -40,7 +40,7 @@ Under ADR-0004’s **reconstructability boundary rule**, this dual placement sit
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:addresses`.
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:addresses`.
 - ADR-0006 — Core relational predicates (`addresses` vs `affects`).
 - ADR-0002 — Scope (`Concern` as abstract anchor).
 - ADR-0004 — The KG Lives Under Tooling (reconstructability boundary rule).

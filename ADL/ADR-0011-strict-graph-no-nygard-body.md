@@ -37,7 +37,7 @@ Earlier sketches considered Nygard-style datatype properties (`context`, `decisi
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:DecisionRecord`, `adr-o:Alternative`, `adr-o:DeliberationFact` (comments on rejection and deliberation).
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:DecisionRecord`, `adr-o:Alternative`, `adr-o:DeliberationFact` (comments on rejection and deliberation).
 - ADR-0010 — Atom-first `Consideration` and `*Fact` link classes.
 - ADR-0004 — The KG Lives Under Tooling.
 - ADR-0000 — Inception Record (historical prototype list; superseded items noted in Context above).

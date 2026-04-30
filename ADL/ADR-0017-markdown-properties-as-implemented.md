@@ -32,7 +32,7 @@ This ADR **narrows and clarifies** ADR-0003 for the current ontology **without**
 - **`skos:prefLabel`** — short noun-phrase **labels**, same role as titles; not treated as Markdown prose carriers.
 - **`*Fact` nodes** — no dedicated prose datatype properties; facts link to `Consideration` for text.
 
-**Enforcement:** scope notes on the above properties in [`ontology/adr-o.ttl`](/ontology/adr-o.ttl); **`sh:datatype`** for Markdown in the deferred SHACL shapes graph. OWL annotation property range assertions are editorial only for this purpose. This follows ADR-0004’s reconstructability boundary rule: shape-level datatype enforcement is treated as tooling-layer validation rather than encoded as stronger OWL constraints that do not carry the intended operational semantics for annotation properties.
+**Enforcement:** scope notes on the above properties in [`adr-o.ttl`](/adr-o.ttl); **`sh:datatype`** for Markdown in the deferred SHACL shapes graph. OWL annotation property range assertions are editorial only for this purpose. This follows ADR-0004’s reconstructability boundary rule: shape-level datatype enforcement is treated as tooling-layer validation rather than encoded as stronger OWL constraints that do not carry the intended operational semantics for annotation properties.
 
 Bulk retyping of legacy bare-string `skos:definition` literals on small scheme individuals may be done in a later data pass alongside SHACL.
 
@@ -51,7 +51,7 @@ Bulk retyping of legacy bare-string `skos:definition` literals on small scheme i
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — scope notes on `dcterms:description`, `skos:definition`, `skos:note`; `adr-o:Consideration` `rdfs:comment`; ontology header `dcterms:description` literal typing.
+- [`adr-o.ttl`](/adr-o.ttl) — scope notes on `dcterms:description`, `skos:definition`, `skos:note`; `adr-o:Consideration` `rdfs:comment`; ontology header `dcterms:description` literal typing.
 - ADR-0003 — Prose Literals Are Markdown (datatype and original scope).
 - ADR-0015 — Canonical Dublin Core usage.
 - ADR-0010 — `*Fact` nodes as structural placements.

@@ -41,6 +41,6 @@ ADR-0000 required a controlled status vocabulary rather than an uncontrolled str
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:hasStatus`, `adr-o:Status`, `adr-o:statusScheme`, status individuals, status `owl:AllDifferent` block.
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:hasStatus`, `adr-o:Status`, `adr-o:statusScheme`, status individuals, status `owl:AllDifferent` block.
 - ADR-0000 — Inception Record (status list intent).
 - ADR-0002 — Scope (SKOS extension pattern).

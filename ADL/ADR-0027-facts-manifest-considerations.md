@@ -63,4 +63,4 @@ The rename does not change the cardinality. The predicate remains `owl:Functiona
 
 - [ADR-0010](/ADL/ADR-0010-consideration-and-reified-facts.md) — the original reification design.
 - [ADR-0025](/ADL/ADR-0025-causal-network.md) — `materializes` / `justifiedBy` parallel.
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — predicate declaration.
+- [`adr-o.ttl`](/adr-o.ttl) — predicate declaration.

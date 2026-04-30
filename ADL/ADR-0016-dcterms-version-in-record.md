@@ -37,5 +37,5 @@ This does **not** resolve future typed predicates such as `adr-o:amends` or `adr
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `dcterms:version` declaration and scope note.
+- [`adr-o.ttl`](/adr-o.ttl) — `dcterms:version` declaration and scope note.
 - ADR-0006 — `adr-o:supersedes` / `adr-o:supersededBy` (successor-record model).

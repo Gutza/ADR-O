@@ -48,6 +48,6 @@ Background discussion for early ontology iterations is preserved informally in p
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:addresses`, `adr-o:affects`, `adr-o:dependsOn`, `adr-o:enables`, `adr-o:conflictsWith`, `adr-o:supersedes`, `adr-o:supersededBy`, `prov:wasRevisionOf` (scope note).
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:addresses`, `adr-o:affects`, `adr-o:dependsOn`, `adr-o:enables`, `adr-o:conflictsWith`, `adr-o:supersedes`, `adr-o:supersededBy`, `prov:wasRevisionOf` (scope note).
 - ADR-0000 — Inception Record (vocabulary intent and survey).
 - ADR-0002 — Scope (`Concern`, domain-agnostic core).

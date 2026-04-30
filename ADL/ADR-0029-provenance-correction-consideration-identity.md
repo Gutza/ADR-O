@@ -50,9 +50,8 @@ The following files have been corrected in place under this ADR:
 |------|--------|
 | `ADL/ADR-0010-consideration-and-reified-facts.md` | Removed "YADR-style identity" parenthetical from Consequences. |
 | `ADL/ADR-0028-integrating-the-decision-transaction-principle.md` | Renamed Section 7 and reframed its content to own the coherence property as ADR-O's contribution; corrected adjacent references. |
-| `ontology/IDEAS.md` | Rewrote the "Argument reuse problem" section to accurately describe YADR's clerical mechanism and distinguish ADR-O's IRI-identity contribution. |
 | `ontology/ROADMAP.md` | Replaced "Solves the YADR identity problem" with an accurate description of ADR-O's design. |
-| `ontology/adr-o.ttl` | Removed "YADR-style identity property" and "YADR-style Y-statement loop closure" language from `adr-o:manifests` and `adr-o:Consideration` comments; corrected `adr-o:ExpectedCost` attribution. |
+| `adr-o.ttl` | Removed "YADR-style identity property" and "YADR-style Y-statement loop closure" language from `adr-o:manifests` and `adr-o:Consideration` comments; corrected `adr-o:ExpectedCost` attribution. |
 
 ## Alternatives considered
 

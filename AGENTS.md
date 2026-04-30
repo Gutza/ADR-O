@@ -1,7 +1,7 @@
 # AGENTS.md — ADR-O
 
 ## Core Project
-- **Ontology:** [`ontology/adr-o.ttl`](ontology/adr-o.ttl) — canonical OWL 2 ontology.
+- **Ontology:** [`adr-o.ttl`](adr-o.ttl) — canonical OWL 2 ontology.
 - **Decision Records:** [`ADL/*.md`](ADL/) — human-readable ADRs with YAML frontmatter.
 - **ADR Registry:** [`ADL/ADL.yaml`](ADL/ADL.yaml) — **must be kept in sync** with all ADR files.
 - **Namespace:** `https://w3id.org/adr-o#`
@@ -27,11 +27,11 @@
 
 ## Ontology Contributions
 - **Standard:** Turtle (`.ttl`) format.
-- **Markdown literals:** Use datatype `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` for `dcterms:description`, `skos:definition`, `skos:note` (and sub-properties).
+- **Literals:** Use datatype `^^adr-o:md` for `dcterms:description`, `skos:definition`, `skos:note` (and sub-properties) to write full Markdown (see ADR-0038) .
 - **Short labels:** `skos:prefLabel` is a plain string label, **not** Markdown.
 - **Prose policy:** No Nygard body literals on records (ADR-0011). Prose lives in `Claim` nodes.
 - **Current core terms:** Use `ExpectedOutcome` (not `OutcomeFact`), `manifests` (not `consideration`), and `derivedFrom`/`derives` (identity reuse is not the cross-record model).
-- **Observation loop:** Use `Observation`, `verifies`, and `hasVerdict` for tₙ validation of t₀ expected outcomes (ADR-0030).
+- **Observation loop:** Use `ObservedOutcome`, `verifies`, and `hasVerdict` for tₙ validation of t₀ expected outcomes (ADR-0030, ADR-0033).
 - **Controlled vocabularies:** Keep status and valence terms aligned with ontology schemes: status (`Accepted`, `Proposed`, `Rejected`, `Deprecated`, `Superseded`), deliberation valence (`Supports`, `Against`, `Neutral`), expected outcome valence (`ExpectedGain`, `ExpectedCost`, `ExpectedRisk`, `ExpectedDependency`), observation verdict (`Satisfied`, `Violated`, `Inconclusive`).
 - **Process:**
   - Update `owl:versionInfo` and `owl:versionIRI` in `adr-o.ttl` when advancing versions.

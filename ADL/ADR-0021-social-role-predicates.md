@@ -75,7 +75,7 @@ Because these role predicates are object properties, they do not take literal va
 
 ## Post-acceptance ontology follow-up (exact changes)
 
-Apply the following in `ontology/adr-o.ttl`:
+Apply the following in `adr-o.ttl`:
 
 1. Add declarations for `adr-o:authoredBy`, `adr-o:decidedBy`, `adr-o:consulted`, `adr-o:informed` as `owl:ObjectProperty`.
 2. Set domain of each predicate to `adr-o:DecisionRecord`.
@@ -90,6 +90,6 @@ Apply the following in `ontology/adr-o.ttl`:
 ## References
 
 - [`ontology/ROADMAP.md`](/ontology/ROADMAP.md) — Horizon 2.1 Social Graph.
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — current metadata and object-property baseline.
+- [`adr-o.ttl`](/adr-o.ttl) — current metadata and object-property baseline.
 - ADR-0004 — The KG Lives Under Tooling.
 - ADR-0015 — Canonical Dublin Core and PROV Usage for ADR-O.

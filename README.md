@@ -1,53 +1,97 @@
 # ADR-O
 
-ADR-O is an RDF/OWL 2 ontology for Any Decision Record (ADR): any load-bearing decision — in any domain — worth preserving with its context, rationale, and alternatives as a machine-traversable graph. The goal is to represent decisions as a linked graph rather than isolated files, so both humans and tools can recover not just what was decided, but why — including how decisions relate to one another, including the explicit inference from framing concerns to selected options.
+**ADR-O is the RDF/OWL 2 ontology for Any Decision Record (ADR)**, *modeling any set of decisions worth preserving, with their context, rationales, and alternatives as machine-traversable graphs*, so both humans and AI agents can recover not just what was decided, but why — and how each decision relates to every other.
 
-> The acronym explicitly traces its roots back to software architecture, where ADR = Architecture Decision Record, and it was preserved in this project's name specifically for its rich heritage. See [ADR-0002](/ADL/ADR-0002-ontology-scope.md) for more on this.
+> The acronym explicitly traces its roots back to software architecture, where *ADR = Architecture Decision Record*. The acronym was preserved specifically for its rich heritage; see [ADR-0002](/ADL/ADR-0002-ontology-scope.md) for more on this.
 
-## Status
-
-The canonical ontology is **[`ontology/adr-o.ttl`](/ontology/adr-o.ttl)** at **`0.5.3-draft`** (`owl:versionIRI` `https://w3id.org/adr-o/0.5.3`). Treat this as a **technical preview**: versions in the 0.x line include intentional breaking redesigns before a stable release.
-
-A **SHACL** shapes companion for validation is planned but **not shipped**; some integrity rules are documented as authoring conventions or deferred to tooling layers until that ships.
-
-ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)** (kept in sync with the ADR markdown files); use the index as the operational source of truth (currently ADR-0000 through ADR-0040).
-
-**Human-facing documentation:** [https://gutza.github.io/ADR-O/](https://gutza.github.io/ADR-O/) (also linked from the ontology via `rdfs:seeAlso`).
+The canonical ontology is **[`adr-o.ttl`](/adr-o.ttl)**, currently at version **`0.6.0-alpha`**. The project's own ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)**.
 
 ## Why ADR-O
 
-Traditional ADRs are useful for people but hard for machines to query consistently. ADR-O makes decision history explicit and durable as a graph:
+Traditional ADRs are useful for people but hard for machines to query consistently. A folder of Markdown files answers "what did we decide?" only if you can read every file. ADR-O makes decision history explicit and durable as a graph, so an agent can answer "what constrains this choice?", "what was the reasoning that led away from this approach?", or "what is the full supersession chain from the founding decision to what is in effect today?" — by traversal, not by reading prose.
 
-- **`DecisionRecord`** as the hub: metadata via Dublin Core Terms; typed links to other records (for example `supersedes`, `amends`, `amendedBy`, `dependsOn`, `enables`, `conflictsWith`, `addresses`) plus the ADL-scope causal family (`constrainedBy`, `prohibitedBy`, `recommendedBy`, `discouragedBy`, `permittedBy`); bibliographic links via `dcterms:references` to external or non-record resources; explicit snout modeling via `promptedBy` to a `Complaint` (with `namedBy` stakeholder provenance); explicit social-role predicates (`authoredBy`, `decidedBy`, `consulted`, `informed`); an option pool (`hasAlternative`) and a chosen option (`chosenAlternative`). Resource provenance flows inward only: `justifiedBy` from a resource to the decision that warranted it — never outward from the decision.
-- **Atom-first content:** reusable **`Claim`** nodes placed by reified **`ContextFact`**, **`DeliberationFact`**, and **`ExpectedOutcome`** links into framing, deliberation, and expected-outcome roles, with ordering on the record and valence schemes for deliberation and expected-outcome facts. Realized effects are represented as **`ObservedOutcome`** (with discovery typing and optional verification verdicts). Status, valences, verdicts, and discovery types use SKOS concept schemes. Cross-record `Claim` reuse is reference-based via `derivedFrom`/`derives` rather than identity reuse, preserving each record's epistemic transaction boundary.
-- **Decision closure:** each **`DecisionRecord`** can be closed by a functional **`closedBy`** link to **`Verdict`**, reifying the convergence act and carrying the "accepting that" prose payload as typed Markdown (`adr-o:md`).
-- **Design stance:** the RDF graph is the authoritative substrate. Human-readable Markdown remains a companion representation for discussion and publication, while the graph carries the canonical semantics. Where the graph does carry prose literals (primarily on `Claim`, `DecisionRecord`, and annotated referenced resources via `dcterms:description`, `skos:definition`, and `skos:note`), they are typed as `^^adr-o:md`, an ergonomic alias equivalent to `^^<https://www.w3.org/ns/iana/media-types/text/markdown>` per ADR-0038 and ADR-0003.
+The model is organized around a `DecisionRecord` as the central node, connected outward at two levels:
 
-Together, this supports reliable graph traversal and richer analysis than keyword search over prose alone. Agents and services can consume **explicit triples** instead of re-inferring a decision graph from unstructured text every time.
+**At ADL scope** — across records — typed links form the traversable backbone: `supersedes`, `amends`, `dependsOn`, `enables`, `conflictsWith`, and the causal-modal family (`constrainedBy`, `prohibitedBy`, `recommendedBy`, `discouragedBy`, `permittedBy`). This is where machine-readable reasoning lives.
+
+**At ADR scope** — inside a single record — reified fact nodes make each part of the decision locatable without prose parsing: a `Complaint` (the raw triggering situation, via `promptedBy`), `ContextFact` and `DeliberationFact` nodes manifesting reusable `Claim` atoms, a `Verdict` (the reified convergence act, via `closedBy`), `ExpectedOutcome` commitments, and `ObservedOutcome` nodes closing the learning loop at tₙ. Social roles (`authoredBy`, `decidedBy`, `consulted`, `informed`) and bibliographic links (`dcterms:references`) round out the record.
+
+All prose-carrying literals are typed `^^adr-o:md` (an ergonomic alias for the IANA text/markdown datatype), making them renderer-friendly without losing OWL compliance.
 
 ## Design direction
 
 ADR-O aims for the **smallest complete domain-agnostic core**: the vocabulary is not locked to any domain's class names or concerns — domain-specific terms belong in **profiles** in their own namespaces. Software architecture teams are a natural first-adopter audience, but the core is designed for any decision-making context.
 
-The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`supersedes` as a sub-property of `prov:wasRevisionOf`), and uses SKOS for controlled values. It **defines only** ADR-specific terms that are missing from those stacks. It **aligns with** ISO 42010-style separation of concerns (and lessons from OntolAD) without importing heavy external ontologies as `owl:imports`; this document-shape discipline is codified in [ADR-0014](/ADL/ADR-0014-ontology-document-shape.md) (with inception context in [ADR-0000](/ADL/ADR-0000-inception.md)).
+The ontology **reuses** Dublin Core Terms, aligns supersession with PROV-O (`supersedes` as a sub-property of `prov:wasRevisionOf`), and uses SKOS for controlled values. It **defines only** ADR-specific terms that are missing from those stacks. It **aligns with** ISO 42010-style separation of concerns (and lessons from OntolAD) without importing heavy external ontologies as `owl:imports`; this discipline is codified in [ADR-0014](/ADL/ADR-0014-ontology-document-shape.md).
 
-## Repository map (start here)
+The modeling priority is **efficient agent navigation of the ADL**, not formal completeness inside individual records. ADR scope earns formal structure when it enables locatability — giving an agent a first-class node to find and read — not when it attempts to encode the internal logic of a human deliberation. See [*ADR-O Modeling Scope Priorities*](/Archive/ADR-O%20Modeling%20Scope%20Priorities.md) for the full argument.
+
+## Minimal example
+
+A complete (minimal) `DecisionRecord` in Turtle — one complaint, two alternatives, one chosen, one context fact and one deliberation fact each:
+
+```turtle
+@prefix :        <https://example.org/adl/> .
+@prefix adr-o:   <https://w3id.org/adr-o#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+# Complaint — the triggering situation
+:complaint-001 a adr-o:Complaint ;
+    dcterms:description "Our REST API responses are too slow under peak load."^^adr-o:md .
+
+# Claims — reusable atomic propositions
+:claim-latency-sla a adr-o:Claim ;
+    skos:prefLabel "Latency SLA at risk"@en ;
+    dcterms:description "P99 latency exceeds the 200 ms SLA under loads above 500 RPS."^^adr-o:md .
+
+:claim-cache-complexity a adr-o:Claim ;
+    skos:prefLabel "Cache invalidation complexity"@en ;
+    dcterms:description "Introducing a cache layer adds invalidation complexity and risk of stale data."^^adr-o:md .
+
+# Alternatives
+:alt-cache a adr-o:Alternative ;
+    skos:prefLabel "Add Redis caching layer"@en .
+
+:alt-scale-db a adr-o:Alternative ;
+    skos:prefLabel "Scale up the database"@en .
+
+# Decision Record
+:ADR-001 a adr-o:DecisionRecord ;
+    dcterms:identifier    "ADR-001" ;
+    adr-o:index           1 ;
+    dcterms:title         "API Latency: caching vs. database scaling"@en ;
+    adr-o:decidedAt       "2025-11-03"^^xsd:date ;
+    adr-o:hasStatus       adr-o:Accepted ;
+    adr-o:promptedBy      :complaint-001 ;
+    adr-o:hasAlternative  :alt-cache, :alt-scale-db ;
+    adr-o:chosenAlternative :alt-cache ;
+
+    adr-o:hasContext (
+        [ a adr-o:ContextFact ;
+          adr-o:manifests :claim-latency-sla ]
+    ) ;
+
+    adr-o:hasDeliberation (
+        [ a adr-o:DeliberationFact ;
+          adr-o:onAlternative    :alt-cache ;
+          adr-o:manifests        :claim-cache-complexity ;
+          adr-o:deliberationValence adr-o:Against ]
+    ) .
+```
+
+The full vocabulary is documented in the ontology and in the ADL — `ExpectedOutcome`, `ObservedOutcome`, `Verdict`, social roles, inter-record predicates, bibliographic links.
+
+## Repository map
 
 | Location | Content |
 |--|--|
 | [`MANIFESTO.md`](/MANIFESTO.md) | Motivation and north star. |
-| [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
-| [`ontology/IDEAS.md`](/ontology/IDEAS.md) | Design exploration and backlog-style ideas. |
+| [`adr-o.ttl`](/adr-o.ttl) | Canonical OWL 2 ontology (Turtle). |
+| [`BACKLOG.md`](/BACKLOG.md) | Open questions and backlog. |
 | [`ADL/ADL.yaml`](/ADL/ADL.yaml) | The ADL Index file. |
-| [`Archive/index.md`](/Archive/index.md) | Archived references and outreach materials. |
-
-## Intended outcomes
-
-ADR-O is intended to enable:
-
-- machine-interpretable decision history across system (or organisational) evolution;
-- consistent querying of rationale, options, and trade-offs;
-- better support for AI-assisted decision workflows grounded in explicit graphs.
+| [`Archive/index.md`](/Archive/index.md) | References, outreach materials, and methodology documents. |
 
 ## Namespace and license
 

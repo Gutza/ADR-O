@@ -52,6 +52,6 @@ The class name **`Consideration`** was chosen over overloaded alternatives (e.g.
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:Consideration`, `adr-o:ContextFact`, `adr-o:DeliberationFact`, `adr-o:OutcomeFact`, `adr-o:hasContext`, `adr-o:hasDeliberation`, `adr-o:hasOutcome`, `adr-o:consideration`.
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:Consideration`, `adr-o:ContextFact`, `adr-o:DeliberationFact`, `adr-o:OutcomeFact`, `adr-o:hasContext`, `adr-o:hasDeliberation`, `adr-o:hasOutcome`, `adr-o:consideration`.
 - ADR-0004 — The KG Lives Under Tooling.
 - ADR-0009 — Deliberation and outcome valence schemes.

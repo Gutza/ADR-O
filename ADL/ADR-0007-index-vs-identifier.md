@@ -23,7 +23,7 @@ Human-readable decision identifiers (for example `ADR-0042`) are essential for d
 - **`dcterms:identifier`** — string identifier of a `DecisionRecord` (e.g. `ADR-0042`), as usual in Dublin Core.
 - **`adr-o:index`** — `xsd:integer`, `owl:FunctionalProperty` on `adr-o:DecisionRecord`, for sortable ordering within a log and for traversing supersession chains in intended sequence.
 
-The ontology documents this split in the `rdfs:comment` on `adr-o:index` and in the `skos:scopeNote` on `dcterms:identifier` in [`ontology/adr-o.ttl`](/ontology/adr-o.ttl).
+The ontology documents this split in the `rdfs:comment` on `adr-o:index` and in the `skos:scopeNote` on `dcterms:identifier` in [`adr-o.ttl`](/adr-o.ttl).
 
 ## Alternatives considered
 
@@ -40,4 +40,4 @@ The ontology documents this split in the `rdfs:comment` on `adr-o:index` and in 
 
 ## References
 
-- [`ontology/adr-o.ttl`](/ontology/adr-o.ttl) — `adr-o:index`; `dcterms:identifier` scope note.
+- [`adr-o.ttl`](/adr-o.ttl) — `adr-o:index`; `dcterms:identifier` scope note.

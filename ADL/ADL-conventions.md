@@ -49,4 +49,4 @@ Frontmatter keys are author-facing. RDF semantics remain canonical through this 
 - `amends` -> `adr-o:amends`
 - `amendedBy` -> `adr-o:amendedBy`
 
-This keeps author UX simple while preserving alignment with `ontology/adr-o.ttl`.
+This keeps author UX simple while preserving alignment with `adr-o.ttl`.
