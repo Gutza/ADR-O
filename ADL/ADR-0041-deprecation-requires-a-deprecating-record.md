@@ -1,7 +1,7 @@
 ---
 id: 41
 type: Core design
-status: Proposed
+status: Accepted
 date: 2026-05-05
 author:
   name: Bogdan Stăncescu

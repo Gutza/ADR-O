@@ -22,6 +22,8 @@ supersedes:
 
 # ADR-0028 - Integrating the Decision Transaction Principle
 
+> Amendment note (ADR-0042): practitioner-facing prose companion article at [/Archive/Decision%20Transaction%20Principle.md](/Archive/Decision%20Transaction%20Principle.md). This ADR remains active as ontology-justifying decision history.
+
 ## Context
 
 The **Decision Transaction Principle** establishes that a `DecisionRecord` is an epistemic transaction: it represents the closed state of deliberation at the moment of commitment (t₀). The boundary between t₀ (what was decided) and tₙ (what later became true) must be impermeable.

@@ -1,23 +1,10 @@
----
-id: 25
-type: Core vocabulary
-status: Accepted
-date: 2026-04-22
-author:
-  name: Bogdan Stăncescu
-  email: bogdan@moongate.ro
-amendedBy:
-  - ADR-0028
-  - ADR-0032
----
+# ADR-O Causality Scopes
 
-# ADR-0025 — Causal Topology: Scopes, Modal Constraints, and Materialization
-
-> Amendment note (ADR-0042): practitioner-facing prose companion article at [/Archive/ADR-O%20Causality%20Scopes.md](/Archive/ADR-O%20Causality%20Scopes.md). This ADR remains active as ontology-justifying decision history.
+This article is a lifted transcription of [ADR-0025](/ADL/ADR-0025-causal-network.md), maintained as practitioner-facing guidance under ADR-0042.
 
 ## Context
 
-ADR-0006 introduced relational predicates (`supersedes`, `dependsOn`, `enables`, `conflictsWith`) that allow us to traverse a decision log. But these are **relational**—they tell us that decisions are connected, but they don't tell us **how** or **why**.
+ADR-0006 introduced relational predicates (`supersedes`, `dependsOn`, `enables`, `conflictsWith`) that allow us to traverse a decision log. But these are **relational**-they tell us that decisions are connected, but they don't tell us **how** or **why**.
 
 A key organizational pain point is understanding why a specific system artifact (e.g., a lock file, a config flag, a CI step) is critical. Currently, this requires reading through ADRs and reconstructing the chain of "this because that" in one's head.
 
@@ -30,18 +17,18 @@ The real-time agent scenario (ADR-0005 vignette) demands that an agent be able t
 ### 1. The Three Scopes of Causation
 
 #### ADR Scope
-The **ADR scope** is the tightest of the three, and it represents a single deliberation – a single complete [Y-statement](/Archive/Y-Statements.md).
+The **ADR scope** is the tightest of the three, and it represents a single deliberation - a single complete [Y-statement](/Archive/Y-Statements.md).
 
 Within a single record, causality is **argumentative**. A `Consideration` is weighed against an `Alternative` to produce a decision. This scope is designed to be a machine-readable encoding of ZIO's **Y-Statement** structure:
 
 | Y-statement clause | ADR-O construct |
 | :--- | :--- |
-| *"In the context of..."* | `adr-o:hasContext` → `ContextFact` → `Consideration` |
-| *"Facing..."* | `adr-o:hasContext` → `ContextFact` → `Consideration` (specifically a concern) |
+| *"In the context of..."* | `adr-o:hasContext` -> `ContextFact` -> `Consideration` |
+| *"Facing..."* | `adr-o:hasContext` -> `ContextFact` -> `Consideration` (specifically a concern) |
 | *"We decided for..."* | `adr-o:chosenAlternative` |
 | *"And neglected..."* | `adr-o:hasAlternative` (those not chosen) |
-| *"To achieve..."* | `adr-o:hasOutcome` → `OutcomeFact` with `adr-o:Benefit` |
-| *"Accepting that..."* | `adr-o:hasOutcome` → `OutcomeFact` with `adr-o:AcceptedCost` |
+| *"To achieve..."* | `adr-o:hasOutcome` -> `OutcomeFact` with `adr-o:Benefit` |
+| *"Accepting that..."* | `adr-o:hasOutcome` -> `OutcomeFact` with `adr-o:AcceptedCost` |
 
 The `adr-o:outcomeValence` predicate is the structural encoding of the Y-Statement's payoff/cost distinction. It transforms a prose "acceptance" into a queryable fact.
 
@@ -57,14 +44,14 @@ Between decisions, causality is **retrospective**. A later decision recognizes t
     - `adr-o:recommends` (RFC 2119: **SHOULD**)
     - `adr-o:discourages` (RFC 2119: **SHOULD NOT**)
     - `adr-o:enabledBy` (RFC 2119: **MAY**)
-- **Causal direction:** `Consideration` (in later ADR) → `OutcomeFact` (from prior ADR).
+- **Causal direction:** `Consideration` (in later ADR) -> `OutcomeFact` (from prior ADR).
 - **Nature:** A claim made by the later decision about its own constraints. The prior decision does not "push" constraints forward; the later decision "pulls" them back.
 
 #### Project Scope
 The **Project scope** breaks out of the ADL, and contains both the ADL and the deliverable artifact documented by it; at this scope we're concerned with connections between the ADL and the system artifacts it describes.
 - **Predicates:**
-    - `adr-o:materializes` (`DecisionRecord` → `rdfs:Resource`)
-    - `adr-o:justifiedBy` (`rdfs:Resource` → `DecisionRecord`)
+    - `adr-o:materializes` (`DecisionRecord` -> `rdfs:Resource`)
+    - `adr-o:justifiedBy` (`rdfs:Resource` -> `DecisionRecord`)
 - **Causal direction:** The deliverable points back to its justification.
 - **Nature:** Provenance. The deliverable is a materialized effect of a decision.
 
@@ -94,7 +81,7 @@ mr-adl:cons-B  a adr-o:Consideration ;
 
 When `ADR-B` `supersedes` `ADR-A`, `ADR-A`'s `OutcomeFact`s become **semantically void**. They still exist in the graph as historical facts, but they no longer act as constraints or enablers for future decisions.
 
-**Tooling implication:** Any `Consideration` that is `constrainedBy` an `OutcomeFact` of a superseded decision is flagged as having a **stale constraint**. This is a primary value of the graph—it reveals when a decision is relying on a premise that is no longer in force.
+**Tooling implication:** Any `Consideration` that is `constrainedBy` an `OutcomeFact` of a superseded decision is flagged as having a **stale constraint**. This is a primary value of the graph-it reveals when a decision is relying on a premise that is no longer in force.
 
 ### 4. Reasoning and Inferences
 
@@ -123,7 +110,7 @@ Starting from the real-time ADR concept in ADR-0005, ADR-0025 enables the upgrad
 >
 > **John:** "Fine, we'll just find a vim plugin."
 >
-> **Agent:** "Before you do—ADR-0723 is also a causal anchor for **four other decisions**: the CI pipeline (ADR-0112), the onboarding guide (ADR-0201), the contributor contract (ADR-0415), and the security scan workflow (ADR-0503). All four of those decisions are `constrainedBy` that same outcome. If you change the linting mechanism, you're not just changing an editor—you're pulling the rug out from under four downstream decisions. Would you like me to map the impact chain?"
+> **Agent:** "Before you do-ADR-0723 is also a causal anchor for **four other decisions**: the CI pipeline (ADR-0112), the onboarding guide (ADR-0201), the contributor contract (ADR-0415), and the security scan workflow (ADR-0503). All four of those decisions are `constrainedBy` that same outcome. If you change the linting mechanism, you're not just changing an editor-you're pulling the rug out from under four downstream decisions. Would you like me to map the impact chain?"
 
 ## Alternatives considered
 
@@ -152,9 +139,9 @@ Starting from the real-time ADR concept in ADR-0005, ADR-0025 enables the upgrad
 
 ## References
 
-- ADR-0004 — The KG Lives Under Tooling (agents as active participants).
-- ADR-0005 — Log All Decisions (the real-time vignette, now expanded).
-- ADR-0010 — Atom-first `Consideration` (the node that carries the causal link).
-- ADR-0011 — Strict Graph (no Nygard body literals to hide constraints in).
-- RFC 2119 — Requirement levels (MUST, SHOULD, MAY).
-- ADR-0026 — Ontology provenance (the specific application of this model).
+- ADR-0004 - The KG Lives Under Tooling (agents as active participants).
+- ADR-0005 - Log All Decisions (the real-time vignette, now expanded).
+- ADR-0010 - Atom-first `Consideration` (the node that carries the causal link).
+- ADR-0011 - Strict Graph (no Nygard body literals to hide constraints in).
+- RFC 2119 - Requirement levels (MUST, SHOULD, MAY).
+- ADR-0026 - Ontology provenance (the specific application of this model).

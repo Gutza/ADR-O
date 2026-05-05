@@ -10,6 +10,10 @@ This folder archives ADR and ADR-O references, local working papers, external mi
 - [The Decision Transaction Principle](./The%20Decision%20Transaction%20Principle.md) - immutability model and t0/tn boundary.
 - [Consideration Reification - A Design Choice](./Consideration%20Reification%20-%20A%20Design%20Choice.md) - rationale for claim/fact/record layering.
 - [Y-Statements](./Y-Statements.md) - Y-statement structure and ADR-O mapping.
+- [ADR-O Tooling-Mediation Principle](./ADR-O%20Tooling-Mediation%20Principle.md) - lifted from ADR-0004 as practitioner guidance on tooling-mediated ontology operation.
+- [Inclusion-First ADL Authoring Principle](./Inclusion-First%20ADL%20Authoring%20Principle.md) - lifted from ADR-0005 as practitioner guidance on inclusion-first capture.
+- [ADR-O Causality Scopes](./ADR-O%20Causality%20Scopes.md) - lifted from ADR-0025 as practitioner guidance on three-scope causal modeling.
+- [Decision Transaction Principle](./Decision%20Transaction%20Principle.md) - lifted from ADR-0028 as practitioner guidance on t0/tn integrity boundaries.
 
 ### Outreach Drafts
 - [Software Teams, Convert your ADRs to Knowledge Graphs](./Outreach/2026-04-18-Software-Teams-Convert-ADRs-to-KGs.md) - long-form outreach draft.
