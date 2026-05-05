@@ -4,7 +4,7 @@
 
 > The acronym explicitly traces its roots back to software architecture, where *ADR = Architecture Decision Record*. The acronym was preserved specifically for its rich heritage; see [ADR-0002](/ADL/ADR-0002-ontology-scope.md) for more on this.
 
-The canonical ontology is **[`adr-o.ttl`](/adr-o.ttl)**, currently at version **`0.6.0-alpha`**. The project's own ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)**.
+The canonical ontology is **[`adr-o.ttl`](/adr-o.ttl)**, currently at version **`0.7.1-alpha`**. The project's own ADR lifecycle and status tracking are maintained in the **[ADL Index file](/ADL/ADL.yaml)**.
 
 ## Why ADR-O
 
@@ -60,7 +60,7 @@ A complete (minimal) `DecisionRecord` in Turtle — one complaint, two alternati
 # Decision Record
 :ADR-001 a adr-o:DecisionRecord ;
     dcterms:identifier    "ADR-001" ;
-    adr-o:index           1 ;
+    adr-o:adrNumber       1 ;
     dcterms:title         "API Latency: caching vs. database scaling"@en ;
     adr-o:decidedAt       "2025-11-03"^^xsd:date ;
     adr-o:hasStatus       adr-o:Accepted ;

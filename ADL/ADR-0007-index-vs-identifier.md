@@ -8,6 +8,7 @@ author:
   email: bogdan@moongate.ro
 amendedBy:
   - ADR-0024
+  - ADR-0044
 ---
 
 # ADR-0007 — Numeric `adr-o:index` vs String `dcterms:identifier`

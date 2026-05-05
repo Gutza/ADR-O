@@ -9,6 +9,8 @@ author:
 amends:
   - ADR-0007
   - ADR-0020
+amendedBy:
+  - ADR-0044
 ---
 
 # ADR-0024 — Sequential IDs for All Decision Records

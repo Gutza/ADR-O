@@ -12,7 +12,7 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.7.0> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.7.1> ;
                           dcterms:created "2026-04-18"^^xsd:date ;
                           dcterms:modified "2026-05-05"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
@@ -20,7 +20,7 @@
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.7.0-alpha" ;
+                          owl:versionInfo "0.7.1-alpha" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -571,13 +571,14 @@ adr-o:md rdf:type rdfs:Datatype ;
          adr-o:justifiedBy adr-odr:ADR-0038-minting-markdown-datatype .
 
 
-adr-o:index rdf:type owl:DatatypeProperty ,
-                     owl:FunctionalProperty ;
-            rdfs:domain adr-o:DecisionRecord ;
-            rdfs:range xsd:integer ;
-            rdfs:comment "Ordering index of a DecisionRecord within its log. Required for chronological sorting."@en ;
-            rdfs:label "index"@en ;
-            adr-o:justifiedBy adr-odr:ADR-0007-index-vs-identifier .
+adr-o:adrNumber rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain adr-o:DecisionRecord ;
+                rdfs:range xsd:integer ;
+                rdfs:comment "The number of a DecisionRecord within its ADL — the stable, publicly referenceable integer identity token used in citations, filenames, and inter-record links. Machine-sortable complement to the string dcterms:identifier."@en ;
+                rdfs:label "ADR number"@en ;
+                adr-o:justifiedBy adr-odr:ADR-0007-index-vs-identifier ,
+                                  adr-odr:ADR-0044-adr-number .
 
 
 adr-o:consolidationOrder rdf:type owl:DatatypeProperty ,

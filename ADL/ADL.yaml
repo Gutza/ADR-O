@@ -43,7 +43,7 @@
   filename: "ADR-0007-index-vs-identifier.md"
   status: "Accepted"
   summary: "Introduces adr-o:index (xsd:integer, functional) alongside dcterms:identifier (string) so SPARQL can sort records by native integer order without parsing identifier strings."
-  amendedBy: [24]
+  amendedBy: [24, 44]
 - index: 8
   title: "Status SKOS and Integrity"
   filename: "ADR-0008-status-skos-and-integrity.md"
@@ -138,6 +138,7 @@
   status: "Accepted"
   summary: "Every DecisionRecord receives a unique sequential adr-o:index at creation time; amendment relationships are expressed via predicates, not ID suffixes."
   amends: [7, 20]
+  amendedBy: [44]
 - index: 25
   title: "Causal Topology: Scopes, Modal Constraints, and Materialization"
   filename: "ADR-0025-causal-network.md"
@@ -251,3 +252,9 @@
   filename: "ADR-0043-consolidated-adl.md"
   status: "Accepted"
   summary: "Introduces a two-layer enacted/consolidated architecture for ADL management. The enacted layer (frozen DecisionRecords) is the authoritative historical record; the consolidated layer (ConsolidatedADL + ConsolidatedOutcome entries) is a disposable LLM-maintained cache answering 'what are we currently committed to?' via a bounded 3-way diff algorithm. Mints ConsolidatedADL, ConsolidatedOutcome, consolidatedFrom, consolidatedIn, inConsolidatedADL, consolidatedUpTo, and consolidationOrder."
+- index: 44
+  title: "Rename adr-o:index to adr-o:adrNumber"
+  filename: "ADR-0044-adr-number.md"
+  status: "Accepted"
+  summary: "Renames adr-o:index to adr-o:adrNumber to reflect that the property is the ADR's stable identity token — the number used in citations, filenames, and conversation — not merely a sorting auxiliary. The contrast with adr-o:consolidationOrder (a disposable ordering integer introduced in ADR-0043) crystallised the semantic gap."
+  amends: [7, 24]
