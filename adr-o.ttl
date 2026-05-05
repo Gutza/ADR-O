@@ -12,14 +12,14 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.6.0> ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.6.1> ;
                           dcterms:created "2026-04-28"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships."^^adr-o:md ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.6.0-alpha" ;
+                          owl:versionInfo "0.6.1-alpha" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -234,6 +234,23 @@ adr-o:dependsOn rdf:type owl:ObjectProperty ;
                 rdfs:comment "ADL scope: indicates that a DecisionRecord relies on another."@en ;
                 rdfs:label "depends on"@en ;
                 adr-o:justifiedBy adr-odr:ADR-0006-core-relational-predicates .
+
+
+adr-o:deprecatedBy rdf:type owl:ObjectProperty ;
+                   owl:inverseOf adr-o:deprecates ;
+                   rdfs:domain adr-o:DecisionRecord ;
+                   rdfs:range adr-o:DecisionRecord ;
+                   rdfs:comment "ADL scope: inverse of adr-o:deprecates; links a deprecated DecisionRecord to the record that deprecated it. This does not imply replacement semantics."@en ;
+                   rdfs:label "deprecated by"@en ;
+                   adr-o:justifiedBy adr-odr:ADR-0041-deprecation-requires-a-deprecating-record .
+
+
+adr-o:deprecates rdf:type owl:ObjectProperty ;
+                 rdfs:domain adr-o:DecisionRecord ;
+                 rdfs:range adr-o:DecisionRecord ;
+                 rdfs:comment "ADL scope: a DecisionRecord deprecates another DecisionRecord, withdrawing recommendation without asserting a direct successor replacement."@en ;
+                 rdfs:label "deprecates"@en ;
+                 adr-o:justifiedBy adr-odr:ADR-0041-deprecation-requires-a-deprecating-record .
 
 
 adr-o:enables rdf:type owl:ObjectProperty ;
@@ -570,6 +587,40 @@ adr-o:DecisionRecord rdf:type owl:Class ;
                      rdfs:comment "A record of a single, load-bearing decision. Domain-agnostic core."@en ;
                      rdfs:label "Decision Record"@en ;
                      adr-o:justifiedBy adr-odr:ADR-0002-scope .
+
+
+[ rdf:type owl:Class ;
+  owl:intersectionOf ( adr-o:DecisionRecord
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty adr-o:hasStatus ;
+                         owl:hasValue adr-o:Superseded
+                       ]
+                     ) ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty adr-o:supersededBy ;
+                    owl:someValuesFrom adr-o:DecisionRecord
+                  ] ;
+  rdfs:comment "Constraint: a DecisionRecord with status Superseded must link to at least one successor record via adr-o:supersededBy."@en ;
+  adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity ,
+                    adr-odr:ADR-0041-deprecation-requires-a-deprecating-record
+] .
+
+
+[ rdf:type owl:Class ;
+  owl:intersectionOf ( adr-o:DecisionRecord
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty adr-o:hasStatus ;
+                         owl:hasValue adr-o:Deprecated
+                       ]
+                     ) ;
+  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                    owl:onProperty adr-o:deprecatedBy ;
+                    owl:someValuesFrom adr-o:DecisionRecord
+                  ] ;
+  rdfs:comment "Constraint: a DecisionRecord with status Deprecated must link to at least one deprecating record via adr-o:deprecatedBy."@en ;
+  adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity ,
+                    adr-odr:ADR-0041-deprecation-requires-a-deprecating-record
+] .
 
 
 adr-o:DeliberationFact rdf:type owl:Class ;

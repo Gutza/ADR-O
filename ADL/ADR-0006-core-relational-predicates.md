@@ -8,6 +8,7 @@ author:
   email: bogdan@moongate.ro
 amendedBy:
   - ADR-0028
+  - ADR-0041
 ---
 
 # ADR-0006 — Core Relational Predicates and PROV Alignment

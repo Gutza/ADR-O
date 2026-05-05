@@ -6,6 +6,8 @@ date: 2026-04-19
 author:
   name: Bogdan Stăncescu
   email: bogdan@moongate.ro
+amendedBy:
+  - ADR-0041
 ---
 
 # ADR-0008 — Lifecycle Status as a SKOS Scheme with OWL Integrity

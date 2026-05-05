@@ -1,6 +1,8 @@
 # AGENTS.md — ADR-O
 
 ## Core Project
+**ADR-O** is a formal OWL 2 ontology for modeling ADLs (an ADL is a project's collection of ADRs.) ADR-O itself has its own ADL, which is **not** (yet) formalized as an RDF graph.
+
 - **Ontology:** [`adr-o.ttl`](adr-o.ttl) — canonical OWL 2 ontology.
 - **Decision Records:** [`ADL/*.md`](ADL/) — human-readable ADRs with YAML frontmatter.
 - **ADR Registry:** [`ADL/ADL.yaml`](ADL/ADL.yaml) — **must be kept in sync** with all ADR files.

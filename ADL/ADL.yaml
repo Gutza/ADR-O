@@ -35,7 +35,7 @@
   filename: "ADR-0006-core-relational-predicates.md"
   status: "Accepted"
   summary: "Defines the core relational predicates (addresses, affects, dependsOn, enables, conflictsWith, supersedes, supersededBy) with supersedes declared as a sub-property of prov:wasRevisionOf for PROV-O interoperability."
-  amendedBy: [28]
+  amendedBy: [28, 41]
 - index: 7
   title: "Index vs Identifier"
   filename: "ADR-0007-index-vs-identifier.md"
@@ -47,6 +47,7 @@
   filename: "ADR-0008-status-skos-and-integrity.md"
   status: "Accepted"
   summary: "Models lifecycle status as a SKOS concept scheme with five core individuals and a functional adr-o:hasStatus property, enforced by owl:AllDifferent for OWL DL inconsistency detection on duplicate statuses."
+  amendedBy: [41]
 - index: 9
   title: "Deliberation and Outcome Valence"
   filename: "ADR-0009-deliberation-and-outcome-valence.md"
@@ -230,3 +231,9 @@
   filename: "ADR-0040-verdict-reification.md"
   status: "Accepted"
   summary: "Introduces adr-o:Verdict as the reified convergence act at the waist of the fish, linked from DecisionRecord via a functional adr-o:closedBy predicate. Verdict is Tier 1 epistemic core — mutable during drafting, frozen on external reference — and carries the Y-statement 'accepting that' clause as authored prose typed adr-o:md."
+- index: 41
+  title: "Deprecation Requires a Deprecating Record"
+  filename: "ADR-0041-deprecation-requires-a-deprecating-record.md"
+  status: "Proposed"
+  summary: "Distinguishes deprecation governance from replacement semantics by introducing a dedicated DecisionRecord relation pair (`deprecates`/`deprecatedBy`) and requiring explicit linkage from deprecated records to the ADR that deprecates them."
+  amends: [6, 8]
