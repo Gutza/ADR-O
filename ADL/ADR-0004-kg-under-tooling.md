@@ -1,11 +1,13 @@
 ---
 id: 4
 type: Core design
-status: Accepted
+status: Deprecated
 date: 2026-04-19
 author:
   name: Bogdan Stăncescu
   email: bogdan@moongate.ro
+deprecatedBy:
+  - ADR-0042
 ---
 
 # ADR-0004 — The KG Lives Under Tooling
