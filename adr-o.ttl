@@ -12,14 +12,15 @@
 @base <https://w3id.org/adr-o#> .
 
 <https://w3id.org/adr-o> rdf:type owl:Ontology ;
-                          owl:versionIRI <https://w3id.org/adr-o/0.6.1> ;
-                          dcterms:created "2026-04-28"^^xsd:date ;
+                          owl:versionIRI <https://w3id.org/adr-o/0.7.0> ;
+                          dcterms:created "2026-04-18"^^xsd:date ;
+                          dcterms:modified "2026-05-05"^^xsd:date ;
                           dcterms:creator "Bogdan Stăncescu" ;
                           dcterms:description "A domain-agnostic RDF/OWL 2 ontology for Any Decision Record. Decisions are modelled as graphs of reusable Claims placed by reified facts (ContextFact, DeliberationFact, ExpectedOutcome) into framing, deliberation, and expected-outcome roles, with explicit option pools and typed inter-record relationships."^^adr-o:md ;
                           dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
                           dcterms:title "ADR-O: An Ontology for Architecture Decision Records"@en ;
                           rdfs:seeAlso <https://gutza.github.io/ADR-O/> ;
-                          owl:versionInfo "0.6.1-alpha" ;
+                          owl:versionInfo "0.7.0-alpha" ;
                           skos:scopeNote "ADR-O defines the minimum vocabulary for representing decision records as typed graphs. Records contain metadata, a pool of Alternatives, and ordered lists of reified facts (Context, Deliberation, ExpectedOutcome) that manifest Claims. Status and valences are managed via SKOS schemes. Domain-specific extensions use the core's extension pattern."@en .
 
 #################################################################
@@ -27,10 +28,9 @@
 #################################################################
 
 dcterms:created rdf:type owl:AnnotationProperty ;
-                rdfs:domain adr-o:DecisionRecord ;
                 rdfs:range xsd:date ;
-                rdfs:comment "In ADR-O: the date the record artifact was created. For post-factum ADRs this may be later than the decision date."@en ;
-                skos:scopeNote "Optional record-creation timestamp. Distinct from adr-o:decidedAt when the log distinguishes decision date from record authorship."@en ;
+                rdfs:comment "In ADR-O: the original creation date of the resource. Immutable — set once when the resource is first authored and never updated thereafter. On DecisionRecord: the date the record artifact was first created; may be later than the decision date for post-factum records. On owl:Ontology: the date the ontology document was first created."@en ;
+                skos:scopeNote "Immutable original-creation timestamp. Pair with dcterms:modified (which tracks subsequent changes) rather than updating this property on revision. dcterms:date is intentionally not used: it is the generic parent of the DC date family and provides less precision than the created/modified pair. On DecisionRecord, distinct from adr-o:decidedAt (the t₀ commitment date) when the log distinguishes decision date from record authorship."@en ;
                 adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
 
 
@@ -82,11 +82,10 @@ dcterms:references rdf:type owl:AnnotationProperty ;
 
 
 dcterms:modified rdf:type owl:AnnotationProperty ;
-                 rdfs:domain adr-o:DecisionRecord ;
                  rdfs:range xsd:date ;
-                 rdfs:comment "The date of the last editorial modification in ADR scope. Amendment and supersession events are recorded as new DecisionRecords instead."@en ;
+                 rdfs:comment "In ADR-O: the date of the most recent change to the resource. Updated on every substantive revision. On DecisionRecord: covers non-semantic editorial changes only; semantic changes require a new DecisionRecord via adr-o:amends. On owl:Ontology: advanced with each new version release."@en ;
                  rdfs:label "modified"@en ;
-                 skos:scopeNote "Pairs with dcterms:version for non-semantic artifact evolution under the Decision Transaction Principle."@en ;
+                 skos:scopeNote "Mutable last-modified timestamp — the complement of dcterms:created. Together they form the canonical DC lifecycle pair: dcterms:created is set once and frozen; dcterms:modified tracks all subsequent changes. On DecisionRecord, pairs with dcterms:version for non-semantic artifact evolution under the Decision Transaction Principle."@en ;
                  adr-o:justifiedBy adr-odr:ADR-0034-timestamp-decisionrecord .
 
 
@@ -522,6 +521,44 @@ adr-o:verifies rdf:type owl:ObjectProperty ,
                                  adr-odr:ADR-0033-observation-discovery .
 
 
+adr-o:consolidatedFrom rdf:type owl:ObjectProperty ;
+                       owl:inverseOf adr-o:consolidatedIn ;
+                       rdfs:domain adr-o:ConsolidatedOutcome ;
+                       rdfs:range adr-o:ExpectedOutcome ;
+                       rdfs:comment "Links a ConsolidatedOutcome to the source ExpectedOutcome(s) from which it was projected. The forward source-map link: from operative surface to frozen enacted record."@en ;
+                       rdfs:label "consolidated from"@en ;
+                       skos:scopeNote "Not declared owl:FunctionalProperty: multi-source entries are the normal result of any in-place amendment. The original ExpectedOutcome contributes the semantic substance; the amending ExpectedOutcome contributes the modification. Both links are required for the source map to be honest — pointing to the amending record alone would falsely imply the substance originated there; pointing to the original alone would falsely imply the current text is unchanged. Single-source entries are the common case only for commitments that have never been amended."@en ;
+                       adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
+
+
+adr-o:consolidatedIn rdf:type owl:ObjectProperty ;
+                     rdfs:domain adr-o:ExpectedOutcome ;
+                     rdfs:range adr-o:ConsolidatedOutcome ;
+                     rdfs:comment "Inverse of adr-o:consolidatedFrom. Links a source ExpectedOutcome to its corresponding ConsolidatedOutcome. Absence of this link on an ExpectedOutcome from an active DecisionRecord is a meaningful signal: the commitment is not currently reflected in the consolidated view."@en ;
+                     rdfs:label "consolidated in"@en ;
+                     adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
+
+
+adr-o:inConsolidatedADL rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                        rdfs:domain adr-o:ConsolidatedOutcome ;
+                        rdfs:range adr-o:ConsolidatedADL ;
+                        rdfs:comment "Links a ConsolidatedOutcome to the ConsolidatedADL it belongs to. Functional: one entry belongs to exactly one consolidated document."@en ;
+                        rdfs:label "in consolidated ADL"@en ;
+                        skos:scopeNote "Follows the skos:inScheme membership pattern with the additional owl:FunctionalProperty constraint that SKOS omits. Functionality enforces the singleton design of ConsolidatedADL: a ConsolidatedOutcome cannot belong to two consolidated documents without violating the one-consolidated-view-per-ADL commitment."@en ;
+                        adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
+
+
+adr-o:consolidatedUpTo rdf:type owl:ObjectProperty ,
+                                owl:FunctionalProperty ;
+                       rdfs:domain adr-o:ConsolidatedADL ;
+                       rdfs:range adr-o:DecisionRecord ;
+                       rdfs:comment "Links a ConsolidatedADL to the most recently incorporated DecisionRecord. Staleness is computed by comparing this pointer to the most recent Accepted record in the ADL."@en ;
+                       rdfs:label "consolidated up to"@en ;
+                       skos:scopeNote "Anchored to DecisionRecord IRI, not to a timestamp, per the Decision Transaction Principle. 'Last consolidated to include ADR-0042' is more stable and meaningful than 'last updated on Wednesday'. Advancing this pointer is the final step of every consolidation event."@en ;
+                       adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -541,6 +578,15 @@ adr-o:index rdf:type owl:DatatypeProperty ,
             rdfs:comment "Ordering index of a DecisionRecord within its log. Required for chronological sorting."@en ;
             rdfs:label "index"@en ;
             adr-o:justifiedBy adr-odr:ADR-0007-index-vs-identifier .
+
+
+adr-o:consolidationOrder rdf:type owl:DatatypeProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain adr-o:ConsolidatedOutcome ;
+                         rdfs:range xsd:integer ;
+                         rdfs:comment "Ordering index of a ConsolidatedOutcome within its ConsolidatedADL. Managed by the consolidation tooling layer; the ontology defines the property and range but imposes no ordering constraints or contiguity requirements. Not guaranteed to be persistent or consistent across consolidation events."@en ;
+                         rdfs:label "consolidation order"@en ;
+                         adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
 
 
 #################################################################
@@ -755,6 +801,20 @@ adr-o:Status rdf:type owl:Class ;
              rdfs:comment "A lifecycle status for a DecisionRecord. Range of adr-o:hasStatus."@en ;
              rdfs:label "Status"@en ;
              adr-o:justifiedBy adr-odr:ADR-0008-status-skos-and-integrity .
+
+
+adr-o:ConsolidatedADL rdf:type owl:Class ;
+                      rdfs:comment "A disposable, LLM-maintained cache of the currently operative commitments across an ADL. Contains an ordered collection of ConsolidatedOutcome entries, each tracing to its source ExpectedOutcome via adr-o:consolidatedFrom."@en ;
+                      rdfs:label "Consolidated ADL"@en ;
+                      skos:scopeNote "Not a DecisionRecord and not part of the enacted layer. Eternally mutable: entries may be edited, replaced, or removed as the ADL evolves. One instance per ADL in normal use — multiple instances would recreate the normative fragmentation the consolidated layer exists to prevent. Does not subclass prov:Entity: the PROV alignment test (ADR-0035) fails at fixed-aspects; ConsolidatedADL is explicitly mutable by design."@en ;
+                      adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
+
+
+adr-o:ConsolidatedOutcome rdf:type owl:Class ;
+                          rdfs:comment "An entry in a ConsolidatedADL representing the current operative text of an ExpectedOutcome. Carries back-links to its source ExpectedOutcome(s) via adr-o:consolidatedFrom. Mutable: may be edited in place by subsequent amendments without producing a new IRI."@en ;
+                          rdfs:label "Consolidated Outcome"@en ;
+                          skos:scopeNote "Not a Claim: carries no deliberative truth value (ADR-0031). Not subject to verification or observation. Its structural value is the source-map link (adr-o:consolidatedFrom) connecting the operative surface to the frozen enacted layer. Analogous to a debug-build symbol table entry."@en ;
+                          adr-o:justifiedBy adr-odr:ADR-0043-consolidated-adl .
 
 
 #################################################################

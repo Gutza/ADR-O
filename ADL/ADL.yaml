@@ -246,3 +246,8 @@
   summary: "Establishes that all project documents are deliverables regardless of downstream decision influence, while reserving ADR status strictly for artifacts whose primary purpose is recording a decision transaction."
   amends: [5, 25, 28]
   deprecates: [4, 5]
+- index: 43
+  title: "The Consolidated ADL"
+  filename: "ADR-0043-consolidated-adl.md"
+  status: "Accepted"
+  summary: "Introduces a two-layer enacted/consolidated architecture for ADL management. The enacted layer (frozen DecisionRecords) is the authoritative historical record; the consolidated layer (ConsolidatedADL + ConsolidatedOutcome entries) is a disposable LLM-maintained cache answering 'what are we currently committed to?' via a bounded 3-way diff algorithm. Mints ConsolidatedADL, ConsolidatedOutcome, consolidatedFrom, consolidatedIn, inConsolidatedADL, consolidatedUpTo, and consolidationOrder."
